@@ -5,7 +5,7 @@ using UnityEngine;
 public class CopycatPower : MonoBehaviour, IPowerable
 {
     private GameObject[] gameObjects;
-    private List<GameObject> copyables = new List<GameObject>();
+    private Dictionary<string, Mesh> copyables = new Dictionary<string,Mesh>();
 
     private Mesh baseMesh;
     public bool guardForm;
@@ -21,42 +21,50 @@ public class CopycatPower : MonoBehaviour, IPowerable
 
         foreach (GameObject obj in gameObjects)
         {
-            if (obj.GetComponent<ICopyable>() != null)
+            ICopyable copyable = obj.GetComponent<ICopyable>();
+            if (copyable != null)
             {
-                copyables.Add(obj);
+                copyables.Add(obj.name, copyable.Copy());
             }
         }
     }
 
     public void ActivatePower()
     {
-        GetComponent<MeshFilter>().mesh = ChooseForm();
+        GetComponent<MeshFilter>().mesh = ChooseForm("test");
     }
 
-    private Mesh ChooseForm()
-    {
-        Mesh closestMesh = baseMesh;
-        float minDist = Mathf.Infinity;
-        guardForm = false;
-        foreach (GameObject obj in copyables)
-        {
-            float testDist = Vector3.Distance(transform.position, obj.transform.position);
-            if (minDist > testDist)
-            {
-                minDist = testDist;
-                closestMesh = obj.GetComponent<MeshFilter>().mesh;
 
-                if (obj.GetComponent<Guard>() != null)
-                    aspect.aspectName = Aspect.aspect.Enemy;
-                else
-                    aspect.aspectName = Aspect.aspect.Object;
-            }
-        }
-        if (minDist > 5f)
+    // right now the dictionary stores a string, mesh pair, but
+    // future implementations might use an enum.
+    // the string that is passed in is the name of the object the player
+    // is colliding with.
+    private Mesh ChooseForm(string nameOfObject)
+    {
+        // set the player's mesh in case the player is not touching anything.
+        Mesh form = baseMesh;
+
+        // search the dictionary for the nameOfObject
+        Mesh returnedMesh;
+        if (copyables.TryGetValue(nameOfObject, out returnedMesh))
         {
-            closestMesh = baseMesh;
+            returnedMesh = copyables[nameOfObject];
+            form = returnedMesh;
+        }
+
+        if (nameOfObject == null)
+        {
             aspect.aspectName = Aspect.aspect.Player;
         }
-        return closestMesh;
+        else if (nameOfObject == "Guard")
+        {
+            aspect.aspectName = Aspect.aspect.Enemy;
+        }
+        else
+        {
+            aspect.aspectName = Aspect.aspect.Object;
+        }
+
+        return form;
     }
 }
