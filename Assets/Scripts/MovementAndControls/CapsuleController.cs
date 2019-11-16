@@ -66,7 +66,7 @@ public class CapsuleController : MonoBehaviour
             }
         }
 
-        Debug.Log(aspectRef.aspectName);
+        //Debug.Log(aspectRef.aspectName);
 
     }
 

@@ -28,7 +28,7 @@ public class Walls : MonoBehaviour
 
         Quaternion rot = transform.rotation;
 
-        Debug.Log(rot);
+        //Debug.Log(rot);
 
         if (rot == new Quaternion(0.5f, -0.5f, -0.5f, 0.5f))
         {
@@ -51,13 +51,13 @@ public class Walls : MonoBehaviour
             wallDirection = Direction.Floor; // (0.7f, 0.0f, 0.0f, 0.7f)
         }
 
-        Debug.Log(wallDirection);
+        //Debug.Log(wallDirection);
 
     }
 
     void SetAlignment()
     {
-        Debug.Log("hi");
+        //Debug.Log("hi");
     }
 
     // Update is called once per frame
