@@ -1189,6 +1189,11 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6222707549622507832, guid: 96255af31581242bdb6eded485469486,
+        type: 3}
+      propertyPath: m_Mass
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6222707549622507975, guid: 96255af31581242bdb6eded485469486,
         type: 3}
       propertyPath: m_LocalPosition.x

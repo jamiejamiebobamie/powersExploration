@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class WallWalkingPower1 : MonoBehaviour, IPowerable
 {
+    // second attempt at the wall walking ability.
+    // press mouse button to activate and deactivate.
+    // power does not use physics or gravity.
 
-    RaycastHit hitForward,hitLeft,hitRight, hitBackward;
+    RaycastHit hitForward,hitLeft,hitRight, hitBackward, hitUp, hitDown;
 	bool powerActivated;
-    ReturnInfo logTheWalls;
+    ReturnInfo hitNormal;
     float elapsedTime;
     int hitDistance = 5;
     [SerializeField] Rigidbody rb;
-
+    ReturnInfo testInfo;
     Quaternion playerStartRotation;
 
     struct ReturnInfo
@@ -23,9 +26,11 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
     // Start is called before the first frame update
     void Start()
     {
+        elapsedTime = 0.0f;
+
         playerStartRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
-        elapsedTime = Time.deltaTime;
+        testInfo.hitNormal = Vector3.up;
     }
 
     public void ActivatePower()
@@ -55,35 +60,23 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
     {
         if (powerActivated)
         {
+            elapsedTime += Time.deltaTime;
 
-            // need to implement a second or half second delay on calling method.
-            logTheWalls = RayCastCardinalDirections();
-            Debug.Log(logTheWalls.hitNormal);
+            if (elapsedTime >= 1.0f)
+                hitNormal = RayCastCardinalDirections();
 
-            // just for testing
-            Debug.Log(logTheWalls.logString);
+            Debug.Log(hitNormal.hitNormal);
 
-            //Vector3 rot = (logTheWalls.hitNormal);// + transform.TransformDirection(Vector3.forward)) / 2;
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, logTheWalls.hitNormal);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, 0.05f);
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, hitNormal.hitNormal);
+            if (transform.rotation != rot)
+                transform.rotation = Quaternion.Slerp(transform.rotation, rot, 0.05f);
         }
         else
-        {
             transform.rotation = Quaternion.Slerp(transform.rotation, playerStartRotation, .05f);
-        }
-            //} else if (Vector3.forward.z > Vector3.forward.x)
-            //{
-            //    if (transform.rotation.z - playerStartRotation.z > .002f)
-            //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, playerStartRotation.z), .05f);
-            //    else
-            //        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(transform.rotation.x, transform.rotation.y, playerStartRotation.x), .05f);
-
-            //}
         }
 
     ReturnInfo RayCastCardinalDirections()
 	{
-        ReturnInfo testInfo = new ReturnInfo();
         string logWalls = "";
         int count = 0;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitForward, hitDistance))
@@ -110,21 +103,29 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
             testInfo.hitNormal += hitBackward.normal;
             count++;
         }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hitRight, hitDistance))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hitUp, hitDistance))
         {
             logWalls += "hitUp";
-            testInfo.hitNormal += hitRight.normal;
+            testInfo.hitNormal += hitUp.normal;
             count++;
         }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitBackward, hitDistance))
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitDown, hitDistance))
         {
             logWalls += "hitDown";
-            testInfo.hitNormal += hitBackward.normal;
+            testInfo.hitNormal += hitDown.normal;
             count++;
         }
 
         testInfo.logString = logWalls;
         testInfo.hitNormal /= count;
+        testInfo.hitNormal = Vector3.Normalize(testInfo.hitNormal);
+
+        if (float.IsNaN(testInfo.hitNormal.x))
+            //if (double.IsPositiveInfinity(testInfo.hitNormal.y))
+            {
+                testInfo.hitNormal = Vector3.up;
+
+        }
 
         return testInfo;
     }
