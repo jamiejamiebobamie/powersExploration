@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower1 : MonoBehaviour, IPowerable
+public class WallWalkingWithUpVector : MonoBehaviour
 {
     // second attempt at the wall walking ability.
     // press mouse button to activate and deactivate.
     // power does not use physics or gravity.
 
-    RaycastHit hitForward,hitLeft,hitRight, hitBackward, hitUp, hitDown;
-	bool powerActivated;
+    RaycastHit hitForward, hitLeft, hitRight, hitBackward, hitUp, hitDown;
+    bool powerActivated;
     Vector3 upNormalFromPower;
     float elapsedTime;
     int hitDistance = 5;
@@ -29,7 +29,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
     void Start()
     {
         // floor
-        WallRotate.Add(new Vector3(0,1,0), new Vector3(0, 0, 90));
+        WallRotate.Add(new Vector3(0, 1, 0), new Vector3(0, 0, 90));
 
         // cieling
         WallRotate.Add(new Vector3(0, -1, 0), new Vector3(0, 0, -90));
@@ -47,7 +47,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
 
     public void ActivatePower()
     {
-		activatePower();
+        activatePower();
     }
 
     // this power will be activated on button down and deactivated on buttonup
@@ -100,14 +100,14 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
                 else
                     playerNormallyRotated = true;
             }
-            
+
             //upNormalFromPower = Vector3.zero;
             //gameObject.transform.up = Vector3.up;
         }
     }
 
     Vector3 RayCastCardinalDirections()
-	{
+    {
         //string logWalls = "";
         int count = 0;
         upNormalFromPower = Vector3.zero;
@@ -173,3 +173,4 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
         return upNormalFromPower;
     }
 }
+
