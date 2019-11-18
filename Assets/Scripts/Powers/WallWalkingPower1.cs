@@ -21,9 +21,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
     Dictionary<Vector3, Vector3> WallRotate = new Dictionary<Vector3, Vector3>();
 
     Quaternion rot;
-
-    //pushing again.
-
+    //Vector3 forw;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +41,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
         playerStartRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
         upNormalFromPower = Vector3.up;
+        //forw = transform.forward;
     }
 
     public void ActivatePower()
@@ -75,9 +74,17 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
             elapsedTime += Time.deltaTime;
 
             if (elapsedTime >= 1.0f)
+            {
                 upNormalFromPower = RayCastCardinalDirections();
+                //forw = transform.forward;
+            }
 
-            Quaternion rot = Quaternion.FromToRotation(Vector3.up, upNormalFromPower);
+
+            //Quaternion rot1 = Quaternion.FromToRotation(Vector3.forward, forw);
+
+            Quaternion rot2 = Quaternion.FromToRotation(Vector3.up, upNormalFromPower);
+
+            //Quaternion rot3 = rot2* rot1;
 
             //if (WallRotate.ContainsKey(upNormalFromPower))
             //{
@@ -85,10 +92,11 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
             //}
 
 
-            Debug.Log(upNormalFromPower);
+            Debug.Log(rot);
 
             if (transform.up != upNormalFromPower)
-                transform.rotation = Quaternion.Lerp(transform.rotation, rot, .1f);
+                //if (elapsedTime >= 1.0f)
+                transform.rotation = Quaternion.Lerp(transform.rotation, rot2, .1f);
         }
         else
         {
