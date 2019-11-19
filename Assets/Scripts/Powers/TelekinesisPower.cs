@@ -14,14 +14,12 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     float elapsedTime, compareTime;
     int count;
 
-    // Start is called before the first frame update
     void Start()
     {
         allScenery = FindObjectsOfType<Scenery>();
         elapsedTime = 0.0f;
         compareTime = 0.0f;
         count = 0;
-        //StartCoroutine("UpdateQueue");
     }
 
     public void ActivatePower()
@@ -38,7 +36,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log(hit.transform.gameObject.name);
+            //Debug.Log(hit.transform.gameObject.name);
             IThrowable throwThisOne = throwables.Dequeue();
             throwThisOne.BecomeProjectile(hit.point);
         }
@@ -59,10 +57,8 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 scenery.Orbiting = true;
             }
         }
-        Debug.Log(throwables.Count);
     }
 
-    // Update is called once per frame
     void Update()
     {
         elapsedTime += Time.deltaTime;

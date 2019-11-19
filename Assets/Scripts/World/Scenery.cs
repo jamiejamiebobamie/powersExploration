@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 {
-    private bool burning;
+    [SerializeField] GameObject fireStandIn;
+    private bool isBurning;
     public bool isProjectile;
     public bool Orbiting
     {
@@ -15,18 +16,15 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             if (orbiting)
             {
                 Physics.IgnoreCollision(collide, playerCollide, true);
-                //rb.useGravity = true;
                 rb.isKinematic = true;
             }
             else
             {
                 Physics.IgnoreCollision(collide, playerCollide, false);
-                //rb.useGravity = true;
                 rb.isKinematic = false;
             }
         }
     }
-
     private bool orbiting;
 
     private GameObject player;
@@ -45,7 +43,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     float elapsedTime;
 
-
     void Start()
     {
         isProjectile = false;
@@ -54,18 +51,17 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         player = GameObject.FindGameObjectWithTag("Player");// playerRef;
         playerCollide = player.GetComponent<Collider>();
 
-        rotSpeed = random.Next(1,6);
-        transSpeed = rotSpeed * 5;// 30;// rotSpeed * 5;
-        //transSpeed = random.Next(10, 25);
+        rotSpeed = random.Next(2,5);
+        transSpeed = rotSpeed * 5;
 
         collide = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         elapsedTime = 0.0f;
-        // set Layer for all scenery to be Ignore Raycast
+        // NOTE:
+        // make sure to set Layer for all scenery to be "Ignore Raycast"
     }
 
-    [SerializeField] GameObject fireStandIn;
     public Mesh Copy()
     {
         Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
@@ -75,13 +71,12 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     public void Burns()
     {
         Instantiate(fireStandIn, transform.position, Quaternion.identity);
-        burning = true;
+        isBurning = true;
     }
 
     public void BecomeProjectile(Vector3 destination)
     {
-        Orbiting = false; // need to stagger this so that the projectile can
-        //get safely away from the player before setting to false
+        Orbiting = false;
 
         isProjectile = true;
 
@@ -90,6 +85,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         rb.AddForce(directionOfForce * 3000f);
     }
 
+    // coroutine?
     public void Orbit()
     {
         Vector3 relativePos = (player.transform.position
@@ -105,14 +101,16 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         transform.Translate(0, 0, 1 * Time.deltaTime * transSpeed);
     }
 
+    // how to only allow, scenery isProjectile?
     private void OnCollisionEnter(Collision collision)
     {
         IHittable hittable = collision.gameObject.GetComponent<IHittable>();
         if (hittable != null)
         {
             float hitForce = rb.velocity.magnitude;
-            //Debug.Log(hitForce);
             Vector3 hitDirection = Vector3.Normalize(rb.velocity);
+
+            Debug.Log(hittable);
             hittable.ApplyHitForce(hitDirection, hitForce);
         }
     }
@@ -120,11 +118,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     private void Update()
     {
         elapsedTime += Time.deltaTime; // I don't understand how this works.
-
-        //if (elapsedTime >= 4.0f)
-        //{
-        //    Debug.Log(elapsedTime);
-        //}
 
         if (orbiting)
         {
@@ -134,7 +127,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             if (isProjectile && elapsedTime >= 4.0f)
             {
                 isProjectile = false;
-                //Debug.Log(isProjectile);
             }
         }
 

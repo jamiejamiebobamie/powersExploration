@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Guard : Humanoid
 {
-    //public Mesh Copy()
-    //{
-    //	Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
-    //	return gameObjectMesh;
-    //} // humanoid implements ICopyable
-
-        // set up to be navagents and use navmesh;
-        // move to target;
     Vector3 targetPosition;
     public GameObject Floor;
 
@@ -44,6 +36,11 @@ public class Guard : Humanoid
 
     private void ChooseNewTargetPosition()
     {
-        targetPosition = new Vector3(Random.Range(Floor.transform.position.x - Floor.transform.localScale.x / 2, Floor.transform.position.x + Floor.transform.localScale.x / 2), 2, Random.Range(Floor.transform.position.z - Floor.transform.localScale.z / 2, Floor.transform.position.z + Floor.transform.localScale.z / 2));
+        targetPosition = new Vector3(Random.Range(Floor.transform.position.x
+            - Floor.transform.localScale.x / 2,
+            Floor.transform.position.x + Floor.transform.localScale.x / 2),
+            2, Random.Range(Floor.transform.position.z
+            - Floor.transform.localScale.z / 2, Floor.transform.position.z
+            + Floor.transform.localScale.z / 2));
     }
 }

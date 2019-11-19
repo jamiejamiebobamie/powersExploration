@@ -57,11 +57,13 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
         {
             powerActivated = false;
             rb.useGravity = true;
+            //rb.isKinematic = true;
         }
         else
         {
             powerActivated = true;
             rb.useGravity = false;
+            //rb.isKinematic = false;
             playerNormallyRotated = false;
         }
     }
@@ -83,7 +85,12 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
             //Quaternion rot1 = Quaternion.FromToRotation(Vector3.forward, forw);
 
             Quaternion rot2 = Quaternion.FromToRotation(Vector3.up, upNormalFromPower);
+            // multiplying two quaternions has the effect of combinign two rotations
+            // rotating one way and then rotating another.
 
+            //Quaternion rot3 = Quaternion.FromToRotation(Vector3.forward, transform.forward);
+
+            //rot2 *= transform.rotation;
             //Quaternion rot3 = rot2* rot1;
 
             //if (WallRotate.ContainsKey(upNormalFromPower))
@@ -104,7 +111,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
             if (!playerNormallyRotated)
             {
                 if (transform.rotation != Quaternion.identity)
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 0.5f);
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 0.05f);
                 else
                     playerNormallyRotated = true;
             }
