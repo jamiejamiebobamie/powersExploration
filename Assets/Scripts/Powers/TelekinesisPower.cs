@@ -4,20 +4,25 @@ using UnityEngine;
 
 public class TelekinesisPower : MonoBehaviour, IPowerable
 {
+    // issues: throwable objects are being dequeue
+    // and then immediately enqueued if within range of player (4f)
+    // need to put UpdateQueue() on a timer (coRoutine?)
 
     Queue<IThrowable> throwables = new Queue<IThrowable>();
     Scenery[] allScenery;
     GameObject playerRef;
-    float elapsedTime;
+    float elapsedTime, compareTime;
+    int count;
 
     // Start is called before the first frame update
     void Start()
     {
         allScenery = FindObjectsOfType<Scenery>();
         elapsedTime = 0.0f;
+        compareTime = 0.0f;
+        count = 0;
+        //StartCoroutine("UpdateQueue");
     }
-
-
 
     public void ActivatePower()
     {
@@ -33,7 +38,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            Debug.Log("hit");
+            Debug.Log(hit.transform.gameObject.name);
             IThrowable throwThisOne = throwables.Dequeue();
             throwThisOne.BecomeProjectile(hit.point);
         }
@@ -44,14 +49,17 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     {
         foreach (Scenery scenery in allScenery)
         {
-            float distanceFromPlayer = (transform.position - scenery.transform.position).magnitude;
-            if (!throwables.Contains(scenery)&& distanceFromPlayer < 5f)
+            float distanceFromPlayer = (transform.position
+                - scenery.transform.position).magnitude;
+
+            if (!throwables.Contains(scenery)
+                && distanceFromPlayer < 4f && !scenery.isProjectile)
             {
                 throwables.Enqueue(scenery);
                 scenery.Orbiting = true;
             }
         }
-
+        Debug.Log(throwables.Count);
     }
 
     // Update is called once per frame
@@ -59,7 +67,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     {
         elapsedTime += Time.deltaTime;
 
-        if (elapsedTime > 4.0f)
+        if (elapsedTime % 2.0f < 1)
             UpdateQueue();
 
     }

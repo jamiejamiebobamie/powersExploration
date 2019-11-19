@@ -5,7 +5,7 @@ using UnityEngine;
 public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 {
     private bool burning;
-
+    public bool isProjectile;
     public bool Orbiting
     {
         get { return orbiting; }
@@ -48,19 +48,21 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     void Start()
     {
+        isProjectile = false;
         orbiting = false;
 
         player = GameObject.FindGameObjectWithTag("Player");// playerRef;
         playerCollide = player.GetComponent<Collider>();
 
         rotSpeed = random.Next(1,6);
-        transSpeed = rotSpeed * 5;
+        transSpeed = rotSpeed * 5;// 30;// rotSpeed * 5;
         //transSpeed = random.Next(10, 25);
 
         collide = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         elapsedTime = 0.0f;
+        // set Layer for all scenery to be Ignore Raycast
     }
 
     [SerializeField] GameObject fireStandIn;
@@ -81,6 +83,8 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         Orbiting = false; // need to stagger this so that the projectile can
         //get safely away from the player before setting to false
 
+        isProjectile = true;
+
         Vector3 directionOfForce = Vector3.Normalize(destination
             - gameObject.transform.position);
         rb.AddForce(directionOfForce * 3000f);
@@ -89,7 +93,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     public void Orbit()
     {
         Vector3 relativePos = (player.transform.position
-            + new Vector3(0, 0.5f, 0))- transform.position;
+            + new Vector3(0, rotSpeed, 0))- transform.position;
 
         Quaternion rotation = Quaternion.LookRotation(relativePos);
 
@@ -101,13 +105,37 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         transform.Translate(0, 0, 1 * Time.deltaTime * transSpeed);
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        IHittable hittable = collision.gameObject.GetComponent<IHittable>();
+        if (hittable != null)
+        {
+            float hitForce = rb.velocity.magnitude;
+            //Debug.Log(hitForce);
+            Vector3 hitDirection = Vector3.Normalize(rb.velocity);
+            hittable.ApplyHitForce(hitDirection, hitForce);
+        }
+    }
+
     private void Update()
     {
-        elapsedTime += Time.deltaTime;
+        elapsedTime += Time.deltaTime; // I don't understand how this works.
+
+        //if (elapsedTime >= 4.0f)
+        //{
+        //    Debug.Log(elapsedTime);
+        //}
 
         if (orbiting)
         {
             Orbit();
+        } else
+        {
+            if (isProjectile && elapsedTime >= 4.0f)
+            {
+                isProjectile = false;
+                //Debug.Log(isProjectile);
+            }
         }
 
     }
