@@ -16,6 +16,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     void Start()
     {
+        //Debug.Log(gameObject.name);
         allScenery = FindObjectsOfType<Scenery>();
         elapsedTime = 0.0f;
         compareTime = 0.0f;
@@ -54,6 +55,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 && distanceFromPlayer < 4f && !scenery.isProjectile)
             {
                 throwables.Enqueue(scenery);
+                scenery.orbitPlayer = gameObject;
                 scenery.Orbiting = true;
             }
         }
@@ -65,6 +67,5 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
         if (elapsedTime % 2.0f < 1)
             UpdateQueue();
-
     }
 }

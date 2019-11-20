@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
+public class EmptyThrowable : MonoBehaviour, IThrowable
 {
-    [SerializeField] GameObject fireStandIn;
-    private bool isBurning;
+
     public bool isProjectile;
+    private bool orbiting;
+
     public bool Orbiting
     {
         get { return orbiting; }
@@ -15,29 +16,29 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             orbiting = value;
             if (orbiting)
             {
-                foreach (Collider playerCollide in telekinesisPlayerColliders)
-                {
-                    Physics.IgnoreCollision(collide, playerCollide, true);
-                }
+                Physics.IgnoreCollision(collide, playerCollide, true);
                 rb.isKinematic = true;
             }
             else
             {
-                foreach (Collider playerCollide in telekinesisPlayerColliders)
-                {
-                    Physics.IgnoreCollision(collide, playerCollide, false);
-                }
-
+                Physics.IgnoreCollision(collide, playerCollide, false);
                 rb.isKinematic = false;
+                foreach (Transform children in transform)
+                {
+                    Rigidbody childRb = children.GetComponent<Rigidbody>();
+                    if (childRb != null)
+                    {
+                        childRb.isKinematic = false;
+                        childRb.useGravity = false;
+                        //Physics.IgnoreCollision(collide, playerCollide, false);
+                    }
+                }
             }
         }
     }
-    private bool orbiting;
-    public GameObject orbitPlayer; // a reference to the player
-                                    // that the item is orbiting around
 
-    private TelekinesisPower[] playersWithTelekinesis;
-    private List<Collider> telekinesisPlayerColliders = new List<Collider>();
+
+    private GameObject player;
 
     //[Range(-100, 100)] // 2 to 4 good range with transSpeed 20
     public float rotSpeed; // need to make getters and setters
@@ -47,7 +48,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     Collider collide;
     Rigidbody rb;
-    //Collider playerCollide;
+    Collider playerCollide;
 
     System.Random random = new System.Random();
 
@@ -58,19 +59,8 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         isProjectile = false;
         orbiting = false;
 
-        playersWithTelekinesis = FindObjectsOfType<TelekinesisPower>();
-
-        foreach (TelekinesisPower power in playersWithTelekinesis)
-        {
-            Collider test_collider = power.gameObject.GetComponent<Collider>();
-            if (test_collider != null)
-            {
-                telekinesisPlayerColliders.Add(test_collider);
-            }
-        }
-
-        //player = GameObject.FindGameObjectWithTag("Player");// playerRef;
-        //playerCollide = player.GetComponent<Collider>();
+        player = GameObject.FindGameObjectWithTag("Player");// playerRef;
+        playerCollide = player.GetComponent<Collider>();
 
         rotSpeed = random.Next(2,5);
         transSpeed = rotSpeed * 5;
@@ -81,18 +71,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         elapsedTime = 0.0f;
         // NOTE:
         // make sure to set Layer for all scenery to be "Ignore Raycast"
-    }
-
-    public Mesh Copy()
-    {
-        Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
-        return gameObjectMesh;
-    }
-
-    public void Burns()
-    {
-        Instantiate(fireStandIn, transform.position, Quaternion.identity);
-        isBurning = true;
     }
 
     public void BecomeProjectile(Vector3 destination)
@@ -109,8 +87,8 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     // coroutine?
     public void Orbit()
     {
-        Vector3 relativePos = (orbitPlayer.transform.position
-            + new Vector3(0, rotSpeed+2f, 0))- transform.position;
+        Vector3 relativePos = (player.transform.position
+            + new Vector3(0, rotSpeed, 0))- transform.position;
 
         Quaternion rotation = Quaternion.LookRotation(relativePos);
 
@@ -131,7 +109,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             float hitForce = rb.velocity.magnitude;
             Vector3 hitDirection = Vector3.Normalize(rb.velocity);
 
-            //Debug.Log(hittable);
+            Debug.Log(hittable);
             hittable.ApplyHitForce(hitDirection, hitForce);
         }
     }
