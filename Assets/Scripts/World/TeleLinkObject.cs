@@ -6,18 +6,18 @@ public class TeleLinkObject : MonoBehaviour, ITeleportable
 {
     private void Start()
     {
-       GameObject[] allObjectsInLevel = FindObjectsOfType<GameObject>();
+       //GameObject[] allObjectsInLevel = FindObjectsOfType<GameObject>();
 
-        foreach (GameObject o in allObjectsInLevel)
-        {
-            if (o.GetComponent<TeleLinkPower>() != null)
-            {
-                return;//idk too tired.
-            }
-        }
+       // foreach (GameObject o in allObjectsInLevel)
+       // {
+       //     if (o.GetComponent<TeleLinkPower>() != null)
+       //     {
+       //         ReturnDistance();
+       //     }
+       // }
         
     }
-    public float ReturnDistance()
+    public Vector3 ReturnPosition()
     {
         return transform.position;
     }

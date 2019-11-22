@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface ITeleportable
 {
-    public float ReturnDistance();
+    Vector3 ReturnPosition();
 }
