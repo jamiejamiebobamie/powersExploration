@@ -4,71 +4,22 @@ using UnityEngine;
 
 public class TeleLinkPower : MonoBehaviour, IPowerable
 {
-    List<Vector3> TeleLinkPositions = new List<Vector3>();
+    //List<Vector3> TeleLinkPositions = new List<Vector3>();
 
-    //struct TeleportNode
-    //{
-    //    public Vector3 Location;
-    //    public List<TeleportNode> Neighbors;
-    //}
 
-    //TeleportNode[] TeleportNodeArray;
+    [SerializeField] int numberOfTeleportPositions;
+
+    Vector3[] TeleLinkPositions;
+    int TeleLinkPositionsCount = 0;
+    GameObject[] TeleLinkPositionsMarkers;
+    [SerializeField] GameObject marker;
 
     Vector3 currentPosition;
 
-
-    [SerializeField] GameObject marker;
-
     private void Start()
     {
-        GameObject[] allObjectsInLevel = FindObjectsOfType<GameObject>();
-
-        foreach (GameObject o in allObjectsInLevel)
-        {
-            ITeleportable telePortComponent = o.GetComponent<ITeleportable>();
-            if (telePortComponent != null)
-            {
-                Vector3 TeleLinkPosition = telePortComponent.ReturnPosition();
-
-                TeleLinkPositions.Add(TeleLinkPosition);
-                //TeleportNode newNode = new TeleportNode();
-                //newNode.Location = TeleLinkPosition;
-            }
-        }
-
-        //TeleportNodeArray = new TeleportNode[TeleLinkPositions.Count - 1];
-
-        //foreach (Vector3 positionA in TeleLinkPositions)
-        //{
-        //    foreach (Vector3 positionB in TeleLinkPositions)
-        //    {
-        //        if (positionA != positionB)
-        //        {
-        //            Ray ray = new Ray();
-
-        //            Vector3 rayDirection = positionA - positionB;
-        //            float distance = rayDirection.magnitude;
-
-        //            ray.direction = rayDirection;
-        //            ray.origin = positionA;
-
-        //            RaycastHit hit = new RaycastHit();
-        //            if (Physics.Raycast(ray, out hit, distance))
-        //            {
-        //                break; // we hit something and the way is not clear.
-        //            }
-        //            else
-        //            {
-        //                TeleportNode newNode = new TeleportNode();
-
-        //            }
-        //        }
-        //    }
-
-
-        //    // add a TeleportNode for each TeleLinkPosition in TeleLinkPositions.
-
-        //}
+        TeleLinkPositions = new Vector3[numberOfTeleportPositions];
+        TeleLinkPositionsMarkers = new GameObject[numberOfTeleportPositions];
     }
 
     public void ActivatePower1()
@@ -98,12 +49,12 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
         {
             if (position != currentPosition)
             {
-                //Direction from current position to player position
+                //Direction from current position to player position.
                 rayDirection = position - transform.position;
 
-                //Check the angle between the player's forward vector and 
-                //the direction vector between the player and the teleport position
-                if ((Vector3.Angle(rayDirection, transform.forward)) < 30)
+                //Check the angle between the player's forward vector and the 
+                //direction vector between the player and the teleport position.
+                if ((Vector3.Angle(rayDirection, transform.forward)) < 20)
                 {
                     distance = rayDirection.magnitude;
 
@@ -132,8 +83,19 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
 
     void AddPositionToTeleLinkPositions()
     {
-        TeleLinkPositions.Add(transform.position);
-        Instantiate(marker, transform.position, transform.rotation);
+        if (TeleLinkPositionsCount >= 10)
+        {
+            TeleLinkPositionsCount = 0;
+        } else
+        {
+            TeleLinkPositionsCount++;
+        }
+
+        TeleLinkPositions[TeleLinkPositionsCount] = transform.position;
+
+        Destroy(TeleLinkPositionsMarkers[TeleLinkPositionsCount]);
+        TeleLinkPositionsMarkers[TeleLinkPositionsCount] =
+            Instantiate(marker, transform.position, transform.rotation);
     }
 
 }

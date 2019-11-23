@@ -58,7 +58,7 @@ public class CapsuleController : MonoBehaviour
             power.ActivatePower2();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             if (aspectRef.aspectName != Aspect.aspect.Sneaking)
             {

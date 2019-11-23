@@ -577,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a769e0e698a2a4b5ca87683ce8970af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfTeleportPositions: 5
   marker: {fileID: 7584740159957185778, guid: f31b2331253c947a7be40fd7345a237a, type: 3}
 --- !u!1 &1826213956
 GameObject:
