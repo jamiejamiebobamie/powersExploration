@@ -3,5 +3,6 @@ using System.Collections;
 
 public interface IPowerable
 {
-    void ActivatePower();
+    void ActivatePower1();
+    void ActivatePower2();
 }

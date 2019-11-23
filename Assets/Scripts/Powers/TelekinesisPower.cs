@@ -23,9 +23,14 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         count = 0;
     }
 
-    public void ActivatePower()
+    public void ActivatePower1()
     {
         Throw();
+    }
+
+    public void ActivatePower2()
+    {
+        return;
     }
 
     void Throw()

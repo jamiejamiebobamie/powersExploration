@@ -44,9 +44,14 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
         //forw = transform.forward;
     }
 
-    public void ActivatePower()
+    public void ActivatePower1()
     {
 		activatePower();
+    }
+
+    public void ActivatePower2()
+    {
+        return;
     }
 
     // this power will be activated on button down and deactivated on buttonup

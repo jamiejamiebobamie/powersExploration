@@ -50,7 +50,12 @@ public class CapsuleController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            power.ActivatePower();
+            power.ActivatePower1();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            power.ActivatePower2();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))

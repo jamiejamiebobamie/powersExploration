@@ -29,9 +29,14 @@ public class CopycatPower : MonoBehaviour, IPowerable
         }
     }
 
-    public void ActivatePower()
+    public void ActivatePower1()
     {
         GetComponent<MeshFilter>().mesh = ChooseForm("test");
+    }
+
+    public void ActivatePower2()
+    {
+        return;
     }
 
 

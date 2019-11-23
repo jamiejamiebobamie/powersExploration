@@ -6,12 +6,17 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
 {
     [SerializeField] GameObject fireStandIn;
 
-	public void ActivatePower()
+	public void ActivatePower1()
 	{
         RaycastToBurnable();
     }
 
-	void RaycastToBurnable()
+    public void ActivatePower2()
+    {
+        return;
+    }
+
+    void RaycastToBurnable()
 	{
 		Ray ray = new Ray();
 		ray.origin = Camera.main.transform.position;

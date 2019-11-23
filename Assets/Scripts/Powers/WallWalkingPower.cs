@@ -34,9 +34,14 @@ public class WallWalkingPower : MonoBehaviour, IPowerable
         rb = GetComponent<Rigidbody>();
     }
 
-    public void ActivatePower()
+    public void ActivatePower1()
     {
         setGravity();
+    }
+
+    public void ActivatePower2()
+    {
+        return;
     }
 
     // need to raycast for layers == walls only
