@@ -3,5 +3,6 @@ using System.Collections;
 
 public interface ICopyable
 {
-	Mesh Copy();
+	Mesh ReturnMesh();
+    int ReturnHeight();
 }

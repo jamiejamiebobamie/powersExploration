@@ -83,10 +83,17 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         elapsedTime = 0.0f;
     }
 
-    public Mesh Copy()
+    public Mesh ReturnMesh()
     {
         Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
         return gameObjectMesh;
+    }
+
+    public int ReturnHeight()
+    {
+        float roundedHeight = Mathf.Round(transform.position.y);
+        int height = (int)roundedHeight;
+        return height;
     }
 
     public void Burns()
