@@ -157,6 +157,22 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         return baseRotationOrbitSpeed;
     }
 
+    public Vector3 GetPosition()
+    {
+        return transform.position;
+    }
+
+    public bool GetIsProjectile()
+    {
+        return isProjectile;
+    }
+
+    public void SetOrbitPlayer(GameObject playerToOrbit)
+    {
+        orbitPlayer = playerToOrbit;
+        Orbiting = true;
+    }
+
     // how to only allow, scenery isProjectile?
     private void OnCollisionEnter(Collision collision)
     {

@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class TelekinesisPower : MonoBehaviour, IPowerable
 {
-    // issues: throwable objects are being dequeue
-    // and then immediately enqueued if within range of player (4f)
-    // need to put UpdateQueue() on a timer (coRoutine?)
-
+    List<IThrowable> possibleThrowables = new List<IThrowable>();
     Queue<IThrowable> throwables = new Queue<IThrowable>();
-    Scenery[] allScenery;
-    GameObject playerRef;
-    float elapsedTime, compareTime;
-    int count;
-
-    bool isBlocking;
+    GameObject[] allSceneObjects;
+    private float elapsedTime;
+    private bool isBlocking;
 
     void Start()
     {
-        allScenery = FindObjectsOfType<Scenery>();
+        allSceneObjects = FindObjectsOfType<GameObject>();
+        foreach(GameObject o in allSceneObjects)
+        {
+            IThrowable testThrowable = o.GetComponent<IThrowable>();
+            if(testThrowable != null)
+            {
+                possibleThrowables.Add(testThrowable);
+            }
+        }
         elapsedTime = 0.0f;
-        compareTime = 0.0f;
-        count = 0;
     }
 
     public void ActivatePower1()
@@ -71,6 +71,8 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         }
     }
 
+    // need to ensure projectile is clear
+    // of player and player's orbiting objects.
     void Throw()
     {
         Ray ray = new Ray();
@@ -86,20 +88,18 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     }
 
-    // this should be iterating over an IThrowable and not Scenery!!!
     void UpdateQueue()
     {
-        foreach (Scenery scenery in allScenery)
+        foreach (IThrowable t in possibleThrowables)
         {
             float distanceFromPlayer = (transform.position
-                - scenery.transform.position).magnitude;
+                - t.GetPosition()).magnitude;
 
-            if (!throwables.Contains(scenery)
-                && distanceFromPlayer < 4f && !scenery.isProjectile)
+            if (!throwables.Contains(t)
+                && distanceFromPlayer < 4f && !t.GetIsProjectile())
             {
-                throwables.Enqueue(scenery);
-                scenery.orbitPlayer = gameObject;
-                scenery.Orbiting = true;
+                throwables.Enqueue(t);
+                t.SetOrbitPlayer(gameObject);
             }
         }
     }
