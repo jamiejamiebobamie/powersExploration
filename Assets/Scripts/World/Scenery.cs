@@ -35,19 +35,16 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         }
     }
     private bool orbiting;
-    public GameObject orbitPlayer; // a reference to the player
-                                    // that the item is orbiting around
+    // a reference to the player that the item is orbiting around
+    public GameObject orbitPlayer;
+                                    
 
     private TelekinesisPower[] playersWithTelekinesis;
     private List<Collider> telekinesisPlayerColliders = new List<Collider>();
 
-    // orbitRotationSpeed = 2 to 4 good range with orbitTranslationSpeed 20
-    // orbitTranslationSpeed = 10 to 25 good range with orbitRotationSpeed 2 to 4
-    // need to make getters and setters
-    public float orbitRotationSpeed, orbitTranslationSpeed;
-
-    private float orbitHeight, baseOrbitHeight,
-        baseTranslationOrbitSpeed, baseRotationOrbitSpeed;
+    // orbitRotationSpeed = 2to4 good range with orbitTranslationSpeed 10to25
+    private float orbitRotationSpeed, orbitTranslationSpeed, orbitHeight,
+        baseOrbitHeight, baseTranslationOrbitSpeed, baseRotationOrbitSpeed;
 
     Collider collide;
     Rigidbody rb;
@@ -109,10 +106,9 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         rb.AddForce(directionOfForce * 3000f);
     }
 
-    // coroutine?
+    // Need to make this a coroutine.
     public void Orbit()
     {
-
         Vector3 relativePos = (orbitPlayer.transform.position
             + new Vector3(0, orbitHeight, 0))- transform.position;
 

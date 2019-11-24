@@ -35,39 +35,50 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         if (isBlocking)
         {
             isBlocking = false;
-            foreach(IThrowable throwable in throwables)
-            {
-                float baseOrbitHeight = throwable.GetOrbitHeight();
-                throwable.SetOrbitHeight(baseOrbitHeight);
+            AttackMode();
 
-                float baseOrbitTranslationSpeed =
-                    throwable.GetOrbitTranslationSpeed();
-                throwable.SetOrbitTranslationSpeed(
-                    baseOrbitTranslationSpeed);
-
-                float baseOrbitRotationSpeed =
-                    throwable.GetOrbitRotationSpeed();
-                throwable.SetOrbitRotationSpeed(
-                    baseOrbitRotationSpeed);
-            }
         } else
         {
             isBlocking = true;
-            foreach (IThrowable throwable in throwables)
-            {
-                float baseOrbitHeight = throwable.GetOrbitHeight();
-                throwable.SetOrbitHeight(baseOrbitHeight/4f);
+            DefenseMode();
+        }
+    }
 
-                float baseOrbitTranslationSpeed =
-                    throwable.GetOrbitTranslationSpeed();
-                throwable.SetOrbitTranslationSpeed(
-                    baseOrbitTranslationSpeed * 1.5f);
+    void DefenseMode()
+    {
+        foreach (IThrowable throwable in throwables)
+        {
+            float baseOrbitHeight = throwable.GetOrbitHeight();
+            throwable.SetOrbitHeight(baseOrbitHeight / 4f);
 
-                float baseOrbitRotationSpeed =
-                    throwable.GetOrbitRotationSpeed();
-                throwable.SetOrbitRotationSpeed(
-                    baseOrbitRotationSpeed * 2f);
-            }
+            float baseOrbitTranslationSpeed =
+                throwable.GetOrbitTranslationSpeed();
+            throwable.SetOrbitTranslationSpeed(
+                baseOrbitTranslationSpeed * 1.5f);
+
+            float baseOrbitRotationSpeed =
+                throwable.GetOrbitRotationSpeed();
+            throwable.SetOrbitRotationSpeed(
+                baseOrbitRotationSpeed * 2f);
+        }
+    }
+
+    void AttackMode()
+    {
+        foreach (IThrowable throwable in throwables)
+        {
+            float baseOrbitHeight = throwable.GetOrbitHeight();
+            throwable.SetOrbitHeight(baseOrbitHeight);
+
+            float baseOrbitTranslationSpeed =
+                throwable.GetOrbitTranslationSpeed();
+            throwable.SetOrbitTranslationSpeed(
+                baseOrbitTranslationSpeed);
+
+            float baseOrbitRotationSpeed =
+                throwable.GetOrbitRotationSpeed();
+            throwable.SetOrbitRotationSpeed(
+                baseOrbitRotationSpeed);
         }
     }
 
