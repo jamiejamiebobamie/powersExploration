@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// NOTE:
+// make sure to set Layer for all scenery to be "Ignore Raycast"
 public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 {
     [SerializeField] GameObject fireStandIn;
@@ -39,15 +41,16 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     private TelekinesisPower[] playersWithTelekinesis;
     private List<Collider> telekinesisPlayerColliders = new List<Collider>();
 
-    //[Range(-100, 100)] // 2 to 4 good range with transSpeed 20
-    public float rotSpeed; // need to make getters and setters
+    // orbitRotationSpeed = 2 to 4 good range with orbitTranslationSpeed 20
+    // orbitTranslationSpeed = 10 to 25 good range with orbitRotationSpeed 2 to 4
+    // need to make getters and setters
+    public float orbitRotationSpeed, orbitTranslationSpeed;
 
-    //[Range(1, 50)] // 10 to 25 good range with rotSpeed 2 to 4
-    public float transSpeed; // need to make getters and setters
+    private float orbitHeight, baseOrbitHeight,
+        baseTranslationOrbitSpeed, baseRotationOrbitSpeed;
 
     Collider collide;
     Rigidbody rb;
-    //Collider playerCollide;
 
     System.Random random = new System.Random();
 
@@ -69,18 +72,18 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             }
         }
 
-        //player = GameObject.FindGameObjectWithTag("Player");// playerRef;
-        //playerCollide = player.GetComponent<Collider>();
+        orbitRotationSpeed = random.Next(2,5);
+        baseRotationOrbitSpeed = orbitRotationSpeed;
 
-        rotSpeed = random.Next(2,5);
-        transSpeed = rotSpeed * 5;
+        orbitTranslationSpeed = orbitRotationSpeed * 5;
+        baseTranslationOrbitSpeed = orbitTranslationSpeed;
+        orbitHeight = orbitRotationSpeed + 2f;
+        baseOrbitHeight = orbitHeight;
 
         collide = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
         elapsedTime = 0.0f;
-        // NOTE:
-        // make sure to set Layer for all scenery to be "Ignore Raycast"
     }
 
     public Mesh Copy()
@@ -109,17 +112,49 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     // coroutine?
     public void Orbit()
     {
+
         Vector3 relativePos = (orbitPlayer.transform.position
-            + new Vector3(0, rotSpeed+2f, 0))- transform.position;
+            + new Vector3(0, orbitHeight, 0))- transform.position;
 
         Quaternion rotation = Quaternion.LookRotation(relativePos);
 
         Quaternion current = transform.localRotation;
 
         transform.localRotation = Quaternion.Slerp(current, rotation,
-            Time.deltaTime * rotSpeed);
+            Time.deltaTime * orbitRotationSpeed);
 
-        transform.Translate(0, 0, 1 * Time.deltaTime * transSpeed);
+        transform.Translate(0, 0,
+            1 * Time.deltaTime * orbitTranslationSpeed);
+    }
+
+    public void SetOrbitHeight(float desiredHeight)
+    {
+        orbitHeight = desiredHeight;
+    }
+
+    public float GetOrbitHeight()
+    {
+        return baseOrbitHeight;
+    }
+
+    public void SetOrbitTranslationSpeed(float desiredSpeed)
+    {
+        orbitTranslationSpeed = desiredSpeed;
+    }
+
+    public float GetOrbitTranslationSpeed()
+    {
+        return baseTranslationOrbitSpeed;
+    }
+
+    public void SetOrbitRotationSpeed(float desiredSpeed)
+    {
+        orbitRotationSpeed = desiredSpeed;
+    }
+
+    public float GetOrbitRotationSpeed()
+    {
+        return baseRotationOrbitSpeed;
     }
 
     // how to only allow, scenery isProjectile?
@@ -131,14 +166,13 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
             float hitForce = rb.velocity.magnitude;
             Vector3 hitDirection = Vector3.Normalize(rb.velocity);
 
-            //Debug.Log(hittable);
             hittable.ApplyHitForce(hitDirection, hitForce);
         }
     }
 
     private void Update()
     {
-        elapsedTime += Time.deltaTime; // I don't understand how this works.
+        elapsedTime += Time.deltaTime;
 
         if (orbiting)
         {

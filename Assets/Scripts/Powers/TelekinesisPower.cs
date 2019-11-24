@@ -14,9 +14,10 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     float elapsedTime, compareTime;
     int count;
 
+    bool isBlocking;
+
     void Start()
     {
-        //Debug.Log(gameObject.name);
         allScenery = FindObjectsOfType<Scenery>();
         elapsedTime = 0.0f;
         compareTime = 0.0f;
@@ -25,12 +26,49 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     public void ActivatePower1()
     {
-        Throw();
+        if (!isBlocking)
+            Throw();
     }
 
     public void ActivatePower2()
     {
-        return;
+        if (isBlocking)
+        {
+            isBlocking = false;
+            foreach(IThrowable throwable in throwables)
+            {
+                float baseOrbitHeight = throwable.GetOrbitHeight();
+                throwable.SetOrbitHeight(baseOrbitHeight);
+
+                float baseOrbitTranslationSpeed =
+                    throwable.GetOrbitTranslationSpeed();
+                throwable.SetOrbitTranslationSpeed(
+                    baseOrbitTranslationSpeed);
+
+                float baseOrbitRotationSpeed =
+                    throwable.GetOrbitRotationSpeed();
+                throwable.SetOrbitRotationSpeed(
+                    baseOrbitRotationSpeed);
+            }
+        } else
+        {
+            isBlocking = true;
+            foreach (IThrowable throwable in throwables)
+            {
+                float baseOrbitHeight = throwable.GetOrbitHeight();
+                throwable.SetOrbitHeight(baseOrbitHeight/4f);
+
+                float baseOrbitTranslationSpeed =
+                    throwable.GetOrbitTranslationSpeed();
+                throwable.SetOrbitTranslationSpeed(
+                    baseOrbitTranslationSpeed * 1.5f);
+
+                float baseOrbitRotationSpeed =
+                    throwable.GetOrbitRotationSpeed();
+                throwable.SetOrbitRotationSpeed(
+                    baseOrbitRotationSpeed * 2f);
+            }
+        }
     }
 
     void Throw()
@@ -42,13 +80,13 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit))
         {
-            //Debug.Log(hit.transform.gameObject.name);
             IThrowable throwThisOne = throwables.Dequeue();
             throwThisOne.BecomeProjectile(hit.point);
         }
 
     }
 
+    // this should be iterating over an IThrowable and not Scenery!!!
     void UpdateQueue()
     {
         foreach (Scenery scenery in allScenery)
