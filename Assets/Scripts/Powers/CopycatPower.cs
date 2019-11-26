@@ -15,7 +15,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
 
     RaycastHit hitForward, hitLeft, hitRight, hitBackward, hitUp, hitDown;
 
-    bool IsCopying
+    public bool IsCopying
     {
         get
         {
