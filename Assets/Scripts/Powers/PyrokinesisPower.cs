@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PyrokinesisPower : MonoBehaviour, IPowerable
 {
-    [SerializeField] GameObject fireStandIn;
-
     [SerializeField]
     private GameObject system;
     private float particleSystemDuration;

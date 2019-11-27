@@ -6,7 +6,7 @@ using UnityEngine;
 // make sure to set Layer for all scenery to be "Ignore Raycast"
 public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 {
-    [SerializeField] GameObject fireStandIn;
+    [SerializeField] GameObject fire;
     private bool isBurning;
     public bool isProjectile;
 
@@ -110,7 +110,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     public void Burns()
     {
-        Instantiate(fireStandIn, transform.position, Quaternion.identity);
+        Instantiate(fire, transform.position, Quaternion.identity);
         isBurning = true;
     }
 

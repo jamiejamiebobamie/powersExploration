@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Hearing : Sense
 {
-    public int SoundDistance = 300;
+    public int SoundDistance = 50;
     private Transform playerTrans;
     private Vector3 rayDirection;
 

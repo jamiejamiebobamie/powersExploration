@@ -72,30 +72,30 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         GetComponent<MeshFilter>().mesh = closestMesh;
     }
 
-    // if you're not moving, you're sneaking (no matter the form).
+    // if you're not moving and you're human/the player, you're sneaking.
     // if you're moving as an object, you're sneaking.
-    // if you're moving as a humanoid mesh, you're not sneaking.
-    // if you're moving as a guard (humanoid mesh), you're an enemy.
+    // if you're moving and you're human/the player, you're human/the player.
+    // if you're moving as a guard, you're an enemy.
 
     // not working:
-        //    if (rb.velocity.magnitude< .00001 && aspect.aspectName == Aspect.aspect.Player)
-        //{
-        //    aspect.aspectName = Aspect.aspect.Sneaking;
-        //}
-        //else if (rb.velocity.magnitude > .00001 && aspect.aspectName == Aspect.aspect.Object)
-        //{
-        //    aspect.aspectName = Aspect.aspect.Sneaking;
-        //    movingObject = true; // storing the Object aspect;
-        //}
-        //else if (rb.velocity.magnitude< .000005 && movingObject)
-        //{
-        //    aspect.aspectName = Aspect.aspect.Object;
-        //    movingObject = false;
-        //}
-        //else if (rb.velocity.magnitude > .000005 && !movingObject)
-        //{
-        //    aspect.aspectName = Aspect.aspect.Player;
-        //}
+    //    if (rb.velocity.magnitude< .00001 && aspect.aspectName == Aspect.aspect.Player)
+    //{
+    //    aspect.aspectName = Aspect.aspect.Sneaking;
+    //}
+    //else if (rb.velocity.magnitude > .00001 && aspect.aspectName == Aspect.aspect.Object)
+    //{
+    //    aspect.aspectName = Aspect.aspect.Sneaking;
+    //    movingObject = true; // storing the Object aspect;
+    //}
+    //else if (rb.velocity.magnitude< .000005 && movingObject)
+    //{
+    //    aspect.aspectName = Aspect.aspect.Object;
+    //    movingObject = false;
+    //}
+    //else if (rb.velocity.magnitude > .000005 && !movingObject)
+    //{
+    //    aspect.aspectName = Aspect.aspect.Player;
+    //}
 
     private void Update()
     {

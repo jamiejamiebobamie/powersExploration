@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2380770721526130578}
-  aspectRef: {fileID: 52472790553904419}
+  aspectNameStored: 0
 --- !u!114 &52472790553904419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireStandIn: {fileID: 5714207890957983725, guid: a0b4d5c8ad0de49ef87dd9cafcb10dac,
     type: 3}
+  system: {fileID: 1000013462590818, guid: 2dde4b7b4af4d421f92720d817527ab6, type: 3}
 --- !u!1001 &5601639167850793796
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -321,6 +322,34 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.10000006
       objectReference: {fileID: 0}
+    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000013439165456, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 198000013227194214, guid: 6407980da6cc440d7be7d2bcf4126eb8,
         type: 3}
       propertyPath: NoiseModule.enabled
@@ -385,34 +414,6 @@ PrefabInstance:
         type: 3}
       propertyPath: VelocityModule.enabled
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012936073094, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011600473472, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000013439165456, guid: 6407980da6cc440d7be7d2bcf4126eb8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198000013621194436, guid: 6407980da6cc440d7be7d2bcf4126eb8,
         type: 3}
