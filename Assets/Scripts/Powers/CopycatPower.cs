@@ -53,8 +53,8 @@ public class CopycatPower : MonoBehaviour, IPowerable
             ICopyable copyable = obj.GetComponent<ICopyable>();
             if (copyable != null)
             {
-                int height = copyable.ReturnHeight();
-                Mesh sceneObjectsMesh = copyable.ReturnMesh();
+                int height = (int)copyable.GetPosition().y;
+                Mesh sceneObjectsMesh = copyable.GetMesh();
 
                 HashSet<Mesh> setOfMeshesAtGivenHeight;
 

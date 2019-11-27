@@ -10,17 +10,20 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable
     [SerializeField] private Rigidbody rb;
     [SerializeField] GameObject fireStandIn;
 
-    public Mesh ReturnMesh()
+    public Mesh GetMesh()
 	{
 		Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
 		return gameObjectMesh;
 	}
 
-    public int ReturnHeight()
+    public Vector3 GetPosition()
     {
-        float roundedHeight = Mathf.Round(transform.position.y);
-        int height = (int)roundedHeight;
-        return height;
+        return transform.position;
+    }
+
+    public virtual bool IsGuard()
+    {
+        return false;
     }
 
     public void Burns()

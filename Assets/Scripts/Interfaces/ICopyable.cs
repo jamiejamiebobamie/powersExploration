@@ -3,6 +3,7 @@ using System.Collections;
 
 public interface ICopyable
 {
-	Mesh ReturnMesh();
-    int ReturnHeight();
+	Mesh GetMesh();
+    Vector3 GetPosition();
+    bool IsGuard();
 }

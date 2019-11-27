@@ -225,10 +225,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 5714207890957983725, guid: 08cadd52ce0c5454c8866af815e8fe7f,
+  fireStandIn: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
     type: 3}
   isProjectile: 0
-  orbitPlayer: {fileID: 0}
 --- !u!1001 &645627511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -594,10 +593,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 5714207890957983725, guid: 08cadd52ce0c5454c8866af815e8fe7f,
+  fireStandIn: {fileID: 1000011797152326, guid: acf39d9f4addf294d93fa56fa373961b,
     type: 3}
   isProjectile: 0
-  orbitPlayer: {fileID: 0}
 --- !u!1 &1989971234
 GameObject:
   m_ObjectHideFlags: 0

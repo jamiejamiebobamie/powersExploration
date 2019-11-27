@@ -36,7 +36,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     }
     private bool orbiting;
     // a reference to the player that the item is orbiting around
-    public GameObject orbitPlayer;
+    private GameObject orbitPlayer;
                                     
 
     private TelekinesisPower[] playersWithTelekinesis;
@@ -83,17 +83,20 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         elapsedTime = 0.0f;
     }
 
-    public Mesh ReturnMesh()
+    public Mesh GetMesh()
     {
         Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
         return gameObjectMesh;
     }
 
-    public int ReturnHeight()
+    public Vector3 GetPosition()
     {
-        float roundedHeight = Mathf.Round(transform.position.y);
-        int height = (int)roundedHeight;
-        return height;
+        return transform.position;
+    }
+
+    public bool IsGuard()
+    {
+        return false;
     }
 
     public void Burns()
@@ -158,11 +161,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     public float GetOrbitRotationSpeed()
     {
         return baseRotationOrbitSpeed;
-    }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
     }
 
     public bool GetIsProjectile()

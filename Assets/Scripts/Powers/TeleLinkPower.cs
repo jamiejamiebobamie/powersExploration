@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class TeleLinkPower : MonoBehaviour, IPowerable
 {
-    //List<Vector3> TeleLinkPositions = new List<Vector3>();
-
 
     [SerializeField] int numberOfTeleportPositions;
 
@@ -13,6 +11,8 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
     int TeleLinkPositionsCount = 0;
     GameObject[] TeleLinkPositionsMarkers;
     [SerializeField] GameObject marker;
+    private bool teleportPlayer;
+    Vector3 portHere;
 
     Vector3 currentPosition;
 
@@ -71,14 +71,27 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
                 }
             }
 
+
             if (portLocation != Vector3.zero)
             {
+                teleportPlayer = true;
+                portHere = portLocation;
                 // need to implement a Lerp/Slerp to location
-                currentPosition = portLocation;
-                transform.position = portLocation;
+                //currentPosition = portLocation;
+                //transform.position = portLocation;
                 // do i need to set the rotation?
+            } else
+            {
+                teleportPlayer = false;
             }
         }
+    }
+
+    private void Update()
+    {
+        if (teleportPlayer)
+            transform.Translate(transform.position - portHere, Space.World);// no idea.
+
     }
 
     void AddPositionToTeleLinkPositions()

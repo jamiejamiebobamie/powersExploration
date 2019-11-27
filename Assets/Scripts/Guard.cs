@@ -12,6 +12,11 @@ public class Guard : Humanoid
         targetPosition = transform.position;
     }
 
+    public override bool IsGuard()
+    {
+        return true;
+    }
+
     void Update()
     {
         // Check if we're near the destination position
@@ -19,7 +24,6 @@ public class Guard : Humanoid
             ChooseNewTargetPosition();
 
         Wander();
-
     }
 
     private void Wander()
