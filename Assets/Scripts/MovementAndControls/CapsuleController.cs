@@ -10,15 +10,15 @@ public class CapsuleController : MonoBehaviour
     private bool jumpPressed = false;
     private bool grounded;
 
-    [SerializeField]
-    private Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     private float hAxis;
     private float vAxis;
     private bool Jump;
     private bool movingObject;
 
-    private Aspect.aspect aspectNameStored;
-    public Aspect aspectRef;
+    public Aspect.aspect aspectNameStored;
+
+    //[SerializeField] private Aspect aspectRef;
 
     private IPowerable power;
 
@@ -58,21 +58,18 @@ public class CapsuleController : MonoBehaviour
             power.ActivatePower2();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            if (aspectRef.aspectName != Aspect.aspect.Sneaking)
-            {
-                aspectNameStored = aspectRef.aspectName;
-                aspectRef.aspectName = Aspect.aspect.Sneaking;
-            }
-            else
-            {
-                aspectRef.aspectName = aspectNameStored;
-            }
-        }
-
-        //Debug.Log(aspectRef.aspectName);
-
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    if (aspectRef.aspectName != Aspect.aspect.Sneaking)
+        //    {
+        //        aspectNameStored = aspectRef.aspectName;
+        //        aspectRef.aspectName = Aspect.aspect.Sneaking;
+        //    }
+        //    else
+        //    {
+        //        aspectRef.aspectName = aspectNameStored;
+        //    }
+        //}
     }
 
     private void FixedUpdate()
@@ -84,15 +81,6 @@ public class CapsuleController : MonoBehaviour
         {
             rb.AddForce(0, jumpHeight, 0);
         }
-        if (rb.velocity.magnitude > .00001 && aspectRef.aspectName == Aspect.aspect.Object)
-            {
-                aspectRef.aspectName = Aspect.aspect.Sneaking;
-                movingObject = true; // storing the Object aspect;
-            }
-        else if (rb.velocity.magnitude < .000005 && movingObject)
-            {
-                aspectRef.aspectName = Aspect.aspect.Object;
-                movingObject = false;
-            }
+
     }
 }

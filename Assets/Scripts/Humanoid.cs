@@ -10,6 +10,13 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable
     [SerializeField] private Rigidbody rb;
     [SerializeField] GameObject fireStandIn;
 
+    private Aspect.aspect aspect;
+
+    private void Start()
+    {
+        aspect = GetComponent<Aspect>().aspectName;
+    }
+
     public Mesh GetMesh()
 	{
 		Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
@@ -23,7 +30,14 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable
 
     public virtual bool IsGuard()
     {
-        return false;
+        Debug.Log("hola");
+
+        return true;// this should return false... but "override" keyword isn't working...
+    }
+
+    public Aspect.aspect GetAspect()
+    {
+        return aspect;
     }
 
     public void Burns()

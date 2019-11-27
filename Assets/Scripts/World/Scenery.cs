@@ -9,6 +9,9 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     [SerializeField] GameObject fireStandIn;
     private bool isBurning;
     public bool isProjectile;
+
+    private Aspect.aspect aspect;
+
     public bool Orbiting
     {
         get { return orbiting; }
@@ -55,6 +58,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     void Start()
     {
+        aspect = GetComponent<Aspect>().aspectName;
         isProjectile = false;
         orbiting = false;
 
@@ -97,6 +101,11 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
     public bool IsGuard()
     {
         return false;
+    }
+
+    public Aspect.aspect GetAspect()
+    {
+        return aspect;
     }
 
     public void Burns()

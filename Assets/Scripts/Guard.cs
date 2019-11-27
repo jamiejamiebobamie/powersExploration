@@ -12,10 +12,19 @@ public class Guard : Humanoid
         targetPosition = transform.position;
     }
 
-    public override bool IsGuard()
-    {
-        return true;
-    }
+    // this is NOT working.
+    //public override bool IsGuard()
+    //{
+    //    Debug.Log("hey");
+    //    return true;
+    //}
+
+    // this is NOT working.
+    //public new bool IsGuard()
+    //{
+    //    Debug.Log("hey");
+    //    return true;
+    //}
 
     void Update()
     {

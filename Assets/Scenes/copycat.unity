@@ -317,6 +317,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &418043180 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+    type: 3}
+  m_PrefabInstance: {fileID: 293382834}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &418043181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 418043180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectName: 1
 --- !u!1001 &449989734
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -533,6 +552,7 @@ GameObject:
   - component: {fileID: 580523720}
   - component: {fileID: 580523719}
   - component: {fileID: 580523723}
+  - component: {fileID: 580523724}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Copyable
@@ -627,6 +647,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireStandIn: {fileID: 0}
   isProjectile: 0
+--- !u!114 &580523724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580523718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectName: 3
 --- !u!1 &638810686
 GameObject:
   m_ObjectHideFlags: 0
@@ -761,6 +794,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1586061597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+    type: 3}
+  m_PrefabInstance: {fileID: 449989734}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1586061598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586061597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectName: 1
 --- !u!1 &1688314824
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,6 +826,7 @@ GameObject:
   - component: {fileID: 1688314826}
   - component: {fileID: 1688314825}
   - component: {fileID: 1688314829}
+  - component: {fileID: 1688314830}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Copyable
@@ -868,6 +921,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireStandIn: {fileID: 0}
   isProjectile: 0
+--- !u!114 &1688314830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1688314824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectName: 3
+--- !u!1 &1837676472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+    type: 3}
+  m_PrefabInstance: {fileID: 503005384}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1837676473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1837676472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aspectName: 1
 --- !u!1001 &1621780683614326425
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -956,7 +1041,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b08dd38464e04d3ea9c1bc3c00a881b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guardForm: 0
   aspect: {fileID: 4673266900384880479}
 --- !u!114 &4673266900384880479 stripped
 MonoBehaviour:

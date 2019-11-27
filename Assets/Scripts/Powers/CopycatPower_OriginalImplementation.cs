@@ -8,14 +8,18 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private List<ICopyable> Copyables = new List<ICopyable>();
 
     private Mesh baseMesh;
-    public bool guardForm;
-
     public Aspect aspect;
 
+    private Rigidbody rb;
+
+    // keeps track of if the player is an object and sneaking due to movement.
+    bool movingObject, standingPlayer;
 
     void Start()
     {
-
+        movingObject = false;
+        standingPlayer = false;
+        rb = GetComponent<Rigidbody>();
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
         gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
@@ -42,27 +46,69 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private void Copy()
     {
         Mesh closestMesh = baseMesh;
+        Aspect.aspect meshAspect = Aspect.aspect.Player;
         float minDist = Mathf.Infinity;
-        guardForm = false;
+
         foreach (ICopyable copyable in Copyables)
         {
-            float testDist = Vector3.Distance(transform.position, copyable.GetPosition());
+            float testDist = Vector3.Distance(transform.position,
+                copyable.GetPosition());
+
             if (minDist > testDist)
             {
                 minDist = testDist;
                 closestMesh = copyable.GetMesh();
-
-                if (copyable.IsGuard())
-                    aspect.aspectName = Aspect.aspect.Enemy;
-                else
-                    aspect.aspectName = Aspect.aspect.Object;
+                meshAspect = copyable.GetAspect();
             }
         }
+
         if (minDist > 5f)
         {
             closestMesh = baseMesh;
-            aspect.aspectName = Aspect.aspect.Player;
+            meshAspect = Aspect.aspect.Player;
         }
+
+        aspect.aspectName = meshAspect;
         GetComponent<MeshFilter>().mesh = closestMesh;
+    }
+
+    // if you're not moving, you're sneaking (no matter the form).
+    // if you're moving as an object, you're sneaking.
+    // if you're moving as a humanoid mesh, you're not sneaking.
+    // if you're moving as a guard (humanoid mesh), you're an enemy.
+
+    // not working:
+        //    if (rb.velocity.magnitude< .00001 && aspect.aspectName == Aspect.aspect.Player)
+        //{
+        //    aspect.aspectName = Aspect.aspect.Sneaking;
+        //}
+        //else if (rb.velocity.magnitude > .00001 && aspect.aspectName == Aspect.aspect.Object)
+        //{
+        //    aspect.aspectName = Aspect.aspect.Sneaking;
+        //    movingObject = true; // storing the Object aspect;
+        //}
+        //else if (rb.velocity.magnitude< .000005 && movingObject)
+        //{
+        //    aspect.aspectName = Aspect.aspect.Object;
+        //    movingObject = false;
+        //}
+        //else if (rb.velocity.magnitude > .000005 && !movingObject)
+        //{
+        //    aspect.aspectName = Aspect.aspect.Player;
+        //}
+
+    private void Update()
+    {
+        if (rb.velocity.magnitude > .00001
+            && aspect.aspectName == Aspect.aspect.Object)
+        {
+            aspect.aspectName = Aspect.aspect.Sneaking;
+            movingObject = true; // storing the Object aspect;
+        }
+        else if (rb.velocity.magnitude < .000005 && movingObject)
+        {
+            aspect.aspectName = Aspect.aspect.Object;
+            movingObject = false;
+        }
     }
 }
