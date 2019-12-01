@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class DestroySelf : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float delay;
+
+    public DestroySelf(int delay)
     {
-        Destroy(gameObject, 3f);
-        
+        this.delay = delay;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Awake()
     {
-        
+        Destroy(gameObject, delay);
     }
 }

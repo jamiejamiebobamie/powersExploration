@@ -46,15 +46,15 @@ public class GuardPower : MonoBehaviour, IPowerable
 
     void PlayDead()
     {
-        if (body.getIncapacitated())
+        if (body.GetIncapacitated())
         {
             aspect.setCurrentAspect(Aspect.aspect.Guard);
-            body.setIncapacitated(false);
+            body.SetIncapacitated(false);
         }
         else
         {
             aspect.setCurrentAspect(Aspect.aspect.Incapacitated);
-            body.setIncapacitated(true);
+            body.SetIncapacitated(true);
         }
     }
 

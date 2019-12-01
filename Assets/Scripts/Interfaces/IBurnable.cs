@@ -5,4 +5,6 @@ using UnityEngine;
 public interface IBurnable
 {
     void Burns();
+    bool GetIncapacitated();
+    void SetIncapacitated(bool value);
 }

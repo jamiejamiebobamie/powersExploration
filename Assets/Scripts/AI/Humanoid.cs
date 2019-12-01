@@ -12,12 +12,14 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
 
     private int hitCount;
 
-    private Aspect.aspect aspect;
+    private Aspect aspect;
 
 
     private void Start()
     {
-        aspect = GetComponent<Aspect>().currentAspect;
+        aspect = GetComponent<Aspect>();
+        rb = GetComponent<Rigidbody>();
+
 
         isBurning = false;
         isStaggered = false;
@@ -25,10 +27,10 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         hitCount = 0;
     }
 
-    public Vector3 GetLocation()
-    {
-        return transform.position;
-    }
+    //public Vector3 GetLocation()
+    //{
+    //    return transform.position;
+    //}
 
 
     public Mesh GetMesh()
@@ -44,14 +46,16 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
 
     public Aspect.aspect GetAspect()
     {
-        return aspect;
+        return aspect.currentAspect;
     }
 
     public void Burns()
     {
         GameObject fireInstance = Instantiate(fire, transform.position, Quaternion.identity);
+        fireInstance.transform.parent = gameObject.transform;
         isBurning = true;
-        Destroy(fireInstance, 3f);
+        //Destroy(fireInstance, 3f);
+        //isIncapacitated = true;
         // other functionality. instantiate "burned" model after x seconds, etc.
     }
 
@@ -67,13 +71,13 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
 
     // implement a RecoverFromHit method.
 
-
-    public void setIncapacitated(bool value)
+    // maybe not neccessary...
+    public void SetIncapacitated(bool value)
     {
         isIncapacitated = value;
     }
 
-    public bool getIncapacitated()
+    public bool GetIncapacitated()
     {
         return isIncapacitated;
     }

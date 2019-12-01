@@ -4,13 +4,13 @@ using UnityEngine;
 
 // NOTE:
 // make sure to set Layer for all scenery to be "Ignore Raycast"
-public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
+public class Scenery : MonoBehaviour, ICopyable, IThrowable
 {
     [SerializeField] GameObject fire;
     private bool isBurning;
     public bool isProjectile;
 
-    private Aspect.aspect aspect;
+    private Aspect aspect;
 
     public bool Orbiting
     {
@@ -59,7 +59,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     void Start()
     {
-        aspect = GetComponent<Aspect>().currentAspect;
+        aspect = GetComponent<Aspect>();
         isProjectile = false;
         orbiting = false;
 
@@ -101,7 +101,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     public Aspect.aspect GetAspect()
     {
-        return aspect;
+        return aspect.currentAspect;
     }
 
     public void Burns()

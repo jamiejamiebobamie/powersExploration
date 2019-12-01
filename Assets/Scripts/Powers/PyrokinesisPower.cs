@@ -7,6 +7,7 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
     [SerializeField]
     private GameObject fire;
     private float particleSystemDuration;
+    [SerializeField] private bool npc;
 
     private void Start()
     {
@@ -26,9 +27,19 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
 
     void RaycastToBurnable()
 	{
-		Ray ray = new Ray();
-		ray.origin = Camera.main.transform.position;
-		ray.direction = Camera.main.transform.forward;
+        Ray ray = new Ray();// this changes depending on NPC or player
+
+        if (npc)
+        {
+            ray.origin = transform.position;
+            ray.direction = transform.forward;
+        }
+        else
+        {
+            ray.origin = Camera.main.transform.position;
+            ray.direction = Camera.main.transform.forward;
+        }
+
 
 		RaycastHit hit;
 
@@ -44,7 +55,11 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
                 hit.transform.gameObject.GetComponent<IBurnable>();
 
             if (burnable != null)
-                burnable.Burns();
+                if (!burnable.GetIncapacitated())
+                {
+                    burnable.SetIncapacitated(true);
+                    burnable.Burns();
+                }
         }
 	}
 }
