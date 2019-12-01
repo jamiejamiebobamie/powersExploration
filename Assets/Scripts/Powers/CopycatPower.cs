@@ -100,7 +100,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
         if (isCopying)
         {
             isCopying = false;
-            aspect.aspectName = Aspect.aspect.Player;
+            aspect.currentAspect = Aspect.aspect.Patient;
         }
         else
         {
@@ -126,7 +126,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
 
             if (returnedMeshes.Count > 0)
             {
-                aspect.aspectName = Aspect.aspect.Object;
+                aspect.currentAspect = Aspect.aspect.Object;
                 int index = random.Next(0, returnedMeshes.Count);
                 form = returnedMeshes[index];
             }

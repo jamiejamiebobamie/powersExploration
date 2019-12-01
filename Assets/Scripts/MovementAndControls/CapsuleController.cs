@@ -17,17 +17,23 @@ public class CapsuleController : MonoBehaviour
     private bool movingObject;
 
     public Aspect.aspect aspectNameStored;
-
-    //[SerializeField] private Aspect aspectRef;
-
-    private IPowerable power;
+    [SerializeField] private IPowerable[] powers;
+    [SerializeField] private IPowerable power1,power2;
 
     // Start is called before the first frame update
     void Start()
     {
-        power = GetComponent<IPowerable>();
-        rb = GetComponent<Rigidbody>();
-        power = GetComponent<IPowerable>();
+        powers = GetComponents<IPowerable>();
+
+        power1 = powers[0];
+
+        if (powers.Length > 1)
+            power2 = powers[1];
+        else
+            power2 = powers[0];
+
+        //rb = GetComponent<Rigidbody>();
+        //power = GetComponent<IPowerable>();
         jumpPressed = false;
         grounded = true;
     }
@@ -50,26 +56,14 @@ public class CapsuleController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            power.ActivatePower1();
+            power1.ActivatePower1();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse1))
         {
-            power.ActivatePower2();
+            power2.ActivatePower2();
         }
 
-        //if (Input.GetKeyDown(KeyCode.LeftShift))
-        //{
-        //    if (aspectRef.aspectName != Aspect.aspect.Sneaking)
-        //    {
-        //        aspectNameStored = aspectRef.aspectName;
-        //        aspectRef.aspectName = Aspect.aspect.Sneaking;
-        //    }
-        //    else
-        //    {
-        //        aspectRef.aspectName = aspectNameStored;
-        //    }
-        //}
     }
 
     private void FixedUpdate()

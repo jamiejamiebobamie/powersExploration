@@ -12,13 +12,13 @@ GameObject:
   - component: {fileID: 7853374298192869112}
   - component: {fileID: 7853374298192869113}
   - component: {fileID: 7853374298192869114}
-  - component: {fileID: 7853374298192869062}
-  - component: {fileID: 7853374298192869061}
   - component: {fileID: 1775613148110410251}
   - component: {fileID: 2929564312480963941}
   - component: {fileID: 1595682096745451105}
+  - component: {fileID: 8321253700985255243}
+  - component: {fileID: 3230371238687144826}
   m_Layer: 0
-  m_Name: Guard
+  m_Name: GuardNPC
   m_TagString: Copyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,31 +98,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7853374298192869062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7853374298192869115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d7f3f36029ff40578c727693d457153, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7853374298192869061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7853374298192869115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05265e582d6aa4b449d8e889a79d4629, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Floor: {fileID: 0}
 --- !u!114 &1775613148110410251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,3 +146,34 @@ MonoBehaviour:
   aspectName: 0
   detectionRate: 1
   player: {fileID: 0}
+--- !u!54 &8321253700985255243
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853374298192869115}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &3230371238687144826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853374298192869115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4099b88104ebf49d89483ecc8cc530b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8321253700985255243}
+  fire: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
+  Floor: {fileID: 0}

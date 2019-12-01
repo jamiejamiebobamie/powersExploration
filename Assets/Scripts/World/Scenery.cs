@@ -38,9 +38,10 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         }
     }
     private bool orbiting;
+
     // a reference to the player that the item is orbiting around
     private GameObject orbitPlayer;
-                                    
+
 
     private TelekinesisPower[] playersWithTelekinesis;
     private List<Collider> telekinesisPlayerColliders = new List<Collider>();
@@ -58,7 +59,7 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     void Start()
     {
-        aspect = GetComponent<Aspect>().aspectName;
+        aspect = GetComponent<Aspect>().currentAspect;
         isProjectile = false;
         orbiting = false;
 
@@ -98,11 +99,6 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         return transform.position;
     }
 
-    public bool IsGuard()
-    {
-        return false;
-    }
-
     public Aspect.aspect GetAspect()
     {
         return aspect;
@@ -110,8 +106,10 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     public void Burns()
     {
-        Instantiate(fire, transform.position, Quaternion.identity);
+        GameObject fireInstance = Instantiate(fire,
+            transform.position, Quaternion.identity);
         isBurning = true;
+        Destroy(fireInstance, 3f);
     }
 
     public void BecomeProjectile(Vector3 destination)
@@ -177,9 +175,10 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
         return isProjectile;
     }
 
-    public void SetOrbitPlayer(GameObject playerToOrbit)
+    // this method also sets Orbiting boolean to true.
+    public void SetObjectToOrbit(GameObject objectToOrbit)
     {
-        orbitPlayer = playerToOrbit;
+        orbitPlayer = objectToOrbit;
         Orbiting = true;
     }
 
@@ -213,4 +212,3 @@ public class Scenery : MonoBehaviour, ICopyable, IBurnable, IThrowable
 
     }
 }
-

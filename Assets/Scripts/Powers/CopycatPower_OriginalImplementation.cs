@@ -10,17 +10,18 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private Mesh baseMesh;
     public Aspect aspect;
 
-    private Rigidbody rb;
-
     // keeps track of if the player is an object and sneaking due to movement.
-    bool movingObject, standingPlayer;
+    bool movingObject;
+    private Rigidbody rb;
 
     void Start()
     {
         movingObject = false;
-        standingPlayer = false;
         rb = GetComponent<Rigidbody>();
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
+
+        // future / final implementation will add copyables to Copyables list
+        // with a Singleton Observable.
         gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
         foreach (GameObject obj in gameObjects)
@@ -46,7 +47,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private void Copy()
     {
         Mesh closestMesh = baseMesh;
-        Aspect.aspect meshAspect = Aspect.aspect.Player;
+        Aspect.aspect meshAspect = Aspect.aspect.Patient;
         float minDist = Mathf.Infinity;
 
         foreach (ICopyable copyable in Copyables)
@@ -65,49 +66,24 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         if (minDist > 5f)
         {
             closestMesh = baseMesh;
-            meshAspect = Aspect.aspect.Player;
+            meshAspect = Aspect.aspect.Patient;
         }
 
-        aspect.aspectName = meshAspect;
         GetComponent<MeshFilter>().mesh = closestMesh;
+        aspect.currentAspect = meshAspect;
     }
-
-    // if you're not moving and you're human/the player, you're sneaking.
-    // if you're moving as an object, you're sneaking.
-    // if you're moving and you're human/the player, you're human/the player.
-    // if you're moving as a guard, you're an enemy.
-
-    // not working:
-    //    if (rb.velocity.magnitude< .00001 && aspect.aspectName == Aspect.aspect.Player)
-    //{
-    //    aspect.aspectName = Aspect.aspect.Sneaking;
-    //}
-    //else if (rb.velocity.magnitude > .00001 && aspect.aspectName == Aspect.aspect.Object)
-    //{
-    //    aspect.aspectName = Aspect.aspect.Sneaking;
-    //    movingObject = true; // storing the Object aspect;
-    //}
-    //else if (rb.velocity.magnitude< .000005 && movingObject)
-    //{
-    //    aspect.aspectName = Aspect.aspect.Object;
-    //    movingObject = false;
-    //}
-    //else if (rb.velocity.magnitude > .000005 && !movingObject)
-    //{
-    //    aspect.aspectName = Aspect.aspect.Player;
-    //}
 
     private void Update()
     {
         if (rb.velocity.magnitude > .00001
-            && aspect.aspectName == Aspect.aspect.Object)
+            && aspect.currentAspect == Aspect.aspect.Object)
         {
-            aspect.aspectName = Aspect.aspect.Sneaking;
+            aspect.currentAspect = Aspect.aspect.Sneaking;
             movingObject = true; // storing the Object aspect;
         }
         else if (rb.velocity.magnitude < .000005 && movingObject)
         {
-            aspect.aspectName = Aspect.aspect.Object;
+            aspect.currentAspect = Aspect.aspect.Object;
             movingObject = false;
         }
     }

@@ -5,15 +5,14 @@ using UnityEngine;
 public class PyrokinesisPower : MonoBehaviour, IPowerable
 {
     [SerializeField]
-    private GameObject system;
+    private GameObject fire;
     private float particleSystemDuration;
 
     private void Start()
     {
-        particleSystemDuration = system.GetComponent<ParticleSystem>().main.duration/2.5f;
+        particleSystemDuration =
+            fire.GetComponent<ParticleSystem>().main.duration/2.5f;
     }
-    //        // A simple particle material with no texture.
-
 
     public void ActivatePower1()
 	{
@@ -36,58 +35,16 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
         if (Physics.Raycast(ray, out hit))
         {
             // Spawn particle effect at hit point
-            //DoEmit(hit.point);
-            GameObject fire = Instantiate(system, hit.point, Quaternion.identity);
-            Destroy(fire, particleSystemDuration);
+            GameObject fireEffect = Instantiate(fire,
+                hit.point, Quaternion.identity);
 
-            IBurnable burnable = hit.transform.gameObject.GetComponent<IBurnable>();
+            Destroy(fireEffect, particleSystemDuration);
+
+            IBurnable burnable =
+                hit.transform.gameObject.GetComponent<IBurnable>();
+
             if (burnable != null)
                 burnable.Burns();
         }
 	}
-
-    //void DoEmit(Vector3 hitpoint)
-    //{
-    //    var emitParams = new ParticleSystem.EmitParams();
-    //    emitParams.position = hitpoint;
-    //    emitParams.velocity = new Vector3(0.0f, 0.0f, -2.0f);
-    //    system.Emit(emitParams, 1);
-    //}
-
-    //https://docs.unity3d.com/ScriptReference/ParticleSystem.EmitParams-position.html
-
-    // spawning a particle system
-
-    //    using UnityEngine;
-
-    //// In this example we have a Particle System emitting aligned particles; we then emit and override the position and velocity every 2 seconds.
-    //public class ExampleClass : MonoBehaviour
-    //{
-    //    private ParticleSystem system;
-
-    //    void Start()
-    //    {
-    //        // A simple particle material with no texture.
-    //        Material particleMaterial = new Material(Shader.Find("Particles/Standard Unlit"));
-
-    //        // Create a Particle System.
-    //        var go = new GameObject("Particle System");
-    //        go.transform.Rotate(-90, 0, 0); // Rotate so the system emits upwards.
-    //        system = go.AddComponent<ParticleSystem>();
-    //        go.GetComponent<ParticleSystemRenderer>().material = particleMaterial;
-
-    //        // Every 2 seconds we will emit.
-    //        InvokeRepeating("DoEmit", 2.0f, 2.0f);
-    //    }
-
-    //    void DoEmit()
-    //    {
-    //        // Any parameters we assign in emitParams will override the current system's when we call Emit.
-    //        // Here we will override the position and velocity. All other parameters will use the behavior defined in the Inspector.
-    //        var emitParams = new ParticleSystem.EmitParams();
-    //        emitParams.position = new Vector3(0.0f, 0.0f, 0.0f);
-    //        emitParams.velocity = new Vector3(0.0f, 0.0f, -2.0f);
-    //        system.Emit(emitParams, 1);
-    //    }
-    //}
 }

@@ -17,8 +17,7 @@ public interface IThrowable
     void SetOrbitRotationSpeed(float desiredSpeed);
     float GetOrbitRotationSpeed();
 
-    // this method also sets Orbiting boolean to true.
-    void SetOrbitPlayer(GameObject playerToOrbit);
+    void SetObjectToOrbit(GameObject objectToOrbit);
 
     Vector3 GetPosition();
 }

@@ -154,9 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &24179553
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -293,9 +292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &83887050
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -433,9 +431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &175757908
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -754,9 +751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!114 &188522500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,18 +785,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aspectName: 0
---- !u!114 &196043208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 196043201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4b51d30a17894f87ac3cac8821288f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &245398095
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,9 +819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &245398097
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -974,9 +957,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &353190667
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1114,9 +1096,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &439845234
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1253,9 +1234,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &505995509
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1393,9 +1373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &512436455
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1532,9 +1511,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &778281946
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1744,9 +1722,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &816108235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1810,9 +1787,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &870970545
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1951,8 +1927,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 905046859}
-  fireStandIn: {fileID: 5714207890957983725, guid: 08cadd52ce0c5454c8866af815e8fe7f,
-    type: 3}
+  fire: {fileID: 0}
   Floor: {fileID: 181994022}
 --- !u!136 &905046855
 CapsuleCollider:
@@ -2103,9 +2078,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &924027650
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2242,9 +2216,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &946439010
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2381,9 +2354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1018679465
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2594,9 +2566,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1139487088
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2825,9 +2796,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1249668286
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2964,9 +2934,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1283445733
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3192,9 +3161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!114 &1414951076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3242,9 +3210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1493197823
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3470,9 +3437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!114 &1528387019
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3520,9 +3486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1631949223
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3659,9 +3624,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &1958619780
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3798,9 +3762,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b438b814a6824469bdff7552f9624a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fireStandIn: {fileID: 0}
+  fire: {fileID: 0}
   isProjectile: 0
-  aspect: 0
 --- !u!54 &2134308359
 Rigidbody:
   m_ObjectHideFlags: 0

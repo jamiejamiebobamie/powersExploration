@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    // from :
-    //https://www.youtube.com/watch?v=_QajrabyTJc
+    // from : https://www.youtube.com/watch?v=_QajrabyTJc
 
 
     public float mouseSensitivity = 100f;
 
     public Transform playerBody;
 
-    [Range(-30f,30f)]float xRotation;
+    [Range(0f,0f)]float xRotation;
 
     void Start()
     {
@@ -25,9 +24,8 @@ public class MouseLook : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
+        // need to clamp values. range attribute does not work.
         xRotation -= mouseY;
-
-        //xRotation = Mathf.Clamp(xRotation, -15f, 15f);
 
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);

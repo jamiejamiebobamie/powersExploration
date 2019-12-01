@@ -8,6 +8,16 @@ public class GuardPower : MonoBehaviour, IPowerable
     [SerializeField] private Rigidbody projectile;
     [SerializeField] private Transform barrelEnd;
 
+    private Aspect aspect;
+    private Humanoid body;
+
+    private void Start()
+    {
+        body = GetComponent<Humanoid>();
+        aspect = GetComponent<Aspect>();
+    }
+
+
     public void ActivatePower1()
     {
         FireTranquilizerDart();
@@ -15,7 +25,15 @@ public class GuardPower : MonoBehaviour, IPowerable
 
     public void ActivatePower2()
     {
-        return;
+
+        // isIncapacitated = true
+        // Ideas:
+        // pick up / use / throw item.
+        // sneak / crouch
+        // lean against wall (fire around corners)
+        // pretend to be dead
+        PlayDead();
+        // return;
     }
 
     void FireTranquilizerDart()
@@ -24,6 +42,20 @@ public class GuardPower : MonoBehaviour, IPowerable
         projectileInstance = Instantiate(projectile,
             barrelEnd.position, transform.rotation) as Rigidbody;
         projectileInstance.AddForce(barrelEnd.forward * 1350f);
+    }
+
+    void PlayDead()
+    {
+        if (body.getIncapacitated())
+        {
+            aspect.setCurrentAspect(Aspect.aspect.Guard);
+            body.setIncapacitated(false);
+        }
+        else
+        {
+            aspect.setCurrentAspect(Aspect.aspect.Incapacitated);
+            body.setIncapacitated(true);
+        }
     }
 
 }

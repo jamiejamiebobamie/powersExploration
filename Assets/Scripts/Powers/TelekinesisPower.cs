@@ -46,39 +46,33 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     void DefenseMode()
     {
-        foreach (IThrowable throwable in throwables)
-        {
-            float baseOrbitHeight = throwable.GetOrbitHeight();
-            throwable.SetOrbitHeight(baseOrbitHeight / 4f);
-
-            float baseOrbitTranslationSpeed =
-                throwable.GetOrbitTranslationSpeed();
-            throwable.SetOrbitTranslationSpeed(
-                baseOrbitTranslationSpeed * 1.5f);
-
-            float baseOrbitRotationSpeed =
-                throwable.GetOrbitRotationSpeed();
-            throwable.SetOrbitRotationSpeed(
-                baseOrbitRotationSpeed * 2f);
-        }
+        SetSpeedAndHeight(heightModifier: 4f,
+            transSpeedModifier: 1.5f, rotSpeedModifier: 2f);
     }
 
     void AttackMode()
     {
+        SetSpeedAndHeight(heightModifier: 1f,
+            transSpeedModifier: 1f, rotSpeedModifier: 1f);
+    }
+
+    void SetSpeedAndHeight(float heightModifier,
+        float transSpeedModifier, float rotSpeedModifier)
+    {
         foreach (IThrowable throwable in throwables)
         {
             float baseOrbitHeight = throwable.GetOrbitHeight();
-            throwable.SetOrbitHeight(baseOrbitHeight);
+            throwable.SetOrbitHeight(baseOrbitHeight / heightModifier);
 
             float baseOrbitTranslationSpeed =
                 throwable.GetOrbitTranslationSpeed();
             throwable.SetOrbitTranslationSpeed(
-                baseOrbitTranslationSpeed);
+                baseOrbitTranslationSpeed * transSpeedModifier);
 
             float baseOrbitRotationSpeed =
                 throwable.GetOrbitRotationSpeed();
             throwable.SetOrbitRotationSpeed(
-                baseOrbitRotationSpeed);
+                baseOrbitRotationSpeed * rotSpeedModifier);
         }
     }
 
@@ -110,7 +104,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 && distanceFromPlayer < 4f && !t.GetIsProjectile())
             {
                 throwables.Enqueue(t);
-                t.SetOrbitPlayer(gameObject);
+                t.SetObjectToOrbit(gameObject);
             }
         }
     }
