@@ -35,8 +35,9 @@ public class Hearing : Sense
             Aspect aspect = hit.collider.GetComponent<Aspect>();
             if (aspect != null)
             {
+                Aspect.aspect currentAspect = aspect.GetCurrentAspect();
                 //Check the aspect
-                if (aspect.currentAspect == aspectName)
+                if (currentAspect == aspectName)
                 {
                     print("Player heard.");
                 }

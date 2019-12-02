@@ -372,6 +372,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GuardNPC (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7853374298192869063, guid: 96ad1bf95507a41799bb0313c522b701,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -622,6 +627,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GuardNPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7853374298192869063, guid: 96ad1bf95507a41799bb0313c522b701,
         type: 3}
@@ -1549,6 +1559,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GuardNPC (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7853374298192869115, guid: 96ad1bf95507a41799bb0313c522b701,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7853374298192869063, guid: 96ad1bf95507a41799bb0313c522b701,
         type: 3}

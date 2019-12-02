@@ -44,16 +44,17 @@ public class GuardPower : MonoBehaviour, IPowerable
         projectileInstance.AddForce(barrelEnd.forward * 1350f);
     }
 
+    // this needs some more thought...
     void PlayDead()
     {
         if (body.GetIncapacitated())
         {
-            aspect.setCurrentAspect(Aspect.aspect.Guard);
+            aspect.SetCurrentAspect(Aspect.aspect.Guard);
             body.SetIncapacitated(false);
         }
         else
         {
-            aspect.setCurrentAspect(Aspect.aspect.Incapacitated);
+            aspect.SetCurrentAspect(Aspect.aspect.Incapacitated);
             body.SetIncapacitated(true);
         }
     }

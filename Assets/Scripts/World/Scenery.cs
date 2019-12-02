@@ -101,7 +101,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
 
     public Aspect.aspect GetAspect()
     {
-        return aspect.currentAspect;
+        return aspect.GetCurrentAspect();
     }
 
     public void Burns()

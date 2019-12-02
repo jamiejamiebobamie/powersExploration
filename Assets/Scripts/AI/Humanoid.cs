@@ -27,12 +27,6 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         hitCount = 0;
     }
 
-    //public Vector3 GetLocation()
-    //{
-    //    return transform.position;
-    //}
-
-
     public Mesh GetMesh()
 	{
 		Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
@@ -46,30 +40,29 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
 
     public Aspect.aspect GetAspect()
     {
-        return aspect.currentAspect;
+        return aspect.GetCurrentAspect();
     }
 
     public void Burns()
     {
-        GameObject fireInstance = Instantiate(fire, transform.position, Quaternion.identity);
+        GameObject fireInstance = Instantiate(fire,
+            transform.position, Quaternion.identity);
         fireInstance.transform.parent = gameObject.transform;
         isBurning = true;
-        //Destroy(fireInstance, 3f);
-        //isIncapacitated = true;
+        Destroy(fireInstance, 3f);
+        isIncapacitated = true;
         // other functionality. instantiate "burned" model after x seconds, etc.
     }
 
+    // implement a RecoverFromHit method.
     public void ApplyHitForce(Vector3 hitForce, float hitStrength)
     {
-        //Debug.Log(rb);
         rb.isKinematic = false;
         rb.useGravity = true;
         rb.AddForce(hitForce * hitStrength * 10f);
         // activate ragdoll
         isStaggered = true;
     }
-
-    // implement a RecoverFromHit method.
 
     // maybe not neccessary...
     public void SetIncapacitated(bool value)

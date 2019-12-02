@@ -42,8 +42,10 @@ public class Sight : Sense
                 Aspect aspect = hit.collider.GetComponent<Aspect>();
                 if (aspect != null)
                 {
+                    Aspect.aspect currentAspect = aspect.GetCurrentAspect();
+
                     //Check the aspect. Ignore “Sneaking” by including it in the acceptable aspects.
-                    if (aspect.currentAspect == aspectName || aspect.currentAspect == Aspect.aspect.Sneaking)
+                    if (currentAspect == aspectName || currentAspect == Aspect.aspect.Sneaking)
                     {
                         //if (player.GetComponent<CapsuleController>().moving == true && player.GetComponent<copycat_script>().humanoidForm != true)
                           print("Player Seen");

@@ -30,7 +30,10 @@ public class GuardLogic : MonoBehaviour
         if (patients.Count > 0)
         {
             targetPatient = ChooseNewTargetPatient();
-        } else
+            if (targetPatient == null)
+                targetPatient = GetComponent<Humanoid>();
+        }
+        else
         {
             targetPatient = GetComponent<Humanoid>();
         }
@@ -42,7 +45,7 @@ public class GuardLogic : MonoBehaviour
         if (Vector3.Distance(targetPatient.GetPosition(), transform.position) <= 1.0f)
             targetPatient = ChooseNewTargetPatient();
 
-        Wander();
+        //Wander();
     }
 
     private void Wander()

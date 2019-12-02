@@ -70,20 +70,20 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         }
 
         GetComponent<MeshFilter>().mesh = closestMesh;
-        aspect.currentAspect = meshAspect;
+        aspect.SetCurrentAspect(meshAspect);
     }
 
     private void Update()
     {
         if (rb.velocity.magnitude > .00001
-            && aspect.currentAspect == Aspect.aspect.Object)
+            && aspect.GetCurrentAspect() == Aspect.aspect.Object)
         {
-            aspect.currentAspect = Aspect.aspect.Sneaking;
+            aspect.SetCurrentAspect(Aspect.aspect.Sneaking);
             movingObject = true; // storing the Object aspect;
         }
         else if (rb.velocity.magnitude < .000005 && movingObject)
         {
-            aspect.currentAspect = Aspect.aspect.Object;
+            aspect.SetCurrentAspect(Aspect.aspect.Object);
             movingObject = false;
         }
     }

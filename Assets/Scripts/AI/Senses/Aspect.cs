@@ -14,15 +14,15 @@ public class Aspect : MonoBehaviour
         // you're not thinking aout this...
     }
 
-    public aspect currentAspect;
+    [SerializeField] private aspect currentAspect;
     //private aspect aspectNameStored;
 
-    public void setCurrentAspect(aspect value)
+    public void SetCurrentAspect(aspect value)
     {
         currentAspect = value;
     }
 
-    public aspect getCurrentAspect()
+    public aspect GetCurrentAspect()
     {
         return currentAspect;
     }
