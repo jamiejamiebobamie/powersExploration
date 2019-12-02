@@ -11,7 +11,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
         new Dictionary<int, HashSet<Mesh>>();
 
     private Mesh baseMesh;
-    public Aspect aspect;
+    public Stimulus stimulus;
 
     RaycastHit hitForward, hitLeft, hitRight, hitBackward, hitUp, hitDown;
 
@@ -100,7 +100,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
         if (isCopying)
         {
             isCopying = false;
-            aspect.SetCurrentAspect(Aspect.aspect.Patient);
+            stimulus.SetCurrentOrigin(Stimulus.origin.Patient);
         }
         else
         {
@@ -126,7 +126,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
 
             if (returnedMeshes.Count > 0)
             {
-                aspect.SetCurrentAspect(Aspect.aspect.Object);
+                stimulus.SetCurrentOrigin(Stimulus.origin.Object);
                 int index = random.Next(0, returnedMeshes.Count);
                 form = returnedMeshes[index];
             }

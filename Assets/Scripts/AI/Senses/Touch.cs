@@ -3,14 +3,15 @@ public class Touch : Sense
 {
     void OnTriggerEnter(Collider other)
     {
-        Aspect aspect = other.GetComponent<Aspect>();
-        if (aspect != null)
+        Stimulus stimulus = other.GetComponent<Stimulus>();
+        if (stimulus != null)
         {
-            Aspect.aspect currentAspect = aspect.GetCurrentAspect();
+            Stimulus.origin currentOrigin = stimulus.GetCurrentOrigin();
             //Check the aspect
-            if (currentAspect == aspectName || currentAspect == Aspect.aspect.Sneaking)
+            if (currentOrigin == desiredStimulusOrigin
+                || currentOrigin == Stimulus.origin.Sneaking)
             {
-                print("Player Touched");
+                print("Touched " + desiredStimulusOrigin + "!");
             }
         }
     }

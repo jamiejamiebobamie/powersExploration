@@ -5,5 +5,5 @@ public interface ICopyable
 {
 	Mesh GetMesh();
     Vector3 GetPosition();
-    Aspect.aspect GetAspect();
+    Stimulus.origin GetOriginOfStimulus();
 }

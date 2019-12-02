@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 public class Sense : MonoBehaviour
 {
-    public Aspect.aspect aspectName = Aspect.aspect.Patient;
+    // this value represents the type of origin the entity is searching for.
+    // as there might be several types of origins of Stimuli that the entity 
+    // is searching for, this needs to be refactored.
+    protected Stimulus.origin desiredStimulusOrigin = Stimulus.origin.Patient;
 
     public float detectionRate = 1.0f;
     protected float elapsedTime = 0.0f;
@@ -11,14 +14,12 @@ public class Sense : MonoBehaviour
 
     public GameObject player;
 
-    // Use this for initialization
     void Start()
     {
         elapsedTime = 0.0f;
         Initialize();
     }
 
-    // Update is called once per frame
     void Update()
     {
         UpdateSense();

@@ -8,7 +8,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private List<ICopyable> Copyables = new List<ICopyable>();
 
     private Mesh baseMesh;
-    public Aspect aspect;
+    public Stimulus stimulus;
 
     // keeps track of if the player is an object and sneaking due to movement.
     bool movingObject;
@@ -47,7 +47,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private void Copy()
     {
         Mesh closestMesh = baseMesh;
-        Aspect.aspect meshAspect = Aspect.aspect.Patient;
+        Stimulus.origin meshStimulusOrigin = Stimulus.origin.Patient;
         float minDist = Mathf.Infinity;
 
         foreach (ICopyable copyable in Copyables)
@@ -59,31 +59,31 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
             {
                 minDist = testDist;
                 closestMesh = copyable.GetMesh();
-                meshAspect = copyable.GetAspect();
+                meshStimulusOrigin = copyable.GetOriginOfStimulus();
             }
         }
 
         if (minDist > 5f)
         {
             closestMesh = baseMesh;
-            meshAspect = Aspect.aspect.Patient;
+            meshStimulusOrigin = Stimulus.origin.Patient;
         }
 
         GetComponent<MeshFilter>().mesh = closestMesh;
-        aspect.SetCurrentAspect(meshAspect);
+        stimulus.SetCurrentOrigin(meshStimulusOrigin);
     }
 
     private void Update()
     {
         if (rb.velocity.magnitude > .00001
-            && aspect.GetCurrentAspect() == Aspect.aspect.Object)
+            && stimulus.GetCurrentOrigin() == Stimulus.origin.Object)
         {
-            aspect.SetCurrentAspect(Aspect.aspect.Sneaking);
+            stimulus.SetCurrentOrigin(Stimulus.origin.Sneaking);
             movingObject = true; // storing the Object aspect;
         }
         else if (rb.velocity.magnitude < .000005 && movingObject)
         {
-            aspect.SetCurrentAspect(Aspect.aspect.Object);
+            stimulus.SetCurrentOrigin(Stimulus.origin.Object);
             movingObject = false;
         }
     }

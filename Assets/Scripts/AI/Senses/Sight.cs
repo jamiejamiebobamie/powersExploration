@@ -39,16 +39,17 @@ public class Sight : Sense
             if (Physics.Raycast(transform.position, rayDirection,
                 out hit, ViewDistance))
             {
-                Aspect aspect = hit.collider.GetComponent<Aspect>();
-                if (aspect != null)
+                Stimulus stimulus = hit.collider.GetComponent<Stimulus>();
+                if (stimulus != null)
                 {
-                    Aspect.aspect currentAspect = aspect.GetCurrentAspect();
+                    Stimulus.origin currentOrigin = stimulus.GetCurrentOrigin();
 
-                    //Check the aspect. Ignore “Sneaking” by including it in the acceptable aspects.
-                    if (currentAspect == aspectName || currentAspect == Aspect.aspect.Sneaking)
+                    //Check the origin of the stimulus.
+                    // Ignore “Sneaking” players CAN be seen.
+                    if (currentOrigin == desiredStimulusOrigin
+                        || currentOrigin == Stimulus.origin.Sneaking)
                     {
-                        //if (player.GetComponent<CapsuleController>().moving == true && player.GetComponent<copycat_script>().humanoidForm != true)
-                          print("Player Seen");
+                          print(desiredStimulusOrigin + " seen!");
                     }
                 }
             }

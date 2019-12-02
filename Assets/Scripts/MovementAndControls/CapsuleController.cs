@@ -16,7 +16,7 @@ public class CapsuleController : MonoBehaviour
     private bool Jump;
     private bool movingObject;
 
-    public Aspect.aspect aspectNameStored;
+    public Stimulus.origin aspectNameStored;
     [SerializeField] private IPowerable[] powers;
     [SerializeField] private IPowerable power1,power2;
 

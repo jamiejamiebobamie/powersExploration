@@ -9,15 +9,14 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
 
      // boolean to show humanoid has been hit
     private bool isStaggered ,isIncapacitated, isBurning;
-
     private int hitCount;
 
-    private Aspect aspect;
+    private Stimulus origin;
 
 
     private void Start()
     {
-        aspect = GetComponent<Aspect>();
+        origin = GetComponent<Stimulus>();
         rb = GetComponent<Rigidbody>();
 
 
@@ -38,9 +37,9 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         return transform.position;
     }
 
-    public Aspect.aspect GetAspect()
+    public Stimulus.origin GetOriginOfStimulus()
     {
-        return aspect.GetCurrentAspect();
+        return origin.GetCurrentOrigin();
     }
 
     public void Burns()

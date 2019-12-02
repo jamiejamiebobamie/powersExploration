@@ -10,7 +10,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     private bool isBurning;
     public bool isProjectile;
 
-    private Aspect aspect;
+    private Stimulus stimulus;
 
     public bool Orbiting
     {
@@ -59,7 +59,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
 
     void Start()
     {
-        aspect = GetComponent<Aspect>();
+        stimulus = GetComponent<Stimulus>();
         isProjectile = false;
         orbiting = false;
 
@@ -99,9 +99,9 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         return transform.position;
     }
 
-    public Aspect.aspect GetAspect()
+    public Stimulus.origin GetOriginOfStimulus()
     {
-        return aspect.GetCurrentAspect();
+        return stimulus.GetCurrentOrigin();
     }
 
     public void Burns()

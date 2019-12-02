@@ -32,14 +32,14 @@ public class Hearing : Sense
         if (Physics.Raycast(transform.position, rayDirection,
                 out hit, SoundDistance))
         {
-            Aspect aspect = hit.collider.GetComponent<Aspect>();
-            if (aspect != null)
+            Stimulus stimulus = hit.collider.GetComponent<Stimulus>();
+            if (stimulus != null)
             {
-                Aspect.aspect currentAspect = aspect.GetCurrentAspect();
+                Stimulus.origin currentOrigin = stimulus.GetCurrentOrigin();
                 //Check the aspect
-                if (currentAspect == aspectName)
+                if (currentOrigin == desiredStimulusOrigin)
                 {
-                    print("Player heard.");
+                    print("Heard target.");
                 }
             }
         }

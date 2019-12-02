@@ -20,8 +20,9 @@ public class GuardLogic : MonoBehaviour
             Humanoid testForHumanoid = test.GetComponent<Humanoid>();
             if (testForHumanoid != null)
             {
-                Aspect.aspect testForAspect = testForHumanoid.GetAspect();
-                if (testForAspect == Aspect.aspect.Patient)
+                Stimulus.origin testForStimulus
+                    = testForHumanoid.GetOriginOfStimulus();
+                if (testForStimulus == Stimulus.origin.Patient)
                 {
                     patients.Add(testForHumanoid);
                 }
@@ -42,10 +43,11 @@ public class GuardLogic : MonoBehaviour
     void Update()
     {
         // Check if we're near the destination position
-        if (Vector3.Distance(targetPatient.GetPosition(), transform.position) <= 1.0f)
+        if (Vector3.Distance(targetPatient.GetPosition(),
+            transform.position) <= 1.0f)
             targetPatient = ChooseNewTargetPatient();
 
-        //Wander();
+        Wander();
     }
 
     private void Wander()

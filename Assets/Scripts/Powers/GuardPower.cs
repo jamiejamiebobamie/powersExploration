@@ -8,13 +8,13 @@ public class GuardPower : MonoBehaviour, IPowerable
     [SerializeField] private Rigidbody projectile;
     [SerializeField] private Transform barrelEnd;
 
-    private Aspect aspect;
+    private Stimulus stimulus;
     private Humanoid body;
 
     private void Start()
     {
         body = GetComponent<Humanoid>();
-        aspect = GetComponent<Aspect>();
+        stimulus = GetComponent<Stimulus>();
     }
 
 
@@ -33,7 +33,6 @@ public class GuardPower : MonoBehaviour, IPowerable
         // lean against wall (fire around corners)
         // pretend to be dead
         PlayDead();
-        // return;
     }
 
     void FireTranquilizerDart()
@@ -49,12 +48,12 @@ public class GuardPower : MonoBehaviour, IPowerable
     {
         if (body.GetIncapacitated())
         {
-            aspect.SetCurrentAspect(Aspect.aspect.Guard);
+            stimulus.SetCurrentOrigin(Stimulus.origin.Guard);
             body.SetIncapacitated(false);
         }
         else
         {
-            aspect.SetCurrentAspect(Aspect.aspect.Incapacitated);
+            stimulus.SetCurrentOrigin(Stimulus.origin.Incapacitated);
             body.SetIncapacitated(true);
         }
     }
