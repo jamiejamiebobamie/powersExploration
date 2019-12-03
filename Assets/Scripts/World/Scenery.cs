@@ -116,24 +116,13 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         Vector3 directionOfForce = Vector3.Normalize(destination
             - gameObject.transform.position);
 
-        //Ray ray = new Ray();
-        //RaycastHit hit;
+        isProjectile = true;
 
-        //ray.direction = directionOfForce;
-        //ray.origin = gameObject.transform.position;
+        // need delay on this
+        Orbiting = false;
 
-        //if(Physics.Raycast(ray, out hit))
-        //{
-        //    IThrowable test
-        //        = hit.transform.gameObject.GetComponent<IThrowable>();
-        //    if (test == null)
-        //    {
-                Orbiting = false;
-                isProjectile = true;
 
-                rb.AddForce(directionOfForce * 3000f);
-            //}
-        //}
+        rb.AddForce(directionOfForce * 3000f);
 
     }
 
@@ -202,6 +191,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     {
         orbitPlayer = objectToOrbit;
         Orbiting = true;
+        //StartCoroutine("Orbit");
     }
 
     // how to only allow, scenery isProjectile?
@@ -222,15 +212,9 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         elapsedTime += Time.deltaTime;
 
         if (orbiting)
-        {
             Orbit();
-        } else
-        {
+        else
             if (isProjectile && elapsedTime >= 4.0f)
-            {
                 isProjectile = false;
-            }
-        }
-
     }
 }

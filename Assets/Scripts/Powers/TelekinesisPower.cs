@@ -5,9 +5,7 @@ using UnityEngine;
 public class TelekinesisPower : MonoBehaviour, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
-
     List<Humanoid> humanoids = new List<Humanoid>();
-
 
     Queue<IThrowable> throwables = new Queue<IThrowable>();
     GameObject[] allSceneObjects;
@@ -39,7 +37,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     public void ActivatePower1()
     {
-        if (!isBlocking)
+        //if (!isBlocking)
             Throw();
     }
 
@@ -48,8 +46,6 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         if (isBlocking)
         {
             isBlocking = false;
-            //DefenseMode();
-
             AttackMode();
 
         } else
@@ -98,7 +94,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         if (throwables.Count > 0)
         {
             Humanoid possibleTarget = null;
-            float minimumAngleFromPlayersFront = Mathf.Infinity;
+            float minAngle= Mathf.Infinity;
 
             foreach (Humanoid h in humanoids)
             {
@@ -106,11 +102,17 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 {
                     Vector3 positionOfHumanoid = h.GetPosition();
                     Vector3 direction = positionOfHumanoid - transform.position;
-                    if (direction.magnitude < 30f)
+                    float distance = direction.magnitude;
+
+                    if (distance < 30f)
                     {
-                        float angleFromPlayersFront = Vector3.Angle(direction, transform.forward);
-                        if (angleFromPlayersFront < minimumAngleFromPlayersFront)
+                        float angleToHumanoid
+                            = Vector3.Angle(direction, transform.forward);
+
+                        if (angleToHumanoid
+                            < minAngle)
                         {
+                            minAngle = angleToHumanoid;
                             possibleTarget = h;
                         }
                     }
@@ -120,6 +122,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
             Vector3 shootHere = Vector3.zero;
             IThrowable throwThisOne = throwables.Dequeue();
 
+            // if there is a target
             if (possibleTarget != null)
             {
                 shootHere = possibleTarget.GetPosition();
@@ -131,11 +134,10 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 ray.direction = Camera.main.transform.forward;
 
                 RaycastHit hit;
-                if (Physics.Raycast(ray, out hit)) //it's always going to hit something...
-                {
+                if (Physics.Raycast(ray, out hit))
                     shootHere = hit.point;
-                }
             }
+
             throwThisOne.BecomeProjectile(shootHere);
 
         }

@@ -226,7 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &85928847
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &97774460
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +438,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &371279688
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +726,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &629195750
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +832,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &1082538864
 GameObject:
   m_ObjectHideFlags: 0
@@ -1052,7 +1047,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!1 &1510593631 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6222707549622507972, guid: 96255af31581242bdb6eded485469486,
@@ -1201,7 +1195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946d3dc4cf13b42388750a7119770f39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallDirection: 0
 --- !u!64 &1776021521
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1307,6 +1300,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsKinematic
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6222707549622507832, guid: 96255af31581242bdb6eded485469486,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6222707549622507975, guid: 96255af31581242bdb6eded485469486,
         type: 3}
