@@ -5,7 +5,6 @@ using UnityEngine;
 public class GuardLogic : MonoBehaviour
 {
     private Humanoid targetPatient;
-    public GameObject Floor;
 
     private List<Humanoid> patients = new List<Humanoid>();
 
@@ -82,16 +81,48 @@ public class GuardLogic : MonoBehaviour
                 }
             }
         }
-
-
-
-        //targetPosition = new Vector3(Random.Range(Floor.transform.position.x
-        //    - Floor.transform.localScale.x / 2,
-        //    Floor.transform.position.x + Floor.transform.localScale.x / 2),
-        //    2, Random.Range(Floor.transform.position.z
-        //    - Floor.transform.localScale.z / 2, Floor.transform.position.z
-        //    + Floor.transform.localScale.z / 2));
         Debug.Log(newTarget.name);
         return newTarget;
     }
 }
+
+// STATES:
+// NOT TARGET -- HUNT LOST TARGET
+        /*
+         * create vector that forms a direction to last sighting
+         * 
+         * create waypoints to patrol from last sighting position
+         * 
+         * use chance to have guards approach and/or shoot scenery around
+         * waypoints
+         *
+         * revert back to NO TARGET -- PATROL once waypoints have been visited.
+         * 
+         */
+
+// NO TARGET -- PATROL
+        /*
+         * raycast 360 degrees around guard and record
+         * the position with the longest distance
+         *
+         * move to that position.
+         *
+         * choose a new position.
+         * 
+         */
+        
+// FOUND TARGET -- IN RANGE
+        /*
+         * shoot target with Tranquilizer.
+         *
+         * other logic ... like runaway, play dead, and shoot from cover...
+         * seems overly-complicated to implement.
+         * 
+         */
+
+// FOUND TARGET -- OUT OF RANGE
+        /*
+         * move toward target until in range.
+         * FOUND TARGET -- IN RANGE
+         * 
+         */

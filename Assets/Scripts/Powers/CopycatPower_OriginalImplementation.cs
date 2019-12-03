@@ -41,6 +41,8 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
 
     public void ActivatePower2()
     {
+        // ShedSkin();
+        // revert to base form and fire the current mesh like a projectile.
         return;
     }
 
