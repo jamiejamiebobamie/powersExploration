@@ -88,41 +88,45 @@ public class GuardLogic : MonoBehaviour
 
 // STATES:
 // NOT TARGET -- HUNT LOST TARGET
-        /*
-         * create vector that forms a direction to last sighting
-         * 
-         * create waypoints to patrol from last sighting position
-         * 
-         * use chance to have guards approach and/or shoot scenery around
-         * waypoints
-         *
-         * revert back to NO TARGET -- PATROL once waypoints have been visited.
-         * 
-         */
+/*
+ * create vector that forms a direction to last sighting
+ * 
+ * create waypoints to patrol from last sighting position
+ * 
+ * use chance to have guards approach and/or shoot scenery around
+ * waypoints
+ *
+ * revert back to NO TARGET -- PATROL once waypoints have been visited.
+ * 
+ */
 
 // NO TARGET -- PATROL
-        /*
-         * raycast 360 degrees around guard and record
-         * the position with the longest distance
-         *
-         * move to that position.
-         *
-         * choose a new position.
-         * 
-         */
-        
+/*
+ * raycast 360 degrees around guard and store the position with the
+ * longest distance that is not the second to last
+ * position visited.
+ *
+ * move to that position.
+ *
+ * choose a new position.
+ * (go to NO TARGET -- PATROL.)
+ * 
+ */
+
 // FOUND TARGET -- IN RANGE
-        /*
-         * shoot target with Tranquilizer.
-         *
-         * other logic ... like runaway, play dead, and shoot from cover...
-         * seems overly-complicated to implement.
-         * 
-         */
+/*
+ * shoot target with Tranquilizer.
+ *
+ * other logic ... like runaway, play dead, and shoot from cover...
+ * seems overly-complicated to implement.
+ *
+ * go to FOUND TARGET -- OUT OF RANGE state if target moves out of range.
+ * 
+ */
 
 // FOUND TARGET -- OUT OF RANGE
-        /*
-         * move toward target until in range.
-         * FOUND TARGET -- IN RANGE
-         * 
-         */
+/*
+ * move toward target until in range.
+ * go to FOUND TARGET -- IN RANGE state.
+ * 
+ */

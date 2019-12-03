@@ -7,9 +7,7 @@ using UnityEngine;
 public class Scenery : MonoBehaviour, ICopyable, IThrowable
 {
     [SerializeField] GameObject fire;
-    private bool isBurning;
-    public bool isProjectile;
-
+    private bool burning, isProjectile, orbiting;
     private Stimulus stimulus;
 
     public bool Orbiting
@@ -37,7 +35,6 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             }
         }
     }
-    private bool orbiting;
 
     // a reference to the player that the item is orbiting around
     private GameObject orbitPlayer;
@@ -74,11 +71,12 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             }
         }
 
-        orbitRotationSpeed = random.Next(2,5);
+        orbitRotationSpeed = random.Next(2, 5);
         baseRotationOrbitSpeed = orbitRotationSpeed;
 
         orbitTranslationSpeed = orbitRotationSpeed * 5;
         baseTranslationOrbitSpeed = orbitTranslationSpeed;
+
         orbitHeight = orbitRotationSpeed + 2f;
         baseOrbitHeight = orbitHeight;
 
@@ -108,36 +106,55 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     {
         GameObject fireInstance = Instantiate(fire,
             transform.position, Quaternion.identity);
-        isBurning = true;
+        burning = true;
         Destroy(fireInstance, 3f);
     }
 
     public void BecomeProjectile(Vector3 destination)
     {
-        Orbiting = false;
-
-        isProjectile = true;
 
         Vector3 directionOfForce = Vector3.Normalize(destination
             - gameObject.transform.position);
-        rb.AddForce(directionOfForce * 3000f);
+
+        //Ray ray = new Ray();
+        //RaycastHit hit;
+
+        //ray.direction = directionOfForce;
+        //ray.origin = gameObject.transform.position;
+
+        //if(Physics.Raycast(ray, out hit))
+        //{
+        //    IThrowable test
+        //        = hit.transform.gameObject.GetComponent<IThrowable>();
+        //    if (test == null)
+        //    {
+                Orbiting = false;
+                isProjectile = true;
+
+                rb.AddForce(directionOfForce * 3000f);
+            //}
+        //}
+
     }
 
     // Need to make this a coroutine.
     public void Orbit()
     {
-        Vector3 relativePos = (orbitPlayer.transform.position
-            + new Vector3(0, orbitHeight, 0))- transform.position;
+        if (!isProjectile)
+        {
+            Vector3 relativePos = (orbitPlayer.transform.position
+                + new Vector3(0, orbitHeight, 0)) - transform.position;
 
-        Quaternion rotation = Quaternion.LookRotation(relativePos);
+            Quaternion rotation = Quaternion.LookRotation(relativePos);
 
-        Quaternion current = transform.localRotation;
+            Quaternion current = transform.localRotation;
 
-        transform.localRotation = Quaternion.Slerp(current, rotation,
-            Time.deltaTime * orbitRotationSpeed);
+            transform.localRotation = Quaternion.Slerp(current, rotation,
+                Time.deltaTime * orbitRotationSpeed);
 
-        transform.Translate(0, 0,
-            1 * Time.deltaTime * orbitTranslationSpeed);
+            transform.Translate(0, 0,
+                1 * Time.deltaTime * orbitTranslationSpeed);
+        }
     }
 
     public void SetOrbitHeight(float desiredHeight)
@@ -173,6 +190,11 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     public bool GetIsProjectile()
     {
         return isProjectile;
+    }
+
+    public bool GetIsBurning()
+    {
+        return burning;
     }
 
     // this method also sets Orbiting boolean to true.

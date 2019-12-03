@@ -63,6 +63,11 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         isStaggered = true;
     }
 
+    public bool GetIsStaggered()
+    {
+        return isStaggered;
+    }
+
     // maybe not neccessary...
     public void SetIncapacitated(bool value)
     {

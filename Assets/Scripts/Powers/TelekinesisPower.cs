@@ -5,6 +5,10 @@ using UnityEngine;
 public class TelekinesisPower : MonoBehaviour, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
+
+    List<Humanoid> humanoids = new List<Humanoid>();
+
+
     Queue<IThrowable> throwables = new Queue<IThrowable>();
     GameObject[] allSceneObjects;
     private float elapsedTime;
@@ -12,6 +16,8 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
 
     void Start()
     {
+        Humanoid selfHumanoidScript = GetComponent<Humanoid>();
+
         allSceneObjects = FindObjectsOfType<GameObject>();
         foreach(GameObject o in allSceneObjects)
         {
@@ -20,7 +26,14 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
             {
                 possibleThrowables.Add(testThrowable);
             }
+
+            Humanoid testHumanoid = o.GetComponent<Humanoid>();
+            if (testHumanoid != null && testHumanoid != selfHumanoidScript)
+            {
+                humanoids.Add(testHumanoid);
+            }
         }
+
         elapsedTime = 0.0f;
     }
 
@@ -35,6 +48,8 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
         if (isBlocking)
         {
             isBlocking = false;
+            //DefenseMode();
+
             AttackMode();
 
         } else
@@ -80,17 +95,58 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     // of player and player's orbiting objects.
     void Throw()
     {
-        Ray ray = new Ray();
-        ray.origin = Camera.main.transform.position;
-        ray.direction = Camera.main.transform.forward;
-
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit))
+        if (throwables.Count > 0)
         {
+            Humanoid possibleTarget = null;
+            float minimumAngleFromPlayersFront = Mathf.Infinity;
+
+            foreach (Humanoid h in humanoids)
+            {
+                if (!h.GetIsStaggered())
+                {
+                    Vector3 positionOfHumanoid = h.GetPosition();
+                    Vector3 direction = positionOfHumanoid - transform.position;
+                    if (direction.magnitude < 30f)
+                    {
+                        float angleFromPlayersFront = Vector3.Angle(direction, transform.forward);
+                        if (angleFromPlayersFront < minimumAngleFromPlayersFront)
+                        {
+                            possibleTarget = h;
+                        }
+                    }
+                }
+            }
+
+            Vector3 shootHere = Vector3.zero;
             IThrowable throwThisOne = throwables.Dequeue();
-            throwThisOne.BecomeProjectile(hit.point);
+
+            if (possibleTarget != null)
+            {
+                shootHere = possibleTarget.GetPosition();
+            }
+            else
+            {
+                Ray ray = new Ray();
+                ray.origin = Camera.main.transform.position;
+                ray.direction = Camera.main.transform.forward;
+
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit)) //it's always going to hit something...
+                {
+                    shootHere = hit.point;
+                }
+            }
+            throwThisOne.BecomeProjectile(shootHere);
+
         }
 
+        //if (throwables.Count > 0)
+        //{
+        //    IThrowable loadNextOne = throwables.Peek();
+        //    loadNextOne.SetOrbitHeight(4f);
+        //    loadNextOne.SetOrbitTranslationSpeed(5f);
+        //    loadNextOne.SetOrbitRotationSpeed(10f);
+        //}
     }
 
     void UpdateQueue()
@@ -101,7 +157,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 - t.GetPosition()).magnitude;
 
             if (!throwables.Contains(t)
-                && distanceFromPlayer < 4f && !t.GetIsProjectile())
+                && distanceFromPlayer < 2f && !t.GetIsProjectile())
             {
                 throwables.Enqueue(t);
                 t.SetObjectToOrbit(gameObject);

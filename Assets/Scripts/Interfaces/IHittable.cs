@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IHittable
 {
     void ApplyHitForce(Vector3 hitDirection, float hitStrength);
+    bool GetIsStaggered();
 }

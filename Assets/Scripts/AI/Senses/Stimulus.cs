@@ -11,16 +11,16 @@ public class Stimulus : MonoBehaviour
         Incapacitated,
     }
 
-    [SerializeField] private origin currentOrigin;
+    [SerializeField] private origin stimulusSource;
 
     public void SetCurrentOrigin(origin value)
     {
-        currentOrigin = value;
+        stimulusSource = value;
     }
 
     public origin GetCurrentOrigin()
     {
-        return currentOrigin;
+        return stimulusSource;
     }
 
 }
