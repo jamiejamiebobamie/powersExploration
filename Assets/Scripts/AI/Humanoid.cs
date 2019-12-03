@@ -11,7 +11,11 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
     private bool isStaggered ,isIncapacitated, isBurning;
     private int hitCount;
 
+    [SerializeField] private Material staggeredMaterial;
+
     private Stimulus origin;
+
+    System.Random random = new System.Random();
 
 
     private void Start()
@@ -60,7 +64,17 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         rb.useGravity = true;
         rb.AddForce(hitForce * hitStrength * 10f);
         // activate ragdoll
-        isStaggered = true;
+        if (isStaggered)
+            isIncapacitated = true;
+        else
+        {
+            int randomBool = random.Next(0, 2);
+            if (randomBool > 0)
+            {
+                Debug.Log("true");
+                isStaggered = true;
+            }
+        }
     }
 
     public bool GetIsStaggered()
@@ -68,7 +82,16 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         return isStaggered;
     }
 
-    // maybe not neccessary...
+    public void SetIsStaggered(bool value)
+    {
+
+        //Get the Renderer component from the new cube
+        Renderer r = gameObject.GetComponent<Renderer>();
+        r.material = staggeredMaterial;
+
+        isStaggered = value;
+    }
+
     public void SetIncapacitated(bool value)
     {
         isIncapacitated = value;

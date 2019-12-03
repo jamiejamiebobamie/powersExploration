@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2929564312480963941}
   - component: {fileID: 1595682096745451105}
   - component: {fileID: 8321253700985255243}
-  - component: {fileID: 3230371238687144826}
+  - component: {fileID: 1777867338267871683}
   m_Layer: 0
   m_Name: GuardNPC
   m_TagString: Copyable
@@ -110,7 +110,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4fe4143cb82046ef9d7770d232a5e8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspectName: 0
   detectionRate: 1
   player: {fileID: 0}
   SoundDistance: 300
@@ -126,7 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c30f09188924229b3b161802497bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspectName: 0
   detectionRate: 1
   player: {fileID: 0}
   FieldOfView: 60
@@ -143,7 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67f5df1bae2c24a6f842ea92e4f23112, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspectName: 0
   detectionRate: 1
   player: {fileID: 0}
 --- !u!54 &8321253700985255243
@@ -162,7 +159,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3230371238687144826
+--- !u!114 &1777867338267871683
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,9 +168,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7853374298192869115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4099b88104ebf49d89483ecc8cc530b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 499b786d5018f443fa2112f03938f149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8321253700985255243}
-  fire: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
-  Floor: {fileID: 0}
+  fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  staggeredMaterial: {fileID: 2100000, guid: 0f0bdb311bf914b69af8cb481ad8859f, type: 2}
