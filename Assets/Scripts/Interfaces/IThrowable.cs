@@ -6,7 +6,7 @@ public interface IThrowable
     bool GetIsProjectile();
     void BecomeProjectile(Vector3 destination);
 
-    void Orbit();
+    IEnumerator Orbit();
 
     void SetOrbitHeight(float desiredHeight);
     float GetOrbitHeight();

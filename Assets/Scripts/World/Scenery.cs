@@ -117,32 +117,50 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             - gameObject.transform.position);
 
         isProjectile = true;
-
-        // need delay on this
+        StopCoroutine("Orbit");
+        // this controls the collider:
         Orbiting = false;
-
+        // turning it to false allows the collider to interact
+        // with the environment causing the projectile to hit other orbiting
+        // throwables, causing the projectile to not hit the target...
 
         rb.AddForce(directionOfForce * 3000f);
 
+
+
+
+
+    }
+
+    private IEnumerator TurnOffOrbitingWithDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 
     // Need to make this a coroutine.
-    public void Orbit()
+    public IEnumerator Orbit()
     {
         if (!isProjectile)
         {
-            Vector3 relativePos = (orbitPlayer.transform.position
+            for (; ; )
+            {
+
+                Vector3 relativePos = (orbitPlayer.transform.position
                 + new Vector3(0, orbitHeight, 0)) - transform.position;
 
-            Quaternion rotation = Quaternion.LookRotation(relativePos);
+                Quaternion rotation = Quaternion.LookRotation(relativePos);
 
-            Quaternion current = transform.localRotation;
+                Quaternion current = transform.localRotation;
 
-            transform.localRotation = Quaternion.Slerp(current, rotation,
-                Time.deltaTime * orbitRotationSpeed);
+                transform.localRotation = Quaternion.Slerp(current, rotation,
+                    Time.deltaTime * orbitRotationSpeed);
 
-            transform.Translate(0, 0,
-                1 * Time.deltaTime * orbitTranslationSpeed);
+                transform.Translate(0, 0,
+                    1 * Time.deltaTime * orbitTranslationSpeed);
+
+                yield return null;// new WaitForSeconds(.05f);
+
+            }
         }
     }
 
@@ -191,7 +209,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     {
         orbitPlayer = objectToOrbit;
         Orbiting = true;
-        //StartCoroutine("Orbit");
+        StartCoroutine("Orbit");
     }
 
     // how to only allow, scenery isProjectile?
@@ -211,9 +229,9 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     {
         elapsedTime += Time.deltaTime;
 
-        if (orbiting)
-            Orbit();
-        else
+        //if (orbiting)
+        //    //Orbit();
+        //else
             if (isProjectile && elapsedTime >= 4.0f)
                 isProjectile = false;
     }
