@@ -32,12 +32,14 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
             }
         }
 
+        StartCoroutine("UpdateQueue");
+
         elapsedTime = 0.0f;
     }
 
     public void ActivatePower1()
     {
-        //if (!isBlocking)
+        if (!isBlocking)
             Throw();
     }
 
@@ -141,37 +143,25 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
             throwThisOne.BecomeProjectile(shootHere);
 
         }
-
-        //if (throwables.Count > 0)
-        //{
-        //    IThrowable loadNextOne = throwables.Peek();
-        //    loadNextOne.SetOrbitHeight(4f);
-        //    loadNextOne.SetOrbitTranslationSpeed(5f);
-        //    loadNextOne.SetOrbitRotationSpeed(10f);
-        //}
     }
 
-    void UpdateQueue()
+    IEnumerator UpdateQueue()
     {
-        foreach (IThrowable t in possibleThrowables)
+        while (true)
         {
-            float distanceFromPlayer = (transform.position
-                - t.GetPosition()).magnitude;
-
-            if (!throwables.Contains(t)
-                && distanceFromPlayer < 2f && !t.GetIsProjectile())
+            foreach (IThrowable t in possibleThrowables)
             {
-                throwables.Enqueue(t);
-                t.SetObjectToOrbit(gameObject);
+                float distanceFromPlayer = (transform.position
+                    - t.GetPosition()).magnitude;
+
+                if (!throwables.Contains(t)
+                    && distanceFromPlayer < 2f && !t.GetIsProjectile())
+                {
+                    throwables.Enqueue(t);
+                    t.SetObjectToOrbit(gameObject);
+                }
             }
+            yield return new WaitForSeconds(1f);
         }
-    }
-
-    void Update()
-    {
-        elapsedTime += Time.deltaTime;
-
-        if (elapsedTime % 2.0f < 1)
-            UpdateQueue();
     }
 }

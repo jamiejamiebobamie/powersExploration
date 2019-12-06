@@ -39,7 +39,6 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     // a reference to the player that the item is orbiting around
     private GameObject orbitPlayer;
 
-
     private TelekinesisPower[] playersWithTelekinesis;
     private List<Collider> telekinesisPlayerColliders = new List<Collider>();
 
@@ -125,19 +124,15 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         // throwables, causing the projectile to not hit the target...
 
         rb.AddForce(directionOfForce * 3000f);
-
-
-
-
-
+        StartCoroutine("SetIsProjectileToFalse");
     }
 
-    private IEnumerator TurnOffOrbitingWithDelay(float delay)
+    private IEnumerator SetIsProjectileToFalse()
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(2f);
+        isProjectile = false;
     }
 
-    // Need to make this a coroutine.
     public IEnumerator Orbit()
     {
         if (!isProjectile)
@@ -158,7 +153,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
                 transform.Translate(0, 0,
                     1 * Time.deltaTime * orbitTranslationSpeed);
 
-                yield return null;// new WaitForSeconds(.05f);
+                yield return new WaitForSeconds(.03f);
 
             }
         }
@@ -204,7 +199,6 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         return burning;
     }
 
-    // this method also sets Orbiting boolean to true.
     public void SetObjectToOrbit(GameObject objectToOrbit)
     {
         orbitPlayer = objectToOrbit;
@@ -225,14 +219,12 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         }
     }
 
-    private void Update()
-    {
-        elapsedTime += Time.deltaTime;
+    //private void Update()
+    //{
+    //    elapsedTime += Time.deltaTime;
 
-        //if (orbiting)
-        //    //Orbit();
-        //else
-            if (isProjectile && elapsedTime >= 4.0f)
-                isProjectile = false;
-    }
+    //    // make a coroutine.
+    //    if (isProjectile && elapsedTime >= 4.0f)
+    //        isProjectile = false;
+    //}
 }
