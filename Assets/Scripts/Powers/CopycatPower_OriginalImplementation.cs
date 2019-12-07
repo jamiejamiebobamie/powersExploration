@@ -8,9 +8,10 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     private List<ICopyable> Copyables = new List<ICopyable>();
 
     private Mesh baseMesh;
-    public Stimulus stimulus;
+    private Stimulus stimulus;
 
-    // keeps track of if the player is an object and sneaking due to movement.
+    // keeps track of if the player is an object
+        // and sneaking due to movement.
     bool movingObject;
     private Rigidbody rb;
 
@@ -19,9 +20,9 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         movingObject = false;
         rb = GetComponent<Rigidbody>();
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
+        stimulus = GetComponent<Stimulus>();
 
-        // future / final implementation will add copyables to Copyables list
-        // with a Singleton Observable.
+
         gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
         foreach (GameObject obj in gameObjects)
@@ -32,18 +33,19 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
                 Copyables.Add(test_ICopyable);
             }
         }
+        StartCoroutine("UpdateForm");
     }
 
     public void ActivatePower1()
     {
-        Copy();
+        // activate the power of the
+            // character or object you're copying.
+        return;
     }
 
     public void ActivatePower2()
     {
-        // ShedSkin();
-        // revert to base form and fire the current mesh like a projectile.
-        return;
+        Copy();
     }
 
     private void Copy()
@@ -54,14 +56,34 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
 
         foreach (ICopyable copyable in Copyables)
         {
+            Vector3 positionOfCopyable = copyable.GetPosition();
+
             float testDist = Vector3.Distance(transform.position,
-                copyable.GetPosition());
+                positionOfCopyable);
 
             if (minDist > testDist)
             {
-                minDist = testDist;
-                closestMesh = copyable.GetMesh();
-                meshStimulusOrigin = copyable.GetOriginOfStimulus();
+                Ray testLineOfSight = new Ray();
+
+                testLineOfSight.origin = transform.position;
+                testLineOfSight.direction =
+                    positionOfCopyable - transform.position;
+
+                RaycastHit hit;
+
+                // test if the copyable can be seen by the player
+                if(Physics.Raycast(testLineOfSight, out hit))
+                {
+                    ICopyable testCopyable =
+                        hit.transform.gameObject.GetComponent<ICopyable>();
+
+                    if (testCopyable != null)
+                    {
+                        minDist = testDist;
+                        closestMesh = testCopyable.GetMesh();
+                        meshStimulusOrigin = testCopyable.GetOriginOfStimulus();
+                    }
+                }
             }
         }
 
@@ -75,18 +97,29 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         stimulus.SetCurrentOrigin(meshStimulusOrigin);
     }
 
-    private void Update()
+    public IEnumerator UpdateForm()
     {
-        if (rb.velocity.magnitude > .00001
-            && stimulus.GetCurrentOrigin() == Stimulus.origin.Object)
+        Vector3 storePosition = Vector3.zero;
+        float distance = 0f;
+
+        while (true)
         {
-            stimulus.SetCurrentOrigin(Stimulus.origin.Sneaking);
-            movingObject = true; // storing the Object aspect;
-        }
-        else if (rb.velocity.magnitude < .000005 && movingObject)
-        {
-            stimulus.SetCurrentOrigin(Stimulus.origin.Object);
-            movingObject = false;
+            distance = Vector3.Distance(storePosition,
+                transform.position);
+
+            if (distance > .5f
+                && stimulus.GetCurrentOrigin() == Stimulus.origin.Object)
+            {
+                stimulus.SetCurrentOrigin(Stimulus.origin.Sneaking);
+                movingObject = true; // storing the Object aspect;
+            }
+            else if (distance < .5f && movingObject)
+                {
+                    stimulus.SetCurrentOrigin(Stimulus.origin.Object);
+                    movingObject = false;
+                }
+            storePosition = transform.position;
+            yield return new WaitForSeconds(.25f);
         }
     }
 }

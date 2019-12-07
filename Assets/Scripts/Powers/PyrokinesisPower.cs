@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class PyrokinesisPower : MonoBehaviour, IPowerable
 {
-    [SerializeField]
-    private GameObject fire;
+    [SerializeField] private GameObject fire;
     private float particleSystemDuration;
     [SerializeField] private bool npc;
 
@@ -27,7 +26,7 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
 
     void RaycastToBurnable()
 	{
-        Ray ray = new Ray();// this changes depending on NPC or player
+        Ray ray = new Ray();
 
         if (npc)
         {
@@ -39,7 +38,6 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
             ray.origin = Camera.main.transform.position;
             ray.direction = Camera.main.transform.forward;
         }
-
 
 		RaycastHit hit;
 

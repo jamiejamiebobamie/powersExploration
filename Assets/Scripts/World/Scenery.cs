@@ -9,7 +9,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     [SerializeField] GameObject fire;
 
     private bool isBurning, isProjectile, isOrbiting;
-    private Stimulus stimulus;
+    public Stimulus stimulus;
 
     public bool IsOrbiting
     {
