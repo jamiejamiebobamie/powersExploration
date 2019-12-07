@@ -31,10 +31,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                 humanoids.Add(testHumanoid);
             }
         }
-
         StartCoroutine("UpdateQueue");
-
-        elapsedTime = 0.0f;
     }
 
     public void ActivatePower1()
@@ -161,7 +158,7 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
                     t.SetObjectToOrbit(gameObject);
                 }
             }
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
         }
     }
 }

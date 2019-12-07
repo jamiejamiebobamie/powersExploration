@@ -2,50 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITargetable//, ITranquilizable
+public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillable
 {
     [SerializeField] private Rigidbody rb;
     [SerializeField] GameObject fire;
-
      // boolean to show humanoid has been hit
     private bool isStaggered ,isIncapacitated, isBurning;
-    private int hitCount;
-
-    [SerializeField] private Material staggeredMaterial;
-
     private Stimulus origin;
-
     System.Random random = new System.Random();
-
 
     private void Start()
     {
         origin = GetComponent<Stimulus>();
         rb = GetComponent<Rigidbody>();
 
-
         isBurning = false;
         isStaggered = false;
         isIncapacitated = false;
-        hitCount = 0;
     }
 
+    // ICopyable ---
     public Mesh GetMesh()
-	{
-		Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
-		return gameObjectMesh;
-	}
+    { return gameObject.GetComponent<MeshFilter>().mesh; }
 
     public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
+    { return transform.position; }
 
     public Stimulus.origin GetOriginOfStimulus()
-    {
-        return origin.GetCurrentOrigin();
-    }
+    { return origin.GetCurrentOrigin(); }
+    // ----
 
+    // IBurnable ---
     public void Burns()
     {
         GameObject fireInstance = Instantiate(fire,
@@ -54,10 +41,17 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
         isBurning = true;
         Destroy(fireInstance, 3f);
         isIncapacitated = true;
-        // other functionality. instantiate "burned" model after x seconds, etc.
+        // other functionality.
+        // instantiate "burned" model after x seconds, etc.
     }
 
-    // implement a RecoverFromHit method.
+    public bool GetIsBurning()
+    {
+        return isBurning;
+    }
+    // ----
+
+    // IHittable ---
     public void ApplyHitForce(Vector3 hitForce, float hitStrength)
     {
         rb.isKinematic = false;
@@ -76,29 +70,15 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable//, //ITar
             }
         }
     }
+    public bool GetIsStaggered() { return isStaggered; }
 
-    public bool GetIsStaggered()
-    {
-        return isStaggered;
-    }
+    public void SetIsStaggered(bool value) { isStaggered = value; }
+    // ----
 
-    public void SetIsStaggered(bool value)
-    {
+    // IKillable ---
+    public void SetIncapacitated(bool value) { isIncapacitated = value; }
 
-        //Get the Renderer component from the new cube
-        Renderer r = gameObject.GetComponent<Renderer>();
-        r.material = staggeredMaterial;
+    public bool GetIncapacitated() { return isIncapacitated; }
+    // ----
 
-        isStaggered = value;
-    }
-
-    public void SetIncapacitated(bool value)
-    {
-        isIncapacitated = value;
-    }
-
-    public bool GetIncapacitated()
-    {
-        return isIncapacitated;
-    }
 }

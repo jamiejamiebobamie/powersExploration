@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+// An interface for objects that can be thrown by telekinesis and
+    // become telekinetic projectiles.
+
+
 public interface IThrowable
 {
     bool GetIsProjectile();
+    IEnumerator SetIsProjectileToFalse();
     void BecomeProjectile(Vector3 destination);
 
     IEnumerator Orbit();

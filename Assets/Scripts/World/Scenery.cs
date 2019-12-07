@@ -7,16 +7,16 @@ using UnityEngine;
 public class Scenery : MonoBehaviour, ICopyable, IThrowable
 {
     [SerializeField] GameObject fire;
-    private bool burning, isProjectile, orbiting;
+
+    private bool isBurning, isProjectile, isOrbiting;
     private Stimulus stimulus;
 
-    public bool Orbiting
+    public bool IsOrbiting
     {
-        get { return orbiting; }
-
+        get { return isOrbiting; }
         set {
-            orbiting = value;
-            if (orbiting)
+            isOrbiting = value;
+            if (isOrbiting)
             {
                 foreach (Collider playerCollide in telekinesisPlayerColliders)
                 {
@@ -30,7 +30,6 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
                 {
                     Physics.IgnoreCollision(collide, playerCollide, false);
                 }
-
                 rb.isKinematic = false;
             }
         }
@@ -46,18 +45,16 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     private float orbitRotationSpeed, orbitTranslationSpeed, orbitHeight,
         baseOrbitHeight, baseTranslationOrbitSpeed, baseRotationOrbitSpeed;
 
-    Collider collide;
-    Rigidbody rb;
+    private Collider collide;
+    private Rigidbody rb;
 
     System.Random random = new System.Random();
-
-    float elapsedTime;
 
     void Start()
     {
         stimulus = GetComponent<Stimulus>();
         isProjectile = false;
-        orbiting = false;
+        isOrbiting = false;
 
         playersWithTelekinesis = FindObjectsOfType<TelekinesisPower>();
 
@@ -76,58 +73,51 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         orbitTranslationSpeed = orbitRotationSpeed * 5;
         baseTranslationOrbitSpeed = orbitTranslationSpeed;
 
-        orbitHeight = orbitRotationSpeed + 2f;
+        orbitHeight = orbitRotationSpeed + random.Next(-2, 2); //+ 2f;
         baseOrbitHeight = orbitHeight;
 
         collide = GetComponent<Collider>();
         rb = GetComponent<Rigidbody>();
         rb.useGravity = true;
-        elapsedTime = 0.0f;
     }
 
+    // ICopyable ---
     public Mesh GetMesh()
-    {
-        Mesh gameObjectMesh = gameObject.GetComponent<MeshFilter>().mesh;
-        return gameObjectMesh;
-    }
-
-    public Vector3 GetPosition()
-    {
-        return transform.position;
-    }
-
+    { return gameObject.GetComponent<MeshFilter>().mesh; }
+    public Vector3 GetPosition() { return transform.position; }
     public Stimulus.origin GetOriginOfStimulus()
-    {
-        return stimulus.GetCurrentOrigin();
-    }
+        { return stimulus.GetCurrentOrigin(); }
+    // ---
 
+    // IBurnable ---
     public void Burns()
     {
         GameObject fireInstance = Instantiate(fire,
             transform.position, Quaternion.identity);
-        burning = true;
+        isBurning = true;
         Destroy(fireInstance, 3f);
     }
+    public bool GetIsBurning()
+    {
+        return isBurning;
+    }
+    // ---
 
+    // IThrowable ---
     public void BecomeProjectile(Vector3 destination)
     {
-
         Vector3 directionOfForce = Vector3.Normalize(destination
             - gameObject.transform.position);
 
         isProjectile = true;
         StopCoroutine("Orbit");
-        // this controls the collider:
-        Orbiting = false;
-        // turning it to false allows the collider to interact
-        // with the environment causing the projectile to hit other orbiting
-        // throwables, causing the projectile to not hit the target...
+        IsOrbiting = false;         // controls the collider:
 
         rb.AddForce(directionOfForce * 3000f);
         StartCoroutine("SetIsProjectileToFalse");
     }
 
-    private IEnumerator SetIsProjectileToFalse()
+    public IEnumerator SetIsProjectileToFalse()
     {
         yield return new WaitForSeconds(2f);
         isProjectile = false;
@@ -194,19 +184,14 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         return isProjectile;
     }
 
-    public bool GetIsBurning()
-    {
-        return burning;
-    }
-
     public void SetObjectToOrbit(GameObject objectToOrbit)
     {
         orbitPlayer = objectToOrbit;
-        Orbiting = true;
+        IsOrbiting = true;
         StartCoroutine("Orbit");
     }
+    // ---
 
-    // how to only allow, scenery isProjectile?
     private void OnCollisionEnter(Collision collision)
     {
         IHittable hittable = collision.gameObject.GetComponent<IHittable>();
@@ -218,13 +203,4 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             hittable.ApplyHitForce(hitDirection, hitForce);
         }
     }
-
-    //private void Update()
-    //{
-    //    elapsedTime += Time.deltaTime;
-
-    //    // make a coroutine.
-    //    if (isProjectile && elapsedTime >= 4.0f)
-    //        isProjectile = false;
-    //}
 }

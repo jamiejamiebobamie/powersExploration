@@ -55,11 +55,7 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
                 hit.transform.gameObject.GetComponent<IBurnable>();
 
             if (burnable != null)
-                if (!burnable.GetIncapacitated())
-                {
-                    burnable.SetIncapacitated(true);
-                    burnable.Burns();
-                }
+                burnable.Burns();
         }
 	}
 }
