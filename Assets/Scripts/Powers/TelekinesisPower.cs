@@ -11,7 +11,10 @@ public class TelekinesisPower : PowersSuperClass, IPowerable
     GameObject[] allSceneObjects;
     private bool isBlocking;
 
-    void Awake()
+    // use: OnCollisionEnter to set the IThrowable to orbit.
+        // Remove UpdateQueue() method / implementation.
+
+void Start()
     {
         Humanoid selfHumanoidScript = GetComponent<Humanoid>();
 

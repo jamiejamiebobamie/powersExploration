@@ -18,18 +18,18 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             isOrbiting = value;
             if (isOrbiting)
             {
-                foreach (Collider playerCollide in telekinesisPlayerColliders)
-                {
-                    Physics.IgnoreCollision(collide, playerCollide, true);
-                }
+                //foreach (Collider playerCollide in telekinesisPlayerColliders)
+                //{
+                //    Physics.IgnoreCollision(collide, playerCollide, true);
+                //}
                 rb.isKinematic = true;
             }
             else
             {
-                foreach (Collider playerCollide in telekinesisPlayerColliders)
-                {
-                    Physics.IgnoreCollision(collide, playerCollide, false);
-                }
+                //foreach (Collider playerCollide in telekinesisPlayerColliders)
+                //{
+                //    Physics.IgnoreCollision(collide, playerCollide, false);
+                //}
                 rb.isKinematic = false;
             }
         }
@@ -38,8 +38,8 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     // a reference to the player that the item is orbiting around
     private GameObject orbitPlayer;
 
-    private TelekinesisPower[] playersWithTelekinesis;
-    private List<Collider> telekinesisPlayerColliders = new List<Collider>();
+    //private TelekinesisPower[] playersWithTelekinesis;
+    //private List<Collider> telekinesisPlayerColliders = new List<Collider>();
 
     // orbitRotationSpeed = 2to4 good range with orbitTranslationSpeed 10to25
     private float orbitRotationSpeed, orbitTranslationSpeed, orbitHeight,
@@ -56,16 +56,16 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         isProjectile = false;
         isOrbiting = false;
 
-        playersWithTelekinesis = FindObjectsOfType<TelekinesisPower>();
+        //playersWithTelekinesis = FindObjectsOfType<TelekinesisPower>();
 
-        foreach (TelekinesisPower power in playersWithTelekinesis)
-        {
-            Collider test_collider = power.gameObject.GetComponent<Collider>();
-            if (test_collider != null)
-            {
-                telekinesisPlayerColliders.Add(test_collider);
-            }
-        }
+        //foreach (TelekinesisPower power in playersWithTelekinesis)
+        //{
+        //    Collider test_collider = power.gameObject.GetComponent<Collider>();
+        //    if (test_collider != null)
+        //    {
+        //        telekinesisPlayerColliders.Add(test_collider);
+        //    }
+        //}
 
         orbitRotationSpeed = random.Next(2, 5);
         baseRotationOrbitSpeed = orbitRotationSpeed;
