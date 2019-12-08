@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PyrokinesisPower : MonoBehaviour, IPowerable
+public class PyrokinesisPower : PowersSuperClass, IPowerable
 {
     [SerializeField] private GameObject fire;
     private float particleSystemDuration;
     [SerializeField] private bool npc;
 
-    private void Start()
+    private void Awake()
     {
-        particleSystemDuration =
-            fire.GetComponent<ParticleSystem>().main.duration/2.5f;
+        if (fire != null)
+        {
+            particleSystemDuration =
+                fire.GetComponent<ParticleSystem>().main.duration / 2.5f;
+        } else
+        {
+            particleSystemDuration = 3f;
+        }
     }
 
     public void ActivatePower1()
@@ -40,12 +46,22 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
         }
 
 		RaycastHit hit;
+        GameObject fireEffect;
 
         if (Physics.Raycast(ray, out hit))
         {
             // Spawn particle effect at hit point
-            GameObject fireEffect = Instantiate(fire,
-                hit.point, Quaternion.identity);
+            if (fire != null)
+            {
+                fireEffect = Instantiate(fire,
+                    hit.point, Quaternion.identity);
+            }
+            else
+            {
+                fireEffect = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                fireEffect.transform.position = hit.point;
+                particleSystemDuration = 3f;
+            }
 
             Destroy(fireEffect, particleSystemDuration);
 
@@ -56,4 +72,9 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
                 burnable.Burns();
         }
 	}
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfTelekinesisPower = new PyrokinesisPower();
+        return instanceOfTelekinesisPower;
+    }
 }

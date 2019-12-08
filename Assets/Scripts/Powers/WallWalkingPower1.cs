@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower1 : MonoBehaviour, IPowerable
+public class WallWalkingPower1 : PowersSuperClass, IPowerable
 {
     // second attempt at the wall walking ability.
     // press mouse button to activate and deactivate.
@@ -24,7 +24,7 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
     //Vector3 forw;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // floor
         WallRotate.Add(new Vector3(0,1,0), new Vector3(0, 0, 90));
@@ -191,5 +191,11 @@ public class WallWalkingPower1 : MonoBehaviour, IPowerable
         }
 
         return upNormalFromPower;
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        //PowersSuperClass instanceOfTelekinesisPower = new TelekinesisPower();
+        return this;
     }
 }

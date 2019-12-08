@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TelekinesisPower : MonoBehaviour, IPowerable
+public class TelekinesisPower : PowersSuperClass, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
     List<Humanoid> humanoids = new List<Humanoid>();
 
     Queue<IThrowable> throwables = new Queue<IThrowable>();
     GameObject[] allSceneObjects;
-    private float elapsedTime;
     private bool isBlocking;
 
-    void Start()
+    void Awake()
     {
         Humanoid selfHumanoidScript = GetComponent<Humanoid>();
 
@@ -160,5 +159,11 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
             }
             yield return new WaitForSeconds(.5f);
         }
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfTelekinesisPower = new TelekinesisPower();
+        return instanceOfTelekinesisPower;
     }
 }

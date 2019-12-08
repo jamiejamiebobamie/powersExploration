@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
+public class CopycatPower_OriginalImplementation : PowersSuperClass, IPowerable
 {
     private GameObject[] gameObjects;
     private List<ICopyable> Copyables = new List<ICopyable>();
@@ -13,15 +13,14 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
     // keeps track of if the player is an object
         // and sneaking due to movement.
     bool movingObject;
-    private Rigidbody rb;
 
-    void Start()
+    IPowerable copiedPower;
+
+    void Awake()
     {
         movingObject = false;
-        rb = GetComponent<Rigidbody>();
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
         stimulus = GetComponent<Stimulus>();
-
 
         gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
 
@@ -38,9 +37,13 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
 
     public void ActivatePower1()
     {
-        // activate the power of the
-            // character or object you're copying.
-        return;
+        // factory method??
+        PowersSuperClass instanceOfPower = copiedPower.InstantiatePower();
+        //instanceOfPower = ;
+
+        //if (copiedPower != null)
+        //instanceOfPower = copiedPower.InstantiatePower();
+        //instanceOfPower.ActivatePower1();
     }
 
     public void ActivatePower2()
@@ -53,6 +56,9 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         Mesh closestMesh = baseMesh;
         Stimulus.origin meshStimulusOrigin = Stimulus.origin.Patient;
         float minDist = Mathf.Infinity;
+
+        // in case player is an object and activates power while sneaking.
+        movingObject = false;
 
         foreach (ICopyable copyable in Copyables)
         {
@@ -82,6 +88,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
                         minDist = testDist;
                         closestMesh = testCopyable.GetMesh();
                         meshStimulusOrigin = testCopyable.GetOriginOfStimulus();
+                        copiedPower = testCopyable.GetPower();
                     }
                 }
             }
@@ -91,6 +98,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
         {
             closestMesh = baseMesh;
             meshStimulusOrigin = Stimulus.origin.Patient;
+            copiedPower = null;
         }
 
         GetComponent<MeshFilter>().mesh = closestMesh;
@@ -121,5 +129,10 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
             storePosition = transform.position;
             yield return new WaitForSeconds(.25f);
         }
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        return this;
     }
 }

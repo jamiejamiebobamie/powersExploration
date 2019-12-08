@@ -30,6 +30,12 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
 
     public Stimulus.origin GetOriginOfStimulus()
     { return origin.GetCurrentOrigin(); }
+
+    public IPowerable GetPower()
+    {
+        IPowerable testPower = GetComponent<IPowerable>();
+        return testPower;
+    }
     // ----
 
     // IBurnable ---

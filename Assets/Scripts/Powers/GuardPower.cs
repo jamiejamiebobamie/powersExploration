@@ -2,21 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardPower : MonoBehaviour, IPowerable
+public class GuardPower : PowersSuperClass, IPowerable
 {
 
     [SerializeField] private Rigidbody projectile;
     [SerializeField] private Transform barrelEnd;
 
     private Stimulus stimulus;
-    private Humanoid body;
 
     private void Start()
     {
-        body = GetComponent<Humanoid>();
         stimulus = GetComponent<Stimulus>();
     }
-
 
     public void ActivatePower1()
     {
@@ -46,16 +43,15 @@ public class GuardPower : MonoBehaviour, IPowerable
     // this needs some more thought...
     void PlayDead()
     {
-        if (body.GetIncapacitated())
-        {
+        if (stimulus.GetCurrentOrigin() == Stimulus.origin.Incapacitated)
             stimulus.SetCurrentOrigin(Stimulus.origin.Guard);
-            body.SetIncapacitated(false);
-        }
         else
-        {
             stimulus.SetCurrentOrigin(Stimulus.origin.Incapacitated);
-            body.SetIncapacitated(true);
-        }
     }
 
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfGuardPower = new GuardPower();
+        return instanceOfGuardPower;
+    }
 }

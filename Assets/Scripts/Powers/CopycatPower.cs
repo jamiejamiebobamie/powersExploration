@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopycatPower : MonoBehaviour, IPowerable
+public class CopycatPower : PowersSuperClass, IPowerable
 {
     System.Random random = new System.Random();
 
@@ -43,7 +43,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
     Quaternion playerStartRotation;
     bool playerNormallyRotated = false;
 
-    void Start()
+    void Awake()
     {
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
         sceneObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
@@ -236,5 +236,11 @@ public class CopycatPower : MonoBehaviour, IPowerable
             upNormalFromPower = Vector3.up;
 
         return upNormalFromPower;
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfTelekinesisPower = new CopycatPower();
+        return instanceOfTelekinesisPower;
     }
 }

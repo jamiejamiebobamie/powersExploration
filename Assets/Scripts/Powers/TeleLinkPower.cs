@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleLinkPower : MonoBehaviour, IPowerable
+public class TeleLinkPower : PowersSuperClass, IPowerable
 {
 
     [SerializeField] int numberOfTeleportPositions;
@@ -16,7 +16,7 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
 
     Vector3 currentPosition;
 
-    private void Start()
+    private void Awake()
     {
         TeleLinkPositions = new Vector3[numberOfTeleportPositions];
         TeleLinkPositionsMarkers = new GameObject[numberOfTeleportPositions];
@@ -109,6 +109,12 @@ public class TeleLinkPower : MonoBehaviour, IPowerable
         Destroy(TeleLinkPositionsMarkers[TeleLinkPositionsCount]);
         TeleLinkPositionsMarkers[TeleLinkPositionsCount] =
             Instantiate(marker, transform.position, transform.rotation);
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfTeleLinkPower = new TeleLinkPower();
+        return instanceOfTeleLinkPower;
     }
 
 }

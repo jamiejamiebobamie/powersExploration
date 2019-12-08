@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower : MonoBehaviour, IPowerable
+public class WallWalkingPower : PowersSuperClass, IPowerable
 {
 
     // raycast to wall and using the hit normal
@@ -29,7 +29,7 @@ public class WallWalkingPower : MonoBehaviour, IPowerable
     Rigidbody rb;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
@@ -79,5 +79,11 @@ public class WallWalkingPower : MonoBehaviour, IPowerable
         //        rayCasted = false;
         //    }
         //}
+    }
+
+    public PowersSuperClass InstantiatePower()
+    {
+        PowersSuperClass instanceOfTelekinesisPower = new TelekinesisPower();
+        return instanceOfTelekinesisPower;
     }
 }
