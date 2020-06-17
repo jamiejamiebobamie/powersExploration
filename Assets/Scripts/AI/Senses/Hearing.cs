@@ -7,11 +7,13 @@ public class Hearing : Sense
     public int SoundDistance = 50;
     private Transform playerTrans;
     private Vector3 rayDirection;
+    private bool patientHeard;
 
     protected override void Initialize()
     {
         //Find player position
         playerTrans = GameObject.FindGameObjectWithTag("Player").transform;
+        patientHeard = false;
     }
 
     // Update is called once per frame
@@ -21,7 +23,12 @@ public class Hearing : Sense
         // Detect perspective sense if within the detection rate
         if (elapsedTime >= detectionRate) DetectAspect();
     }
-
+    public bool getPatientHeard(){
+        return patientHeard;
+    }
+    public Vector3 getSeenPatientLocation(){
+        return playerTrans.position;
+    }
     //Detect perspective field of view for the AI Character
     void DetectAspect()
     {
@@ -40,6 +47,7 @@ public class Hearing : Sense
                 if (currentOrigin == desiredStimulusOrigin)
                 {
                     print("Heard target.");
+                    patientHeard = true;
                 }
             }
         }

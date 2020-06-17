@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardPower : PowersSuperClass, IPowerable
+public class GuardPower : MonoBehaviour, IPowerable
 {
 
     [SerializeField] private Rigidbody projectile;
@@ -24,10 +24,12 @@ public class GuardPower : PowersSuperClass, IPowerable
     {
 
         // isIncapacitated = true
+
         // Ideas:
         // pick up / use / throw item.
         // sneak / crouch
         // lean against wall (fire around corners)
+
         // pretend to be dead
         PlayDead();
     }
@@ -47,11 +49,5 @@ public class GuardPower : PowersSuperClass, IPowerable
             stimulus.SetCurrentOrigin(Stimulus.origin.Guard);
         else
             stimulus.SetCurrentOrigin(Stimulus.origin.Incapacitated);
-    }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        PowersSuperClass instanceOfGuardPower = new GuardPower();
-        return instanceOfGuardPower;
     }
 }

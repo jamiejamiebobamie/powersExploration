@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TelekinesisPower : MonoBehaviour, IPowerable
+public class telekinesis_rusty : MonoBehaviour, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
     List<Humanoid> humanoids = new List<Humanoid>();
@@ -10,9 +10,6 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     Queue<IThrowable> throwables = new Queue<IThrowable>();
     GameObject[] allSceneObjects;
     private bool isBlocking;
-
-    // use: OnCollisionEnter to set the IThrowable to orbit.
-        // Remove UpdateQueue() method / implementation.
 
 void Start()
     {
@@ -88,17 +85,20 @@ void Start()
         }
     }
 
-    // need to ensure projectile is clear
-    // of player and player's orbiting objects.
     void Throw()
     {
+        // check to see if you have something to throw.
         if (throwables.Count > 0)
         {
             Humanoid possibleTarget = null;
-            float minAngle= Mathf.Infinity;
-
+            float minAngle = Mathf.Infinity;
+            // of all the humanoids in the level
+                // check to see if any are in front of you and in distance.
+                // if so find the one that is closest to being directly in
+                // front of you.
             foreach (Humanoid h in humanoids)
             {
+                // ignore staggered enemies.
                 if (!h.GetIsStaggered())
                 {
                     Vector3 positionOfHumanoid = h.GetPosition();
@@ -121,8 +121,6 @@ void Start()
             }
 
             Vector3 shootHere = Vector3.zero;
-            IThrowable throwThisOne = throwables.Dequeue();
-
             // if there is a target
             if (possibleTarget != null)
             {
@@ -138,9 +136,22 @@ void Start()
                 if (Physics.Raycast(ray, out hit))
                     shootHere = hit.point;
             }
+            // find the IThrowable that is closest to the target.
+            IThrowable throwThisOne = null;
+            float minDistanceToTarget = Mathf.Infinity;
+            foreach (IThrowable t in throwables)
+            {
+                Vector3 positionOfThrowable = t.GetPosition();
+                Vector3 vectorToThrow = shootHere - positionOfThrowable;
+                float distanceToThrow = vectorToThrow.magnitude;
+                if (minDistanceToTarget > distanceToThrow)
+                {
+                    minDistanceToTarget = distanceToThrow;
+                    throwThisOne = t;
+                }
 
+            }
             throwThisOne.BecomeProjectile(shootHere);
-
         }
     }
 

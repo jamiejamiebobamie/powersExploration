@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAspect: 0
+  stimulusSource: 0
 --- !u!114 &3308442252370074211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +154,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a1cc416f5c64f84b2380e146e8cbaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parent: {fileID: 0}
 --- !u!114 &5515119078273745302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8217535488109543461}
   fire: {fileID: 1000013462590818, guid: ecdd96beb7f93494880c052dfccf9dc1, type: 3}
+  stimulus: {fileID: 6033368975986811540}
 --- !u!1001 &2215132765105548531
 PrefabInstance:
   m_ObjectHideFlags: 0

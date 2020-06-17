@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower1 : PowersSuperClass, IPowerable
+public class WallWalkingPower1 : MonoBehaviour, IPowerable
 {
     // second attempt at the wall walking ability.
     // press mouse button to activate and deactivate.
@@ -120,7 +120,7 @@ public class WallWalkingPower1 : PowersSuperClass, IPowerable
                 else
                     playerNormallyRotated = true;
             }
-            
+
             //upNormalFromPower = Vector3.zero;
             //gameObject.transform.up = Vector3.up;
         }
@@ -191,11 +191,5 @@ public class WallWalkingPower1 : PowersSuperClass, IPowerable
         }
 
         return upNormalFromPower;
-    }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        //PowersSuperClass instanceOfTelekinesisPower = new TelekinesisPower();
-        return this;
     }
 }

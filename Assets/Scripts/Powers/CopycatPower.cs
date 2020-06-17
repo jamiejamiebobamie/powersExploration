@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopycatPower : PowersSuperClass, IPowerable
+public class CopycatPower : MonoBehaviour, IPowerable
 {
     System.Random random = new System.Random();
 
@@ -236,11 +236,5 @@ public class CopycatPower : PowersSuperClass, IPowerable
             upNormalFromPower = Vector3.up;
 
         return upNormalFromPower;
-    }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        PowersSuperClass instanceOfTelekinesisPower = new CopycatPower();
-        return instanceOfTelekinesisPower;
     }
 }

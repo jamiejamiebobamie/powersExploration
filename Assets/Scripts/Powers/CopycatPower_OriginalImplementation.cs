@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopycatPower_OriginalImplementation : PowersSuperClass, IPowerable
+public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
 {
     private GameObject[] gameObjects;
     private List<ICopyable> Copyables = new List<ICopyable>();
@@ -38,7 +38,7 @@ public class CopycatPower_OriginalImplementation : PowersSuperClass, IPowerable
     public void ActivatePower1()
     {
         // factory method??
-        PowersSuperClass instanceOfPower = copiedPower.InstantiatePower();
+        // PowersSuperClass instanceOfPower = copiedPower.InstantiatePower();
         //instanceOfPower = ;
 
         //if (copiedPower != null)
@@ -129,10 +129,5 @@ public class CopycatPower_OriginalImplementation : PowersSuperClass, IPowerable
             storePosition = transform.position;
             yield return new WaitForSeconds(.25f);
         }
-    }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        return this;
     }
 }

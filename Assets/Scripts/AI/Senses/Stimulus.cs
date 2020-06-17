@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 public class Stimulus : MonoBehaviour
 {
+    [SerializeField] private origin stimulusSource;
     // the senses sense stimuli from an origin.
     public enum origin
     {
@@ -10,17 +11,6 @@ public class Stimulus : MonoBehaviour
         Object,
         Incapacitated,
     }
-
-    [SerializeField] private origin stimulusSource;
-
-    public void SetCurrentOrigin(origin value)
-    {
-        stimulusSource = value;
-    }
-
-    public origin GetCurrentOrigin()
-    {
-        return stimulusSource;
-    }
-
+    public void SetCurrentOrigin(origin value) { stimulusSource = value; }
+    public origin GetCurrentOrigin() { return stimulusSource; }
 }

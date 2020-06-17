@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower : PowersSuperClass, IPowerable
+public class WallWalkingPower : MonoBehaviour, IPowerable
 {
 
     // raycast to wall and using the hit normal
@@ -79,11 +79,5 @@ public class WallWalkingPower : PowersSuperClass, IPowerable
         //        rayCasted = false;
         //    }
         //}
-    }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        PowersSuperClass instanceOfTelekinesisPower = new TelekinesisPower();
-        return instanceOfTelekinesisPower;
     }
 }

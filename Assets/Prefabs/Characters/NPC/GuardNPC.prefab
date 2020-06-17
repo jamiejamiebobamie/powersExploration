@@ -16,9 +16,10 @@ GameObject:
   - component: {fileID: 2929564312480963941}
   - component: {fileID: 1595682096745451105}
   - component: {fileID: 8321253700985255243}
-  - component: {fileID: 1777867338267871683}
+  - component: {fileID: 358637312651514421}
   - component: {fileID: 6374425129617361107}
-  - component: {fileID: 7795547246532619845}
+  - component: {fileID: -3301250312088633357}
+  - component: {fileID: 1777867338267871683}
   m_Layer: 0
   m_Name: GuardNPC
   m_TagString: Copyable
@@ -162,7 +163,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1777867338267871683
+--- !u!114 &358637312651514421
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,11 +172,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7853374298192869115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 499b786d5018f443fa2112f03938f149, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 8321253700985255243}
-  fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  stimulusSource: 1
 --- !u!114 &6374425129617361107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   projectile: {fileID: 3796042123583631794, guid: 40e1856bc59264975811cb49c64cc476,
     type: 3}
   barrelEnd: {fileID: 5982442569602253950}
---- !u!114 &7795547246532619845
+--- !u!114 &-3301250312088633357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -200,10 +200,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7853374298192869115}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
+  m_Script: {fileID: 11500000, guid: 4099b88104ebf49d89483ecc8cc530b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stimulusSource: 1
+  sight: {fileID: 2929564312480963941}
+  touch: {fileID: 1595682096745451105}
+  hearing: {fileID: 1775613148110410251}
+  self: {fileID: 1777867338267871683}
+--- !u!114 &1777867338267871683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7853374298192869115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499b786d5018f443fa2112f03938f149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8321253700985255243}
+  fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  stimulus: {fileID: 358637312651514421}
 --- !u!1 &8588820088700946543
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,13 +247,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8588820088700946543}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.00000011920929, z: -0.647}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.03352785, y: 0.00000011920929, z: 0.66}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 7853374298192869063}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!33 &7055436506361515901
 MeshFilter:
   m_ObjectHideFlags: 0

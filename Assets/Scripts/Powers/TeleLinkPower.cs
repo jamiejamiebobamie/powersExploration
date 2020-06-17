@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleLinkPower : PowersSuperClass, IPowerable
+public class TeleLinkPower : MonoBehaviour, IPowerable
 {
 
     [SerializeField] int numberOfTeleportPositions;
@@ -44,7 +44,7 @@ public class TeleLinkPower : PowersSuperClass, IPowerable
         // highly unlikely the player will
         // have put down a teleLinkPosition right on the origin.
         Vector3 portLocation = Vector3.zero;
- 
+
         foreach (Vector3 position in TeleLinkPositions)
         {
             if (position != currentPosition)
@@ -52,7 +52,7 @@ public class TeleLinkPower : PowersSuperClass, IPowerable
                 //Direction from current position to player position.
                 rayDirection = position - transform.position;
 
-                //Check the angle between the player's forward vector and the 
+                //Check the angle between the player's forward vector and the
                 //direction vector between the player and the teleport position.
                 if ((Vector3.Angle(rayDirection, transform.forward)) < 20)
                 {
@@ -110,11 +110,4 @@ public class TeleLinkPower : PowersSuperClass, IPowerable
         TeleLinkPositionsMarkers[TeleLinkPositionsCount] =
             Instantiate(marker, transform.position, transform.rotation);
     }
-
-    public PowersSuperClass InstantiatePower()
-    {
-        PowersSuperClass instanceOfTeleLinkPower = new TeleLinkPower();
-        return instanceOfTeleLinkPower;
-    }
-
 }

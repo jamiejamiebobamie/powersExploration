@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PyrokinesisPower : PowersSuperClass, IPowerable
+public class PyrokinesisPower : MonoBehaviour, IPowerable
 {
     [SerializeField] private GameObject fire;
     private float particleSystemDuration;
@@ -72,9 +72,4 @@ public class PyrokinesisPower : PowersSuperClass, IPowerable
                 burnable.Burns();
         }
 	}
-    public PowersSuperClass InstantiatePower()
-    {
-        PowersSuperClass instanceOfTelekinesisPower = new PyrokinesisPower();
-        return instanceOfTelekinesisPower;
-    }
 }
