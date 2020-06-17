@@ -8,6 +8,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     [SerializeField] GameObject fire;
      // boolean to show humanoid has been hit
     private bool isStaggered ,isIncapacitated, isBurning;
+    private int tranquilizerDartCount;
     [SerializeField] private Stimulus stimulus;
     System.Random random = new System.Random();
     private void Start()
@@ -16,16 +17,40 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
         isBurning = false;
         isStaggered = false;
         isIncapacitated = false;
+        tranquilizerDartCount = 0;
+    }
+    private void Update()
+    {
+        if (!isStaggered && !isIncapacitated && !isBurning)
+        {
+            if (tranquilizerDartCount>2)
+            {
+                isIncapacitated = true;
+                Debug.Log(isIncapacitated);
+            }
+        }
+        else
+        {
+            Debug.Log("you died from ");
+
+            if (isBurning && isIncapacitated)
+            {
+                Debug.Log("fire");
+            }
+            else if (isStaggered && isIncapacitated)
+            {
+                Debug.Log("telekinesis");
+            }
+            else if (isIncapacitated)
+            {
+                Debug.Log("tranq darts");
+            }
+        }
     }
     // ICopyable ---
     public Mesh GetMesh() { return gameObject.GetComponent<MeshFilter>().mesh; }
     public Vector3 GetPosition() { return transform.position; }
     public Stimulus.origin GetOriginOfStimulus() { return stimulus.GetCurrentOrigin();}
-    public IPowerable GetPower()
-    {
-        IPowerable testPower = GetComponent<IPowerable>();
-        return testPower;
-    }
     // ----
     // IBurnable ---
     public void Burns()
@@ -59,7 +84,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
             int randomBool = random.Next(0, 2);
             if (randomBool > 0)
             {
-                // Debug.Log("true");
+                Debug.Log("isStaggered");
                 isStaggered = true;
             }
         }
@@ -70,5 +95,6 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     // IKillable ---
     public void SetIncapacitated(bool value) { isIncapacitated = value; }
     public bool GetIncapacitated() { return isIncapacitated; }
+    public void IncrementDartCount() {tranquilizerDartCount++;}
     // ----
 }

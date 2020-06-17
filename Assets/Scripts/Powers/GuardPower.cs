@@ -34,7 +34,7 @@ public class GuardPower : MonoBehaviour, IPowerable
         PlayDead();
     }
 
-    void FireTranquilizerDart()
+    private void FireTranquilizerDart()
     {
         Rigidbody projectileInstance;
         projectileInstance = Instantiate(projectile,
@@ -42,8 +42,18 @@ public class GuardPower : MonoBehaviour, IPowerable
         projectileInstance.AddForce(barrelEnd.forward * 1350f);
     }
 
+    public Vector3 getBarrelLocation()
+    {
+        return barrelEnd.position;
+    }
+
+    public Vector3 getBarrelDirection()
+    {
+        return barrelEnd.forward;
+    }
+
     // this needs some more thought...
-    void PlayDead()
+    private void PlayDead()
     {
         if (stimulus.GetCurrentOrigin() == Stimulus.origin.Incapacitated)
             stimulus.SetCurrentOrigin(Stimulus.origin.Guard);

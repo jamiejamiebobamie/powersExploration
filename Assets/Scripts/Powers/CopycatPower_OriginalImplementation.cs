@@ -88,7 +88,7 @@ public class CopycatPower_OriginalImplementation : MonoBehaviour, IPowerable
                         minDist = testDist;
                         closestMesh = testCopyable.GetMesh();
                         meshStimulusOrigin = testCopyable.GetOriginOfStimulus();
-                        copiedPower = testCopyable.GetPower();
+                        // copiedPower = testCopyable.GetPower();
                     }
                 }
             }

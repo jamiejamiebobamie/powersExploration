@@ -75,7 +75,6 @@ public class CopycatPower : MonoBehaviour, IPowerable
             }
         }
 
-
         elapsedTime = 0.0f;
 
         playerStartRotation = transform.rotation;

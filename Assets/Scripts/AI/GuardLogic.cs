@@ -6,11 +6,13 @@ public class GuardLogic : MonoBehaviour
 {
     // reference to gameObject's humanoid script
     [SerializeField] private Humanoid self;
+    [SerializeField] private GuardPower abilities;
     // reference to senses scripts
     [SerializeField] private Sight sight;
     [SerializeField] private Touch touch;
     [SerializeField] private Hearing hearing;
     private bool patientSeen;
+    private bool isFiring;
     // current target.
     private Humanoid targetPatient;
     // list of possible targets
@@ -18,6 +20,7 @@ public class GuardLogic : MonoBehaviour
     private void Start()
     {
         patientSeen = false;
+        isFiring = false;
         Object[] potentialPatients =
             Resources.FindObjectsOfTypeAll(typeof(GameObject));
         foreach (object obj in potentialPatients)
@@ -44,10 +47,10 @@ public class GuardLogic : MonoBehaviour
         {
             targetPatient = GetComponent<Humanoid>();
         }
-}
+    }
     void Update()
     {
-        if (! self.GetIsBurning())
+        if (!self.GetIsBurning() && !self.GetIsStaggered() && !self.GetIncapacitated()) 
         {
             if (!sight.getPatientSeen()
                 && !hearing.getPatientHeard()
@@ -58,15 +61,49 @@ public class GuardLogic : MonoBehaviour
                     transform.position) <= 1.0f)
                     targetPatient = ChooseNewTargetPatient();
                 Wander();
+                if (isFiring)
+                {
+                    StopCoroutine("RayCastToTarget");
+                    isFiring = false;
+                }
             }
             else
             {
                 Vector3 playerLocation = sight.getSeenPatientLocation();
-                // attack and chase patient.
-                Chase(playerLocation);
+                if (Vector3.Distance(playerLocation,
+                    transform.position) <= 15.0f)
+                    {
+                        Quaternion tarRot = Quaternion.LookRotation(playerLocation
+                            - transform.position);
+
+                        transform.rotation = Quaternion.Slerp(transform.rotation, tarRot,
+                            2.0f * Time.deltaTime);
+                            playerLocation = transform.position;
+                    }
+                else
+                {
+                    Chase(playerLocation);
+                }
+                if (!isFiring)
+                {
+                    playerLocation = sight.getSeenPatientLocation();
+                    if (Vector3.Distance(playerLocation,
+                        transform.position) <= 15.0f)
+                        {
+                    // abilities.ActivatePower1();
+                        StartCoroutine("RayCastToTarget");
+                        isFiring = true;
+                } else {
+                    StopCoroutine("RayCastToTarget");
+                }
             }
         }
     }
+    else
+    {
+        StopCoroutine("RayCastToTarget");
+    }
+}
     private void Wander()
     {
         // Set up quaternion for rotation toward destination
@@ -87,9 +124,6 @@ public class GuardLogic : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, tarRot,
             2.0f * Time.deltaTime);
         transform.Translate(new Vector3(0, 0, 5.0f * Time.deltaTime));
-        // RayCastToTarget every 2 seconds
-        // if hit (paitent)
-            // Shoot()
     }
 
     private Humanoid ChooseNewTargetPatient()
@@ -110,12 +144,35 @@ public class GuardLogic : MonoBehaviour
                 }
             }
         }
-        Debug.Log(newTarget.name);
         return newTarget;
     }
 
-    private void RayCastToTarget(){}
-    private void Shoot(){}
+    private IEnumerator RayCastToTarget()
+    {
+        while (true)
+        {
+            Debug.Log("fire");
+            //
+            // Ray ray = new Ray();
+            // Vector3 gunLocation = abilities.getBarrelLocation()+transform.forward*10f;
+            // ray.origin = gunLocation;
+            // ray.direction = transform.forward;
+            //
+            // RaycastHit hit;
+            // if (Physics.Raycast(ray, out hit))
+            // {
+            //     GameObject test = hit.transform.gameObject;
+            //     // Humanoid testHumanoid = test.GetComponent<Humanoid>();
+            //     Debug.Log(test,targetPatient);
+            //         if (test == targetPatient){
+                        // FireTranquilizerDart()
+                        abilities.ActivatePower1();
+            //         }
+            // }
+            yield return new WaitForSeconds(2f);
+
+        }
+    }
 }
 
 // STATES:
