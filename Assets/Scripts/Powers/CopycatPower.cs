@@ -4,236 +4,131 @@ using UnityEngine;
 
 public class CopycatPower : MonoBehaviour, IPowerable
 {
-    System.Random random = new System.Random();
-
-    private GameObject[] sceneObjects;
-    private Dictionary<int, HashSet<Mesh>> Copyables =
-        new Dictionary<int, HashSet<Mesh>>();
+    private GameObject[] gameObjects;
+    private List<ICopyable> Copyables = new List<ICopyable>();
 
     private Mesh baseMesh;
-    public Stimulus stimulus;
+    private Stimulus stimulus;
 
-    RaycastHit hitForward, hitLeft, hitRight, hitBackward, hitUp, hitDown;
+    // keeps track of if the player is an object
+        // and sneaking due to movement.
+    bool movingObject;
 
-    public bool IsCopying
-    {
-        get
-        {
-            return isCopying;
-        }
-        set
-        {
-            isCopying = value;
-            if (!isCopying)
-                gameObject.GetComponent<MeshFilter>().mesh = baseMesh;
-        }
-    }
-
-    bool isWallWalking, isCopying;
-    Vector3 upNormalFromPower;
-    float elapsedTime;
-
-    int HitDistance{ get
-        {
-            return 5;
-        }
-    }
-
-    [SerializeField] Rigidbody rb;
-    Quaternion playerStartRotation;
-    bool playerNormallyRotated = false;
+    IPowerable copiedPower;
 
     void Awake()
     {
+        movingObject = false;
         baseMesh = gameObject.GetComponent<MeshFilter>().mesh;
-        sceneObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+        stimulus = GetComponent<Stimulus>();
 
-        foreach (GameObject obj in sceneObjects)
+        gameObjects = UnityEngine.Object.FindObjectsOfType<GameObject>();
+
+        foreach (GameObject obj in gameObjects)
         {
-            ICopyable copyable = obj.GetComponent<ICopyable>();
-            if (copyable != null)
+            ICopyable test_ICopyable = obj.GetComponent<ICopyable>();
+            if (test_ICopyable != null)
             {
-                int height = (int)copyable.GetPosition().y;
-                Mesh sceneObjectsMesh = copyable.GetMesh();
-
-                HashSet<Mesh> setOfMeshesAtGivenHeight;
-
-                HashSet<Mesh> newSet = new HashSet<Mesh>();
-                // see if that height has a given mesh in the list
-                // if it does add the mesh to the list.
-                if (Copyables.TryGetValue(height, out setOfMeshesAtGivenHeight))
-                {
-                    setOfMeshesAtGivenHeight.Add(sceneObjectsMesh);
-                }
-                // if it does not insert the list with the single mesh
-                else
-                {
-                    newSet.Add(sceneObjectsMesh);
-                    Copyables.Add(height, newSet);
-                    Debug.Log(height);
-                }
+                Copyables.Add(test_ICopyable);
             }
         }
-
-        elapsedTime = 0.0f;
-
-        playerStartRotation = transform.rotation;
-        rb = GetComponent<Rigidbody>();
-        upNormalFromPower = Vector3.up;
+        StartCoroutine("UpdateForm");
     }
 
     public void ActivatePower1()
     {
-        WallWalk();
+        // factory method??
+        // PowersSuperClass instanceOfPower = copiedPower.InstantiatePower();
+        //instanceOfPower = ;
+
+        //if (copiedPower != null)
+        //instanceOfPower = copiedPower.InstantiatePower();
+        //instanceOfPower.ActivatePower1();
+        Copy();
     }
 
     public void ActivatePower2()
     {
-        Copy();
+
     }
 
     private void Copy()
     {
-        Mesh form = baseMesh;
+        Mesh closestMesh = baseMesh;
+        Stimulus.origin meshStimulusOrigin = Stimulus.origin.Patient;
+        float minDist = Mathf.Infinity;
 
-        if (isCopying)
+        // in case player is an object and activates power while sneaking.
+        movingObject = false;
+
+        foreach (ICopyable copyable in Copyables)
         {
-            isCopying = false;
-            stimulus.SetCurrentOrigin(Stimulus.origin.Patient);
-        }
-        else
-        {
-            isCopying = true;
+            Vector3 positionOfCopyable = copyable.GetPosition();
 
-            float roundedHeight = Mathf.Round(transform.position.y);
-            int height = (int)roundedHeight;
+            float testDist = Vector3.Distance(transform.position,
+                positionOfCopyable);
 
-            List<Mesh> returnedMeshes = new List<Mesh>();
-
-            for (int h = height - 5; h < height + 5; h++)
+            if (minDist > testDist)
             {
-                HashSet<Mesh> testMeshSetPerHeight;
-                if (Copyables.TryGetValue(h, out testMeshSetPerHeight))
+                Ray testLineOfSight = new Ray();
+
+                testLineOfSight.origin = transform.position;
+                testLineOfSight.direction =
+                    positionOfCopyable - transform.position;
+
+                RaycastHit hit;
+
+                // test if the copyable can be seen by the player
+                if(Physics.Raycast(testLineOfSight, out hit))
                 {
-                    testMeshSetPerHeight = Copyables[h];
-                    foreach (Mesh m in testMeshSetPerHeight)
+                    ICopyable testCopyable =
+                        hit.transform.gameObject.GetComponent<ICopyable>();
+
+                    if (testCopyable != null)
                     {
-                        returnedMeshes.Add(m);
+                        minDist = testDist;
+                        closestMesh = testCopyable.GetMesh();
+                        meshStimulusOrigin = testCopyable.GetOriginOfStimulus();
+                        // copiedPower = testCopyable.GetPower();
                     }
                 }
             }
-
-            if (returnedMeshes.Count > 0)
-            {
-                stimulus.SetCurrentOrigin(Stimulus.origin.Object);
-                int index = random.Next(0, returnedMeshes.Count);
-                form = returnedMeshes[index];
-            }
         }
 
-        GetComponent<MeshFilter>().mesh = form;
+        if (minDist > 5f)
+        {
+            closestMesh = baseMesh;
+            meshStimulusOrigin = Stimulus.origin.Patient;
+            copiedPower = null;
+        }
+
+        GetComponent<MeshFilter>().mesh = closestMesh;
+        stimulus.SetCurrentOrigin(meshStimulusOrigin);
     }
 
-    void WallWalk()
+    public IEnumerator UpdateForm()
     {
-        if (isWallWalking)
-        {
-            isWallWalking = false;
-            rb.useGravity = true;
-        }
-        else
-        {
-            isWallWalking = true;
-            rb.useGravity = false;
-            playerNormallyRotated = false;
-        }
-    }
+        Vector3 storePosition = Vector3.zero;
+        float distance = 0f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (isWallWalking)
-        { // coroutine
-            elapsedTime += Time.deltaTime;
+        while (true)
+        {
+            distance = Vector3.Distance(storePosition,
+                transform.position);
 
-            if (elapsedTime >= 1.0f)
+            if (distance > .5f
+                && stimulus.GetCurrentOrigin() == Stimulus.origin.Object)
             {
-                upNormalFromPower = RayCastCardinalDirections();
+                stimulus.SetCurrentOrigin(Stimulus.origin.Sneaking);
+                movingObject = true; // storing the Object aspect;
             }
-
-            Quaternion playerRotationFromPower = Quaternion.FromToRotation(Vector3.up, upNormalFromPower);
-
-            if (transform.up != upNormalFromPower)
-                transform.rotation = Quaternion.Lerp(transform.rotation, playerRotationFromPower, .1f);
+            else if (distance < .5f && movingObject)
+                {
+                    stimulus.SetCurrentOrigin(Stimulus.origin.Object);
+                    movingObject = false;
+                }
+            storePosition = transform.position;
+            yield return new WaitForSeconds(.25f);
         }
-        else
-        {
-            if (!playerNormallyRotated)
-            {
-                if (transform.rotation != Quaternion.identity)
-                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.identity, 0.05f);
-                else
-                    playerNormallyRotated = true;
-            }
-        }
-
-        if (IsCopying && rb.velocity.magnitude > 1f)
-                IsCopying = false;
-    }
-
-    Vector3 RayCastCardinalDirections()
-    {
-        int count = 0;
-        upNormalFromPower = Vector3.zero;
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitForward, HitDistance))
-        {
-            upNormalFromPower += hitForward.normal;
-        }
-
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hitForward, HitDistance))
-        {
-            upNormalFromPower += hitForward.normal;
-            count++;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out hitLeft, HitDistance))
-        {
-            upNormalFromPower += hitLeft.normal;
-            count++;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out hitRight, HitDistance))
-        {
-            upNormalFromPower += hitRight.normal;
-            count++;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out hitBackward, HitDistance))
-        {
-            upNormalFromPower += hitBackward.normal;
-            count++;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.up), out hitUp, HitDistance))
-        {
-            upNormalFromPower += hitUp.normal;
-            count++;
-        }
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hitDown, HitDistance))
-        {
-            upNormalFromPower += hitDown.normal;
-            count++;
-        }
-
-        if (count == 0)
-        {
-            isWallWalking = false;
-            rb.useGravity = true;
-            return Vector3.up;
-        }
-
-        upNormalFromPower /= count;
-        upNormalFromPower = Vector3.Normalize(upNormalFromPower);
-
-        if (float.IsNaN(upNormalFromPower.x))
-            upNormalFromPower = Vector3.up;
-
-        return upNormalFromPower;
     }
 }

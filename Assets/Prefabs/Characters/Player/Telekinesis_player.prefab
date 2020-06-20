@@ -193,7 +193,7 @@ GameObject:
   - component: {fileID: 1959602528027786148}
   - component: {fileID: 3568861176545214560}
   m_Layer: 0
-  m_Name: Telekinesis 1
+  m_Name: Telekinesis_player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -293,6 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b51d30a17894f87ac3cac8821288f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  self: {fileID: 3568861176545214560}
 --- !u!114 &3568861176545214560
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,6 +308,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 7753990415840230593}
   fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  stimulus: {fileID: 5344625767388110448}
 --- !u!1 &7906561546741805104
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,6 +36,7 @@ public class GuardLogic : MonoBehaviour
                     patients.Add(testForHumanoid);
                 }
             }
+
         }
         if (patients.Count > 0)
         {
@@ -50,8 +51,12 @@ public class GuardLogic : MonoBehaviour
     }
     void Update()
     {
-        if (!self.GetIsBurning() && !self.GetIsStaggered() && !self.GetIncapacitated()) 
+        if (!self.GetIsBurning() && !self.GetIsStaggered() && !self.GetIncapacitated())
         {
+            if (targetPatient.GetIncapacitated()){
+                targetPatient = ChooseNewTargetPatient();
+            }
+
             if (!sight.getPatientSeen()
                 && !hearing.getPatientHeard()
                 && !touch.getPatientTouched())
@@ -151,28 +156,14 @@ public class GuardLogic : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("fire");
-            //
-            // Ray ray = new Ray();
-            // Vector3 gunLocation = abilities.getBarrelLocation()+transform.forward*10f;
-            // ray.origin = gunLocation;
-            // ray.direction = transform.forward;
-            //
-            // RaycastHit hit;
-            // if (Physics.Raycast(ray, out hit))
-            // {
-            //     GameObject test = hit.transform.gameObject;
-            //     // Humanoid testHumanoid = test.GetComponent<Humanoid>();
-            //     Debug.Log(test,targetPatient);
-            //         if (test == targetPatient){
-                        // FireTranquilizerDart()
-                        abilities.ActivatePower1();
-            //         }
-            // }
-            yield return new WaitForSeconds(2f);
-
+            Debug.Log("fire!");
+                if (sight.getPatientSeen()){
+                    // FireTranquilizerDart();
+                    abilities.ActivatePower1();
+                }
+                yield return new WaitForSeconds(2f);
+            }
         }
-    }
 }
 
 // STATES:

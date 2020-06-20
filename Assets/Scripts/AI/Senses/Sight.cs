@@ -46,11 +46,12 @@ public class Sight : Sense
                 {
                     Stimulus.origin currentOrigin = stimulus.GetCurrentOrigin();
                     //Check the origin of the stimulus.
-                    // Ignore “Sneaking” players CAN be seen.
+                    // Ignore. “Sneaking” players CAN be seen.
                     if (currentOrigin == desiredStimulusOrigin
                         || currentOrigin == Stimulus.origin.Sneaking)
                     {
                           print(desiredStimulusOrigin + " seen!");
+                          // print(playerTrans.transform.gameObject.name);
                           patientSeen = true;
                     }
                 }

@@ -16,8 +16,9 @@ GameObject:
   - component: {fileID: 9038804734432445246}
   - component: {fileID: 8641042567838169993}
   - component: {fileID: 628344823090229645}
+  - component: {fileID: -2267067511391162154}
   m_Layer: 0
-  m_Name: Copycat
+  m_Name: Copycat_player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9c5005e647b4fe8b190fca46811588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspectName: 0
+  stimulusSource: 0
 --- !u!114 &628344823090229645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,7 +154,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b08dd38464e04d3ea9c1bc3c00a881b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aspect: {fileID: 8641042567838169993}
+--- !u!114 &-2267067511391162154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6222707549622507972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 499b786d5018f443fa2112f03938f149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 6222707549622507832}
+  fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  stimulus: {fileID: 8641042567838169993}
 --- !u!1 &6222707550947061291
 GameObject:
   m_ObjectHideFlags: 0

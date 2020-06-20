@@ -8,7 +8,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
 {
     [SerializeField] GameObject fire;
 
-    private bool isBurning, isProjectile, isOrbiting;
+    private bool isBurning, isProjectile, isOrbiting, isThrowable;
     public Stimulus stimulus;
 
     public bool IsOrbiting
@@ -55,6 +55,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         stimulus = GetComponent<Stimulus>();
         isProjectile = false;
         isOrbiting = false;
+        isThrowable = true;
 
         //playersWithTelekinesis = FindObjectsOfType<TelekinesisPower>();
 
@@ -132,7 +133,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     {
         if (!isProjectile)
         {
-            for (; ; )
+            for (;;)
             {
 
                 Vector3 relativePos = (orbitPlayer.transform.position
@@ -184,6 +185,11 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         return baseRotationOrbitSpeed;
     }
 
+    public void setIsThrowable(bool boolean)
+    {
+        isThrowable = boolean;
+    }
+
     public bool GetIsProjectile()
     {
         return isProjectile;
@@ -200,7 +206,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     private void OnCollisionEnter(Collision collision)
     {
         IHittable hittable = collision.gameObject.GetComponent<IHittable>();
-        if (hittable != null)
+        if (hittable != null && isProjectile)
         {
             float hitForce = rb.velocity.magnitude;
             Vector3 hitDirection = Vector3.Normalize(rb.velocity);

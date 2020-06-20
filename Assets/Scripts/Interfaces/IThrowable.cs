@@ -8,6 +8,9 @@ using System.Collections;
 public interface IThrowable
 {
     bool GetIsProjectile();
+    
+    void setIsThrowable(bool boolean);
+
     IEnumerator SetIsProjectileToFalse();
     void BecomeProjectile(Vector3 destination);
 

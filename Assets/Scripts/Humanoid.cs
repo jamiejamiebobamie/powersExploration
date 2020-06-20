@@ -21,12 +21,11 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     }
     private void Update()
     {
-        if (!isStaggered && !isIncapacitated && !isBurning)
+        if (!isIncapacitated)
         {
             if (tranquilizerDartCount>2)
             {
                 isIncapacitated = true;
-                Debug.Log(isIncapacitated);
             }
         }
         else
@@ -75,7 +74,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     {
         rb.isKinematic = false;
         rb.useGravity = true;
-        rb.AddForce(hitForce * hitStrength * 10f);
+        rb.AddForce(hitForce * hitStrength * 5f);
         // activate ragdoll
         if (isStaggered)
             isIncapacitated = true;

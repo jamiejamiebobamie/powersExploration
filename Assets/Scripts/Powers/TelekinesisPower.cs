@@ -7,17 +7,17 @@ public class TelekinesisPower : MonoBehaviour, IPowerable
     List<IThrowable> possibleThrowables = new List<IThrowable>();
     List<Humanoid> humanoids = new List<Humanoid>();
 
-    Queue<IThrowable> throwables = new Queue<IThrowable>();
+    List<IThrowable> throwables = new List<IThrowable>();
     GameObject[] allSceneObjects;
     private bool isBlocking;
+
+    [SerializeField] Humanoid self;// = GetComponent<Humanoid>();
 
     // use: OnCollisionEnter to set the IThrowable to orbit.
         // Remove UpdateQueue() method / implementation.
 
 void Start()
     {
-        Humanoid selfHumanoidScript = GetComponent<Humanoid>();
-
         allSceneObjects = FindObjectsOfType<GameObject>();
         foreach(GameObject o in allSceneObjects)
         {
@@ -28,12 +28,12 @@ void Start()
             }
 
             Humanoid testHumanoid = o.GetComponent<Humanoid>();
-            if (testHumanoid != null && testHumanoid != selfHumanoidScript)
+            if (testHumanoid != null && testHumanoid != self)
             {
                 humanoids.Add(testHumanoid);
             }
         }
-        StartCoroutine("UpdateQueue");
+        StartCoroutine("UpdateThrowables");
     }
 
     public void ActivatePower1()
@@ -56,10 +56,12 @@ void Start()
         }
     }
 
+    public bool GetIsBlocking(){return isBlocking;}
+
     void DefenseMode()
     {
         SetSpeedAndHeight(heightModifier: 4f,
-            transSpeedModifier: 1.5f, rotSpeedModifier: 2f);
+            transSpeedModifier: 2f, rotSpeedModifier: 4f);//4,1.5,2
     }
 
     void AttackMode()
@@ -89,7 +91,8 @@ void Start()
     }
 
     // need to ensure projectile is clear
-    // of player and player's orbiting objects.
+        // of player and player's orbiting objects.
+        // might switch to non-physics-based implementations...
     void Throw()
     {
         if (throwables.Count > 0)
@@ -119,10 +122,7 @@ void Start()
                     }
                 }
             }
-
             Vector3 shootHere = Vector3.zero;
-            IThrowable throwThisOne = throwables.Dequeue();
-
             // if there is a target
             if (possibleTarget != null)
             {
@@ -138,13 +138,52 @@ void Start()
                 if (Physics.Raycast(ray, out hit))
                     shootHere = hit.point;
             }
-
+            // find the IThrowable that is closest to the target.
+            IThrowable throwThisOne = FindClosestThrowable(shootHere);
             throwThisOne.BecomeProjectile(shootHere);
-
         }
     }
 
-    IEnumerator UpdateQueue()
+    public void BlockedAttack(Vector3 directionOfAttack)
+    {
+        IThrowable throwableThatBlockedAttack = FindClosestThrowable(directionOfAttack);
+
+        Vector3 upOrDownVec = Vector3.zero;
+        bool ricochetLeft = Random.value >= 0.5;
+        if(ricochetLeft)
+        {
+            upOrDownVec = Vector3.up;
+        }
+        else
+        {
+            upOrDownVec = Vector3.down;
+        }
+        Vector3 perpVec = Vector3.Cross(directionOfAttack, upOrDownVec).normalized;
+        Vector3 shootHere = self.GetPosition() + perpVec * 5.0f;
+        throwableThatBlockedAttack.BecomeProjectile(shootHere);
+    }
+
+    private IThrowable FindClosestThrowable(Vector3 shootHere)
+    {
+        IThrowable throwThisOne = null;
+
+        float minDistanceToTarget = Mathf.Infinity;
+        foreach (IThrowable t in throwables)
+        {
+            Vector3 positionOfThrowable = t.GetPosition();
+            Vector3 vectorToThrow = shootHere - positionOfThrowable;
+            float distanceToThrow = vectorToThrow.magnitude;
+            if (minDistanceToTarget > distanceToThrow)
+            {
+                minDistanceToTarget = distanceToThrow;
+                throwThisOne = t;
+            }
+        }
+        throwables.Remove(throwThisOne);
+        return throwThisOne;
+    }
+
+    private IEnumerator UpdateThrowables()
     {
         while (true)
         {
@@ -156,8 +195,18 @@ void Start()
                 if (!throwables.Contains(t)
                     && distanceFromPlayer < 2f && !t.GetIsProjectile())
                 {
-                    throwables.Enqueue(t);
+                    throwables.Add(t);
                     t.SetObjectToOrbit(gameObject);
+                    // add new IThrowable to throwables and call the correct method
+                        // to set the throwable's height, rotation speed, translation, speed of orbit.
+                    if (isBlocking)
+                    {
+                        DefenseMode();
+                    }
+                    else
+                    {
+                        AttackMode();
+                    }
                 }
             }
             yield return new WaitForSeconds(.5f);
