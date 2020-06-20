@@ -49,6 +49,10 @@ public class CopycatPower : Power//, IPowerable
         foreach(Humanoid h in humanoids)
         {
             print(h.name+" is dead: "+h.GetIncapacitated());
+            if (h.GetIncapacitated())
+            {
+                h.RemoveFromGameWorld();
+            }
         }
 
     }

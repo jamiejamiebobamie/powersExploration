@@ -96,4 +96,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     public bool GetIncapacitated() { return isIncapacitated; }
     public void IncrementDartCount() {tranquilizerDartCount++;}
     // ----
+
+    public void RemoveFromGameWorld(){Destroy(transform.gameObject);}
+
 }
