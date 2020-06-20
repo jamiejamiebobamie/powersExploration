@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CopycatPower : MonoBehaviour, IPowerable
+public class CopycatPower : Power//, IPowerable
 {
     private GameObject[] gameObjects;
     private List<ICopyable> Copyables = new List<ICopyable>();
@@ -13,8 +13,6 @@ public class CopycatPower : MonoBehaviour, IPowerable
     // keeps track of if the player is an object
         // and sneaking due to movement.
     bool movingObject;
-
-    IPowerable copiedPower;
 
     void Awake()
     {
@@ -35,7 +33,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
         StartCoroutine("UpdateForm");
     }
 
-    public void ActivatePower1()
+    public override void ActivatePower1()
     {
         // factory method??
         // PowersSuperClass instanceOfPower = copiedPower.InstantiatePower();
@@ -47,7 +45,7 @@ public class CopycatPower : MonoBehaviour, IPowerable
         Copy();
     }
 
-    public void ActivatePower2()
+    public override void ActivatePower2()
     {
 
     }
@@ -99,7 +97,6 @@ public class CopycatPower : MonoBehaviour, IPowerable
         {
             closestMesh = baseMesh;
             meshStimulusOrigin = Stimulus.origin.Patient;
-            copiedPower = null;
         }
 
         GetComponent<MeshFilter>().mesh = closestMesh;

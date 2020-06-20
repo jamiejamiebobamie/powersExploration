@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardPower : MonoBehaviour, IPowerable
+public class GuardPower : Power//, IPowerable
 {
 
     [SerializeField] private Rigidbody projectile;
@@ -15,12 +15,12 @@ public class GuardPower : MonoBehaviour, IPowerable
         stimulus = GetComponent<Stimulus>();
     }
 
-    public void ActivatePower1()
+    public override void ActivatePower1()
     {
         FireTranquilizerDart();
     }
 
-    public void ActivatePower2()
+    public override void ActivatePower2()
     {
 
         // isIncapacitated = true

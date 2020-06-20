@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower : MonoBehaviour, IPowerable
+public class WallWalkingPower : MonoBehaviour//, IPowerable
 {
 
     // raycast to wall and using the hit normal

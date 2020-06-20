@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class telekinesis_rusty : MonoBehaviour, IPowerable
+public class telekinesis_rusty : MonoBehaviour//, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
     List<Humanoid> humanoids = new List<Humanoid>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PyrokinesisPower : MonoBehaviour, IPowerable
+public class PyrokinesisPower : Power//, IPowerable
 {
     [SerializeField] private GameObject fire;
     private float particleSystemDuration;
@@ -20,12 +20,12 @@ public class PyrokinesisPower : MonoBehaviour, IPowerable
         }
     }
 
-    public void ActivatePower1()
+    public override void ActivatePower1()
 	{
         RaycastToBurnable();
     }
 
-    public void ActivatePower2()
+    public override void ActivatePower2()
     {
         return;
     }

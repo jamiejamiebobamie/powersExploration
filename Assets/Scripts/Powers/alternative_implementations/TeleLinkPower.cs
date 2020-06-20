@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleLinkPower : MonoBehaviour, IPowerable
+public class TeleLinkPower : MonoBehaviour//, IPowerable
 {
 
     [SerializeField] int numberOfTeleportPositions;

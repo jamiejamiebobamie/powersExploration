@@ -16,8 +16,12 @@ GameObject:
   - component: {fileID: 2267654370121269582}
   - component: {fileID: 5648173016910931098}
   - component: {fileID: 7265602694122348382}
+  - component: {fileID: -6090830764322187903}
+  - component: {fileID: 1800475403548807042}
+  - component: {fileID: -6213605801252728741}
+  - component: {fileID: 6430210139965088962}
   m_Layer: 0
-  m_Name: Telekinesis 1
+  m_Name: Telekinesis_npc
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -139,6 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b51d30a17894f87ac3cac8821288f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  self: {fileID: 7265602694122348382}
 --- !u!114 &7265602694122348382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +158,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4523877097584796671}
   fire: {fileID: 1000013462590818, guid: 1644322bdf7814613b676bb84a26ca13, type: 3}
+  stimulus: {fileID: 2267654370121269582}
+--- !u!114 &-6090830764322187903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523877097584796419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4099b88104ebf49d89483ecc8cc530b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  self: {fileID: 7265602694122348382}
+  power: {fileID: 5648173016910931098}
+  sight: {fileID: 1800475403548807042}
+  touch: {fileID: 6430210139965088962}
+  hearing: {fileID: -6213605801252728741}
+--- !u!114 &1800475403548807042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523877097584796419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16c30f09188924229b3b161802497bf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRate: 1
+  player: {fileID: 0}
+  targetOriginType: 0
+--- !u!114 &-6213605801252728741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523877097584796419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4fe4143cb82046ef9d7770d232a5e8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRate: 1
+  player: {fileID: 0}
+  SoundDistance: 50
+--- !u!114 &6430210139965088962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523877097584796419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f5df1bae2c24a6f842ea92e4f23112, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRate: 1
+  player: {fileID: 0}
 --- !u!1 &6488547483348494789
 GameObject:
   m_ObjectHideFlags: 0

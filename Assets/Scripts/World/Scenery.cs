@@ -88,11 +88,6 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
     public Vector3 GetPosition() { return transform.position; }
     public Stimulus.origin GetOriginOfStimulus()
         { return stimulus.GetCurrentOrigin(); }
-    public IPowerable GetPower()
-    {
-        IPowerable testPower = GetComponent<IPowerable>();
-        return testPower;
-    }
     // ---
 
     // IBurnable ---

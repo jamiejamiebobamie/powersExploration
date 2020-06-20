@@ -17,13 +17,13 @@ public class CapsuleController : MonoBehaviour
     private bool movingObject;
 
     public Stimulus.origin aspectNameStored;
-    [SerializeField] private IPowerable[] powers;
-    [SerializeField] private IPowerable power1,power2;
+    [SerializeField] private Power[] powers;
+    [SerializeField] private Power power1,power2;
 
     // Start is called before the first frame update
     void Start()
     {
-        powers = GetComponents<IPowerable>();
+        powers = GetComponents<Power>();
 
         power1 = powers[0];
 

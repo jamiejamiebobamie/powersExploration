@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GuardLogic : MonoBehaviour
+public class Logic : MonoBehaviour
 {
     // reference to gameObject's humanoid script
     [SerializeField] private Humanoid self;
-    [SerializeField] private GuardPower abilities;
+    [SerializeField] private Power power;
     // reference to senses scripts
     [SerializeField] private Sight sight;
     [SerializeField] private Touch touch;
     [SerializeField] private Hearing hearing;
-    private bool patientSeen;
+    private bool targetSeen;
     private bool isFiring;
     // current target.
-    private Humanoid targetPatient;
+    private Humanoid target;
     // list of possible targets
-    private List<Humanoid> patients = new List<Humanoid>();
+    private List<Humanoid> targets = new List<Humanoid>();
     private void Start()
     {
-        patientSeen = false;
+        targetSeen = false;
         isFiring = false;
-        Object[] potentialPatients =
+        Object[] potentialTargets =
             Resources.FindObjectsOfTypeAll(typeof(GameObject));
-        foreach (object obj in potentialPatients)
+        foreach (object obj in potentialTargets)
         {
             GameObject go = (GameObject)obj;
             Humanoid testForHumanoid = go.GetComponent<Humanoid>();
@@ -31,40 +31,41 @@ public class GuardLogic : MonoBehaviour
             {
                 Stimulus.origin testForStimulus
                     = testForHumanoid.GetOriginOfStimulus();
-                if (testForStimulus == Stimulus.origin.Patient && !patients.Contains(testForHumanoid))
+                if (testForStimulus == sight.getDesiredTarget() && !targets.Contains(testForHumanoid))
                 {
-                    patients.Add(testForHumanoid);
+                    targets.Add(testForHumanoid);
                 }
             }
 
         }
-        if (patients.Count > 0)
+        if (targets.Count > 0)
         {
-            targetPatient = ChooseNewTargetPatient();
-            if (targetPatient == null)
-                targetPatient = GetComponent<Humanoid>();
+            target = ChooseNewTarget();
+            if (target == null)
+                target = GetComponent<Humanoid>();
         }
         else
         {
-            targetPatient = GetComponent<Humanoid>();
+            target = GetComponent<Humanoid>();
         }
     }
     void Update()
     {
         if (!self.GetIsBurning() && !self.GetIsStaggered() && !self.GetIncapacitated())
         {
-            if (targetPatient.GetIncapacitated()){
-                targetPatient = ChooseNewTargetPatient();
+            if (target.GetIncapacitated()){
+                target = ChooseNewTarget();
+                sight.resetSeen();
             }
 
-            if (!sight.getPatientSeen()
+            if (!sight.getTargetSeen()
                 && !hearing.getPatientHeard()
                 && !touch.getPatientTouched())
             {
                 // Check if we're near the destination position
-                if (Vector3.Distance(targetPatient.GetPosition(),
+                if (Vector3.Distance(target.GetPosition(),
                     transform.position) <= 1.0f)
-                    targetPatient = ChooseNewTargetPatient();
+                    target = ChooseNewTarget();
                 Wander();
                 if (isFiring)
                 {
@@ -74,7 +75,7 @@ public class GuardLogic : MonoBehaviour
             }
             else
             {
-                Vector3 playerLocation = sight.getSeenPatientLocation();
+                Vector3 playerLocation = sight.getSeenTargetLocation();
                 if (Vector3.Distance(playerLocation,
                     transform.position) <= 15.0f)
                     {
@@ -91,7 +92,7 @@ public class GuardLogic : MonoBehaviour
                 }
                 if (!isFiring)
                 {
-                    playerLocation = sight.getSeenPatientLocation();
+                    playerLocation = sight.getSeenTargetLocation();
                     if (Vector3.Distance(playerLocation,
                         transform.position) <= 15.0f)
                         {
@@ -112,7 +113,7 @@ public class GuardLogic : MonoBehaviour
     private void Wander()
     {
         // Set up quaternion for rotation toward destination
-        Quaternion tarRot = Quaternion.LookRotation(targetPatient.GetPosition()
+        Quaternion tarRot = Quaternion.LookRotation(target.GetPosition()
             - transform.position);
         // Update rotation and translation
         transform.rotation = Quaternion.Slerp(transform.rotation, tarRot,
@@ -131,11 +132,11 @@ public class GuardLogic : MonoBehaviour
         transform.Translate(new Vector3(0, 0, 5.0f * Time.deltaTime));
     }
 
-    private Humanoid ChooseNewTargetPatient()
+    private Humanoid ChooseNewTarget()
     {
         float minDistance = Mathf.Infinity;
         Humanoid newTarget = null;
-        foreach (Humanoid patient in patients)
+        foreach (Humanoid patient in targets)
         {
             if (!patient.GetIncapacitated())
             {
@@ -157,9 +158,9 @@ public class GuardLogic : MonoBehaviour
         while (true)
         {
             Debug.Log("fire!");
-                if (sight.getPatientSeen()){
+                if (sight.getTargetSeen()){
                     // FireTranquilizerDart();
-                    abilities.ActivatePower1();
+                    power.ActivatePower1();
                 }
                 yield return new WaitForSeconds(2f);
             }

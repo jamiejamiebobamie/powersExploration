@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WallWalkingPower1 : MonoBehaviour, IPowerable
+public class WallWalkingPower1 : MonoBehaviour//, IPowerable
 {
     // second attempt at the wall walking ability.
     // press mouse button to activate and deactivate.

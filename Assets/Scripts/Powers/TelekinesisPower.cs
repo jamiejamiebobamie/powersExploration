@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TelekinesisPower : MonoBehaviour, IPowerable
+public class TelekinesisPower : Power//, IPowerable
 {
     List<IThrowable> possibleThrowables = new List<IThrowable>();
     List<Humanoid> humanoids = new List<Humanoid>();
@@ -36,13 +36,13 @@ void Start()
         StartCoroutine("UpdateThrowables");
     }
 
-    public void ActivatePower1()
+    public override void ActivatePower1()
     {
         if (!isBlocking)
             Throw();
     }
 
-    public void ActivatePower2()
+    public override void ActivatePower2()
     {
         if (isBlocking)
         {
