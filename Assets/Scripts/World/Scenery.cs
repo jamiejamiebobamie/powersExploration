@@ -35,8 +35,8 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         }
     }
 
-    // a reference to the player that the item is orbiting around
-    private GameObject orbitPlayer;
+    // a reference to the target that the item is orbiting around
+    private GameObject orbitTarget;
 
     //private TelekinesisPower[] playersWithTelekinesis;
     //private List<Collider> telekinesisPlayerColliders = new List<Collider>();
@@ -130,8 +130,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
         {
             for (;;)
             {
-
-                Vector3 relativePos = (orbitPlayer.transform.position
+                Vector3 relativePos = (orbitTarget.transform.position
                 + new Vector3(0, orbitHeight, 0)) - transform.position;
 
                 Quaternion rotation = Quaternion.LookRotation(relativePos);
@@ -192,7 +191,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
 
     public void SetObjectToOrbit(GameObject objectToOrbit)
     {
-        orbitPlayer = objectToOrbit;
+        orbitTarget = objectToOrbit;
         IsOrbiting = true;
         StartCoroutine("Orbit");
     }

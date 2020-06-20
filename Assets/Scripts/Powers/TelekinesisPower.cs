@@ -31,6 +31,7 @@ void Start()
             if (testHumanoid != null && testHumanoid != self)
             {
                 humanoids.Add(testHumanoid);
+                Debug.Log(testHumanoid);
             }
         }
         StartCoroutine("UpdateThrowables");
@@ -189,11 +190,11 @@ void Start()
         {
             foreach (IThrowable t in possibleThrowables)
             {
-                float distanceFromPlayer = (transform.position
+                float distanceFromPowerOwner = (transform.position
                     - t.GetPosition()).magnitude;
 
                 if (!throwables.Contains(t)
-                    && distanceFromPlayer < 2f && !t.GetIsProjectile())
+                    && distanceFromPowerOwner < 2f && !t.GetIsProjectile())
                 {
                     throwables.Add(t);
                     t.SetObjectToOrbit(gameObject);

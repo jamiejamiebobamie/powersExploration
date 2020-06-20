@@ -7,6 +7,10 @@ public class CopycatPower : Power//, IPowerable
     private GameObject[] gameObjects;
     private List<ICopyable> Copyables = new List<ICopyable>();
 
+    // testing.
+    private List<Humanoid> humanoids = new List<Humanoid>();
+
+
     private Mesh baseMesh;
     private Stimulus stimulus;
 
@@ -29,8 +33,24 @@ public class CopycatPower : Power//, IPowerable
             {
                 Copyables.Add(test_ICopyable);
             }
+
+            Humanoid test_h = obj.GetComponent<Humanoid>();
+            if (test_h != null)
+            {
+                humanoids.Add(test_h);
+            }
         }
         StartCoroutine("UpdateForm");
+    }
+    // copycat is never an npc.
+        // using this fact to do debugging.
+    void Update()
+    {
+        foreach(Humanoid h in humanoids)
+        {
+            print(h.name+" is dead: "+h.GetIncapacitated());
+        }
+
     }
 
     public override void ActivatePower1()

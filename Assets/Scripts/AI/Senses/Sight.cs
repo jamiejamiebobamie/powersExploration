@@ -33,6 +33,7 @@ public class Sight : Sense
     protected override void UpdateSense()
     {
         elapsedTime += Time.deltaTime;
+        targetSeen = false;
         // Detect perspective sense if within the detection rate
         if (elapsedTime >= detectionRate) DetectAspect();
     }

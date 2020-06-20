@@ -11,6 +11,10 @@ public class Logic : MonoBehaviour
     [SerializeField] private Sight sight;
     [SerializeField] private Touch touch;
     [SerializeField] private Hearing hearing;
+    [SerializeField] private float powerOneDelay;
+    [SerializeField] private float powerTwoDelay;
+
+
     private bool targetSeen;
     private bool isFiring;
     // current target.
@@ -38,20 +42,22 @@ public class Logic : MonoBehaviour
             }
 
         }
-        if (targets.Count > 0)
-        {
-            target = ChooseNewTarget();
-            if (target == null)
-                target = GetComponent<Humanoid>();
-        }
-        else
-        {
-            target = GetComponent<Humanoid>();
-        }
+        target = ChooseNewTarget();
+        Debug.Log(target.name);
+        // if (targets.Count > 0)
+        // {
+        //     target = ChooseNewTarget();
+        //     if (target == null)
+        //         target = GetComponent<Humanoid>();
+        // }
+        // else
+        // {
+        //     target = GetComponent<Humanoid>();
+        // }
     }
     void Update()
     {
-        if (!self.GetIsBurning() && !self.GetIsStaggered() && !self.GetIncapacitated())
+        if (!self.GetIncapacitated())
         {
             if (target.GetIncapacitated()){
                 target = ChooseNewTarget();
@@ -135,17 +141,17 @@ public class Logic : MonoBehaviour
     {
         float minDistance = Mathf.Infinity;
         Humanoid newTarget = null;
-        foreach (Humanoid patient in targets)
+        foreach (Humanoid t in targets)
         {
-            if (!patient.GetIncapacitated())
+            if (!t.GetIncapacitated())
             {
                 float testDistance
                     = Vector3.Distance(transform.position,
-                    patient.GetPosition());
+                    t.GetPosition());
                 if (testDistance < minDistance)
                 {
                     minDistance = testDistance;
-                    newTarget = patient;
+                    newTarget = t;
                 }
             }
         }
@@ -161,7 +167,7 @@ public class Logic : MonoBehaviour
                     // FireTranquilizerDart();
                     power.ActivatePower1();
                 }
-                yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(powerOneDelay);
             }
         }
 }

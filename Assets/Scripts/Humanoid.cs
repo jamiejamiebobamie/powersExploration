@@ -62,7 +62,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
         isIncapacitated = true;
         // other functionality.
         // instantiate "burned" model after x seconds, etc.
-        Destroy(gameObject,5f); // destroy npc.
+        // Destroy(gameObject,5f); // destroy npc.
     }
     public bool GetIsBurning()
     {

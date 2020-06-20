@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRate: 1
   player: {fileID: 0}
-  targetOriginType: 0
+  targetOriginType: 1
 --- !u!114 &-6213605801252728741
 MonoBehaviour:
   m_ObjectHideFlags: 0

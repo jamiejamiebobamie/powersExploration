@@ -193,7 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
   SoundDistance: 300
 --- !u!114 &2929564312480963941
 MonoBehaviour:
@@ -208,7 +207,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
   targetOriginType: 0
 --- !u!114 &1595682096745451105
 MonoBehaviour:
@@ -223,7 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
 --- !u!54 &8321253700985255243
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -285,6 +282,8 @@ MonoBehaviour:
   sight: {fileID: 2929564312480963941}
   touch: {fileID: 1595682096745451105}
   hearing: {fileID: 1775613148110410251}
+  powerOneDelay: 2
+  powerTwoDelay: 0
 --- !u!114 &1777867338267871683
 MonoBehaviour:
   m_ObjectHideFlags: 0
