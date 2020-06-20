@@ -49,7 +49,7 @@ public class Logic : MonoBehaviour
             }
         }
         target = ChooseNewTarget();
-        Debug.Log(target);
+        // Debug.Log(target);
     }
     void Update()
     {
@@ -59,10 +59,21 @@ public class Logic : MonoBehaviour
         {
             // if target is dead.
                 // choose a new target.
+            if (target)
+            {
+
+
             if (target.GetIncapacitated())
             {
-                target = ChooseNewTarget();
-                sight.resetSeen();
+                // TESTING
+                
+                // Humanoid newTarget = ChooseNewTarget();
+                // target = newTarget;
+                // sight.resetSeen();
+                target = null;
+                StopCoroutine("RayCastToTarget");
+
+            }
             }
             // if you can't sense the target.
             if (!sight.getTargetSeen()
@@ -147,20 +158,26 @@ public class Logic : MonoBehaviour
 
     private Humanoid ChooseNewTarget()
     {
-        float minDistance = Mathf.Infinity;
         Humanoid newTarget = null;
-        foreach (Humanoid t in targets)
+        if (targets.Count>0)
         {
-            if (!t.GetIncapacitated())
+            float minDistance = Mathf.Infinity;
+            foreach (Humanoid t in targets)
             {
-                float testDistance
-                    = Vector3.Distance(transform.position,
-                    t.GetPosition());
-                if (testDistance < minDistance)
+                if (!t.GetIncapacitated())
                 {
-                    minDistance = testDistance;
-                    newTarget = t;
+                    print(t);
+                    float testDistance = Vector3.Distance(transform.position, t.GetPosition());
+                    if (testDistance < minDistance)
+                    {
+                        minDistance = testDistance;
+                        newTarget = t;
+                    }
                 }
+                // else
+                // {
+                //     targets.Remove(t);
+                // }
             }
         }
         return newTarget;
@@ -170,7 +187,7 @@ public class Logic : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log("fire!");
+            // Debug.Log("fire!");
                 if (sight.getTargetSeen()){
                     // FireTranquilizerDart();
                     power.ActivatePower1();
