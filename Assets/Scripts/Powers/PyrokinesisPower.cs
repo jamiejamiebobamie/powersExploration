@@ -32,6 +32,7 @@ public class PyrokinesisPower : Power//, IPowerable
 
     void RaycastToBurnable()
 	{
+        Debug.Log("rdy to burn");
         Ray ray = new Ray();
 
         if (npc)

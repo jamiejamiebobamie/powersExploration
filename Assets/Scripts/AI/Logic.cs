@@ -57,7 +57,6 @@ public class Logic : MonoBehaviour
                 target = ChooseNewTarget();
                 sight.resetSeen();
             }
-
             if (!sight.getTargetSeen()
                 && !hearing.getPatientHeard()
                 && !touch.getPatientTouched())
