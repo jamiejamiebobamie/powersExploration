@@ -205,7 +205,7 @@ public class Scenery : MonoBehaviour, ICopyable, IThrowable
             float hitForce = rb.velocity.magnitude;
             Vector3 hitDirection = Vector3.Normalize(rb.velocity);
 
-            hittable.ApplyHitForce(hitDirection, hitForce);
+            hittable.ApplyHitForce(hitDirection, hitForce, orbitTarget.name);
         }
     }
 }

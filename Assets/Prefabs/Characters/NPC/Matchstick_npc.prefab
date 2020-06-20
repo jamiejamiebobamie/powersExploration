@@ -215,11 +215,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   self: {fileID: 5515119078273745302}
   power: {fileID: 3308442252370074211}
+  powerOneDelay: 5
+  powerTwoDelay: 3
+  attackDistance: 15
   sight: {fileID: 1357553019808074207}
   touch: {fileID: -8253759380725332280}
   hearing: {fileID: 7534209572182957573}
-  powerOneDelay: 5
-  powerTwoDelay: 0
 --- !u!1001 &2215132765105548531
 PrefabInstance:
   m_ObjectHideFlags: 0

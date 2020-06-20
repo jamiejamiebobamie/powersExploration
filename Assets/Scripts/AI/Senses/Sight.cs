@@ -35,7 +35,11 @@ public class Sight : Sense
         elapsedTime += Time.deltaTime;
         targetSeen = false;
         // Detect perspective sense if within the detection rate
-        if (elapsedTime >= detectionRate) DetectAspect();
+        if (elapsedTime >= detectionRate)
+        {
+            resetSeen();
+            DetectAspect();
+        };
     }
     public bool getTargetSeen(){
         return targetSeen;

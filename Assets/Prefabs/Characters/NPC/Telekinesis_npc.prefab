@@ -173,6 +173,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   self: {fileID: 7265602694122348382}
   power: {fileID: 5648173016910931098}
+  powerOneDelay: 3
+  powerTwoDelay: 3
+  attackDistance: 15
   sight: {fileID: 1800475403548807042}
   touch: {fileID: 6430210139965088962}
   hearing: {fileID: -6213605801252728741}
@@ -189,7 +192,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
   targetOriginType: 1
 --- !u!114 &-6213605801252728741
 MonoBehaviour:
@@ -204,7 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
   SoundDistance: 50
 --- !u!114 &6430210139965088962
 MonoBehaviour:
@@ -219,7 +220,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRate: 1
-  player: {fileID: 0}
 --- !u!1 &6488547483348494789
 GameObject:
   m_ObjectHideFlags: 0

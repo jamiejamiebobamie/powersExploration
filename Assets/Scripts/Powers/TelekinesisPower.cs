@@ -31,7 +31,7 @@ void Start()
             if (testHumanoid != null && testHumanoid != self)
             {
                 humanoids.Add(testHumanoid);
-                Debug.Log(testHumanoid);
+                // Debug.Log(testHumanoid);
             }
         }
         StartCoroutine("UpdateThrowables");
@@ -58,6 +58,7 @@ void Start()
     }
 
     public bool GetIsBlocking(){return isBlocking;}
+    public bool GetHasThrowables(){return throwables.Count>0;}
 
     void DefenseMode()
     {

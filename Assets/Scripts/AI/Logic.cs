@@ -4,25 +4,27 @@ using UnityEngine;
 
 public class Logic : MonoBehaviour
 {
-    // reference to gameObject's humanoid script
+    // only one.
+    Humanoid player;
+
     [SerializeField] private Humanoid self;
     [SerializeField] private Power power;
+    [SerializeField] private float powerOneDelay;
+    [SerializeField] private float powerTwoDelay;
+    [SerializeField] private float attackDistance;
+    private bool isFiring;
+
     // reference to senses scripts
     [SerializeField] private Sight sight;
     [SerializeField] private Touch touch;
     [SerializeField] private Hearing hearing;
-    [SerializeField] private float powerOneDelay;
-    [SerializeField] private float powerTwoDelay;
-
-
     private bool targetSeen;
-    private bool isFiring;
-    // current target.
     private Humanoid target;
-    // list of possible targets
     private List<Humanoid> targets = new List<Humanoid>();
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Humanoid>();
+
         targetSeen = false;
         isFiring = false;
         Object[] potentialTargets =
@@ -30,55 +32,56 @@ public class Logic : MonoBehaviour
         foreach (object obj in potentialTargets)
         {
             GameObject go = (GameObject)obj;
-            Humanoid testForHumanoid = go.GetComponent<Humanoid>();
-            if (testForHumanoid)
+            Humanoid test_H = go.GetComponent<Humanoid>();
+            if (test_H != null)
             {
-                Stimulus.origin testForStimulus
-                    = testForHumanoid.GetOriginOfStimulus();
-                if (testForStimulus == sight.getDesiredTarget() && !targets.Contains(testForHumanoid))
+                // object instance comparison wasn't working.
+                    // object scene names are unique.
+                if (test_H.name != self.name)
                 {
-                    targets.Add(testForHumanoid);
+                    Stimulus.origin test_S = test_H.GetOriginOfStimulus();
+
+                    if (test_S == sight.getDesiredTarget())// && !targets.Contains(test_H))
+                    {
+                        targets.Add(test_H);
+                    }
                 }
             }
-
         }
         target = ChooseNewTarget();
-        Debug.Log(target.name);
-        // if (targets.Count > 0)
-        // {
-        //     target = ChooseNewTarget();
-        //     if (target == null)
-        //         target = GetComponent<Humanoid>();
-        // }
-        // else
-        // {
-        //     target = GetComponent<Humanoid>();
-        // }
+        Debug.Log(target);
     }
     void Update()
     {
+        // Debug.Log(target);
+        // if not dead.
         if (!self.GetIncapacitated())
         {
-            if (target.GetIncapacitated()){
+            // if target is dead.
+                // choose a new target.
+            if (target.GetIncapacitated())
+            {
                 target = ChooseNewTarget();
                 sight.resetSeen();
             }
+            // if you can't sense the target.
             if (!sight.getTargetSeen()
                 && !hearing.getPatientHeard()
                 && !touch.getPatientTouched())
             {
-                // Check if we're near the destination position
-                if (Vector3.Distance(target.GetPosition(),
-                    transform.position) <= 1.0f)
-                    target = ChooseNewTarget();
-                Wander();
+                // walk casually to the player.
+                    // just for testing...
+                Vector3 goHere = player.GetPosition();
+                Wander(goHere);
+                // if firing. stop.
                 if (isFiring)
                 {
                     StopCoroutine("RayCastToTarget");
                     isFiring = false;
                 }
             }
-            else
+            // if you can sense the target.
+            else if (sight.getTargetSeen())
             {
                 Vector3 playerLocation = sight.getSeenTargetLocation();
                 if (Vector3.Distance(playerLocation,
@@ -99,15 +102,20 @@ public class Logic : MonoBehaviour
                 {
                     playerLocation = sight.getSeenTargetLocation();
                     if (Vector3.Distance(playerLocation,
-                        transform.position) <= 15.0f)
+                        transform.position) <= attackDistance)
                         {
-                    // abilities.ActivatePower1();
                         StartCoroutine("RayCastToTarget");
                         isFiring = true;
-                } else {
-                    StopCoroutine("RayCastToTarget");
-                }
+                    }
+                    else
+                    {
+                        StopCoroutine("RayCastToTarget");
+                    }
             }
+        }
+        else
+        {
+            // follow the other senses...
         }
     }
     else
@@ -115,10 +123,10 @@ public class Logic : MonoBehaviour
         StopCoroutine("RayCastToTarget");
     }
 }
-    private void Wander()
+    private void Wander(Vector3 gohere)
     {
         // Set up quaternion for rotation toward destination
-        Quaternion tarRot = Quaternion.LookRotation(target.GetPosition()
+        Quaternion tarRot = Quaternion.LookRotation(gohere
             - transform.position);
         // Update rotation and translation
         transform.rotation = Quaternion.Slerp(transform.rotation, tarRot,

@@ -18,7 +18,8 @@ public class TranquilizerDartProjectile : MonoBehaviour
             // check to see if the player has the telekinsis power
             if (test_TP){
                 // check to see if the player is blocking with the telekinesis power
-                if (test_TP.GetIsBlocking()){
+                    // and that he has something to block with.
+                if (test_TP.GetIsBlocking() && test_TP.GetHasThrowables()){
                     test_TP.BlockedAttack(collision.relativeVelocity);
                 }
                 // if not blocking, perform normally.

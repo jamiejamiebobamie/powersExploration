@@ -30,7 +30,7 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
         }
         else
         {
-            Debug.Log("you died from ");
+            Debug.Log(gameObject.name+" died from ");
 
             if (isBurning && isIncapacitated)
             {
@@ -70,21 +70,24 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     }
     // ----
     // IHittable ---
-    public void ApplyHitForce(Vector3 hitForce, float hitStrength)
+    public void ApplyHitForce(Vector3 hitForce, float hitStrength, string powerOwnerName)
     {
-        rb.isKinematic = false;
-        rb.useGravity = true;
-        rb.AddForce(hitForce * hitStrength * 5f);
+        // rb.isKinematic = false;
+        // rb.useGravity = true;
+        // rb.AddForce(hitForce * hitStrength * 5f);
         // activate ragdoll
-        if (isStaggered)
-            isIncapacitated = true;
-        else
+        if (gameObject.name != powerOwnerName)
         {
-            int randomBool = random.Next(0, 2);
-            if (randomBool > 0)
+            if (isStaggered)
+                isIncapacitated = true;
+            else
             {
-                Debug.Log("isStaggered");
-                isStaggered = true;
+                int randomBool = random.Next(0, 2);
+                if (randomBool > 0)
+                {
+                    Debug.Log("isStaggered");
+                    isStaggered = true;
+                }
             }
         }
     }
@@ -98,5 +101,4 @@ public class Humanoid : MonoBehaviour, ICopyable, IBurnable, IHittable, IKillabl
     // ----
 
     public void RemoveFromGameWorld(){Destroy(transform.gameObject);}
-
 }
