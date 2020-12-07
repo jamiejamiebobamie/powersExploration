@@ -9,6 +9,8 @@ The insane asylum is [dynamically generated](https://github.com/jamiejamiebobami
 
 The powers include [psychokinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/PyrokinesisPower.cs), [telekinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/TelekinesisPower.cs), and [shapeshifting](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/CopycatPower.cs). The [guard's "power"](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/GuardPower.cs) is having guns that shoot tranquilizer darts.
 
+The powers follow the Strategy GoF design pattern, which "defines a general class of algorithms" that are interchangeable and can be swapped in and out at runtime.
+
 This was a first attempt at making a game in Unity and at the moment I am no longer working on it and it remains unfinished.
 
 The main focus would be polishing and debugging everything as well as implementing the NPCs AI (which is no small task) as well as implementing basic game logic for starting/stopping a match.
