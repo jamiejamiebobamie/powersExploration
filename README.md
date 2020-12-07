@@ -3,7 +3,7 @@ This project evolved to become a Rogue-like, action-adventure video game called 
 
 The gameplay involves escaping an insane asylum for psychics. You play as one of three psychics or as one of the asylum guards, all descending from the [humanoid](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Humanoid.cs) class.
 
-![Image of A Modular Hallway](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Screen Shot 2019-11-05 at 5.26.37 PM.png?raw=true.)
+![Image of A Modular Hallway](https://github.com/jamiejamiebobamie/powersExploration/blob/master/modularHallway.png?raw=true.)
 
 The insane asylum is [dynamically generated](https://github.com/jamiejamiebobamie/ModularHallway/blob/master/Assets/Scripts/createAsylum/CreateAsylum.cs) before the start of every match and contains randomly placed scene [objects](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/World/Scenery.cs) that the psychics interact with when using their powers.
 
