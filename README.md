@@ -3,9 +3,9 @@ This project evolved to become a Rogue-like, action-adventure video game called 
 
 The gameplay involves escaping an insane asylum for psychics. You play as one of three psychics or as one of the asylum guards, all descending from the [humanoid](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Humanoid.cs) class.
 
-![Image of A Modular Hallway](https://github.com/jamiejamiebobamie/powersExploration/blob/master/modularHallway.png?raw=true.)
-
 The insane asylum is [dynamically generated](https://github.com/jamiejamiebobamie/ModularHallway/blob/master/Assets/Scripts/createAsylum/CreateAsylum.cs) before the start of every match and contains randomly placed scene [objects](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/World/Scenery.cs) that the psychics interact with when using their powers.
+
+![Image of A Modular Hallway](https://github.com/jamiejamiebobamie/powersExploration/blob/master/modularHallway.png?raw=true.)
 
 The powers include [psychokinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/PyrokinesisPower.cs), [telekinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/TelekinesisPower.cs), and [shapeshifting](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/CopycatPower.cs). The [guard's "power"](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/GuardPower.cs) is having guns that shoot tranquilizer darts.
 
