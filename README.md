@@ -7,6 +7,8 @@ The insane asylum is [dynamically generated](https://github.com/jamiejamiebobami
 
 ![Image of A Modular Hallway](https://github.com/jamiejamiebobamie/powersExploration/blob/master/modularHallway.png?raw=true.)
 
+![Image of Example Scenery: A Wet Floor Sign](https://github.com/jamiejamiebobamie/powersExploration/blob/master/scenery.png?raw=true.)
+
 The powers include [psychokinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/PyrokinesisPower.cs), [telekinesis](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/TelekinesisPower.cs), and [shapeshifting](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/CopycatPower.cs). The [guard's "power"](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/Powers/GuardPower.cs) is having guns that shoot [tranquilizer darts](https://github.com/jamiejamiebobamie/powersExploration/blob/master/Assets/Scripts/World/TranquilizerDartProjectile.cs).
 
 The powers follow the Strategy GoF design pattern, which "defines a general class of algorithms" that are interchangeable and can be swapped in and out at runtime.
